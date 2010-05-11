@@ -7,5 +7,6 @@ urlpatterns = patterns('',
     # Example:
     # (r'^programming_lab/', include('programming_lab.foo.urls')),
 
+    (r'^accounts/', include('registration.backends.simple.urls')),
     (r'^admin/', include(admin.site.urls)),
 )
