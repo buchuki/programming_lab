@@ -94,6 +94,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
 
     'classlist',
+    'project',
 
     'south',
 )
