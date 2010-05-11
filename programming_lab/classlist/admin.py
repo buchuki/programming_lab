@@ -1,4 +1,8 @@
 from django.contrib import admin
 from classlist.models import ClassList
 
-admin.site.register(ClassList)
+class ClassListAdmin(admin.ModelAdmin):
+    filter_horizontal = ['participants']
+
+
+admin.site.register(ClassList, ClassListAdmin)
