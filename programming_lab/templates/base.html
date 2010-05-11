@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <title>{% block title %}{{title|default:"VPL"}}{% endblock %}</title>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <link rel="shortcut icon" href="/static/images/favicon.ico"/>
+        <link rel="stylesheet" href="/static/styles.css" type="text/css" />
+    </head>
+    <body>
+        <h1>Virtual Programming Lab</h1>
+        <div id="nav">
+            <ul>
+                {% if not user.is_authenticated %}
+                <li><a href="/accounts/register/">Register</a></li>
+                <li><a href="/accounts/login/">Login</a></li>
+                {% else %}
+                <li><a href="/accounts/logout/">Logout</a></li>
+                {% if user.is_superuser %}
+                    <li><a href="/admin/">Admin</a></li>
+                {% endif %}
+                {% endif  %}
+            </ul>
+        </div>
+        <div id="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </body>
+</html>

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    Please fill in the following information to register:
+    <form method="POST">
+        <table>
+            {% csrf_token %}
+        {{form.as_table}}
+        <tr>
+            <td><input type="submit" value="Register" /></td>
+        </tr>
+        </table>
+    </form>
+{% endblock %}
