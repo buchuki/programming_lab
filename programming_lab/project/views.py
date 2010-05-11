@@ -1,1 +1,2 @@
-# Create your views here.
+
+def project_list(request):

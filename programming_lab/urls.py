@@ -14,5 +14,7 @@ urlpatterns = patterns('',
         name='registration_register'),
     (r'accounts/', include('registration.auth_urls')),
 
+    (r'classlist/', include('classlist.urls')),
+
     (r'^admin/', include(admin.site.urls)),
 )
