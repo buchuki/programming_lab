@@ -15,7 +15,6 @@ urlpatterns = patterns('',
     (r'accounts/', include('registration.auth_urls')),
 
     (r'classlist/', include('classlist.urls')),
-    (r'^$', 'classlist.views.classlist'),
 
     (r'^admin/', include(admin.site.urls)),
 )
