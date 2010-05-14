@@ -4,12 +4,14 @@
         <title>{% block title %}{{title|default:"VPL"}}{% endblock %}</title>
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <link rel="shortcut icon" href="/static/images/favicon.ico"/>
+        <link rel="stylesheet" href="/static/reset.css" type="text/css" />
+        <link rel="stylesheet" href="/static/960.css" type="text/css" />
         <link rel="stylesheet" href="/static/styles.css" type="text/css" />
     </head>
     <body>
-        <h1>Virtual Programming Lab</h1>
-        <div id="nav">
-            <ul>
+        <div class="container_16">
+            <h1 class="grid_6">Virtual Programming Lab</h1>
+            <ul id="nav" class="grid_16">
                 {% if not user.is_authenticated %}
                 <li><a href="/accounts/register/">Register</a></li>
                 <li><a href="/accounts/login/">Login</a></li>
@@ -20,8 +22,6 @@
                 {% endif %}
                 {% endif  %}
             </ul>
-        </div>
-        <div id="content">
             {% block content %}
             {% endblock %}
         </div>

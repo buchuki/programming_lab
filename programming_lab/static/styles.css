@@ -1,0 +1,22 @@
+body {
+    font-family: helvetica,verdana,arial,sans;
+    #001;
+}
+h1 {
+    font-size: 24px;
+    color: #667;
+}
+#nav {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: #667;
+}
+#nav li {
+    list-style: none;
+    display: inline;
+}
+#nav a {
+    font-weight: bold;
+    color: #aab;
+    text-decoration: none;
+}
