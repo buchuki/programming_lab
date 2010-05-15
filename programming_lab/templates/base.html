@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="/static/960.css" type="text/css" />
         <link rel="stylesheet" href="/static/styles.css" type="text/css" />
         <script type="text/javascript" src="/static/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="/static/vpl.js"></script>
     </head>
     <body>
         <div class="container_16">
@@ -25,6 +26,10 @@
             </ul>
             {% block content %}
             {% endblock %}
+            <script type="text/javascript">
+                {% block scripts %}
+                {% endblock %}
+            </script>
         </div>
     </body>
 </html>

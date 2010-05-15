@@ -10,6 +10,8 @@ h1 {
     margin-top: 20px;
     margin-bottom: 20px;
     background-color: #667;
+    padding-top: 4px;
+    padding-bottom: 4px;
 }
 #nav li {
     list-style: none;
@@ -19,4 +21,16 @@ h1 {
     font-weight: bold;
     color: #aab;
     text-decoration: none;
+}
+.sidebar_box {
+    border-color: #aab;
+    border-width: 1px;
+    border-style: solid;
+} 
+.sidebar_box h3 {
+    text-align: center;
+    cursor: pointer;
+}
+.sidebar_content {
+    display: none;
 }
