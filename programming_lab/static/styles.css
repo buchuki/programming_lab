@@ -33,4 +33,10 @@ h1 {
 }
 .sidebar_content {
     display: none;
+    padding-left: 3px;
+}
+.sidebar_content a {
+    color: #aab;
+    text-decoration: none;
+    font-size: small;
 }

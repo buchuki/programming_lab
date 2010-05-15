@@ -4,4 +4,10 @@ function sidebar_setup() {
         $(this).next().slideToggle('fast');
              });
     $('#classlist').load('/classlist/');
+    $('#classlist').slideDown();
+}
+
+function  show_projects_for_class(class_id) {
+    $('#projectlist').load('/projects/list_for_class/' + class_id + '/');
+    $('#projectlist').slideDown();
 }
