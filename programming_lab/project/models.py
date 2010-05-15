@@ -9,6 +9,9 @@ class Project(models.Model):
     name = models.CharField(max_length=128)
     description = models.TextField(blank=True)
 
+    def __unicode__(self):
+        return self.name
+
 class File(models.Model):
     project = models.ForeignKey(Project)
     name = models.CharField(max_length=64)

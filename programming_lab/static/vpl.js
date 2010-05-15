@@ -10,4 +10,6 @@ function sidebar_setup() {
 function  show_projects_for_class(class_id) {
     $('#projectlist').load('/projects/list_for_class/' + class_id + '/');
     $('#projectlist').slideDown();
+    $('#classlist a').removeClass('selected');
+    $('#classlist_'+class_id).addClass('selected');
 }

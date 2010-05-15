@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="grid_16">
+    Add a new project to "{{classlist}}":
+<form method="post">
+    {% csrf_token %}
+    <table>
+        {{form.as_table}}
+    </table>
+    <input type="submit" value="Create New Project">
+</form>
+</div>
+{% endblock %}
