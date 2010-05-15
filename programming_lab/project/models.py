@@ -15,4 +15,7 @@ class Project(models.Model):
 class File(models.Model):
     project = models.ForeignKey(Project)
     name = models.CharField(max_length=64)
-    contents = models.TextField()
+    contents = models.TextField(blank=True)
+
+    def __unicode__(self):
+        return self.name
