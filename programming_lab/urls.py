@@ -17,6 +17,7 @@ urlpatterns = patterns('',
 
     (r'^$', include('ide.urls')),
     (r'classlist/', include('classlist.urls')),
+    (r'projects/', include('project.urls')),
 
     (r'^admin/', include(admin.site.urls)),
 )

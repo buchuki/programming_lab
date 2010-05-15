@@ -1,0 +1,6 @@
+<ul>
+{% for project in projects %}
+<li><a href="javascript:show_files_for_project({{project.id}});">{{project}}</a></li>
+{% endfor %}
+<li><a href="{% url create_project %}">New Project</a></li>
+</ul>
