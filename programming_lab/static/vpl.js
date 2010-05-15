@@ -20,3 +20,16 @@ function show_files_for_project(project_id) {
     $('#projectlist a').removeClass('selected');
     $('#project_'+project_id).addClass('selected');
 }
+function load_file(file_id) {
+    $.ajax({
+        url: '/projects/file/' + file_id + '/',
+        success: function(text) {
+                editAreaLoader.openFile('code_editor', {
+                    'id': 'blah',
+                    'text': text,
+                    'syntax': 'html',
+                    'do_highlight': true
+                });
+        }
+    });
+}

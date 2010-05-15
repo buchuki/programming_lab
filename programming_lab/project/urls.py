@@ -5,4 +5,5 @@ urlpatterns = patterns('project.views',
         (r'^files_for_project/(?P<project_id>\d+)/$', 'files_for_project'),
         url(r'^create/(?P<class_id>\d+)/$', 'create_project', name='create_project'),
         url(r'^create_file/(?P<project_id>\d+)/$', 'create_file', name='create_file'),
+        url(r'^file/(?P<file_id>\d+)/$', 'load_file', name='load_file'),
 )

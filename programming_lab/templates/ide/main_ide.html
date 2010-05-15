@@ -18,8 +18,16 @@
         </div>
     </div>
 </div>
-<div class="grid_10">
-    ide
+<div id="code_area" class="grid_10">
+<script type="text/javascript" src="/static/edit_area/edit_area_full.js"></script>
+<textarea id="code_editor" disabled="disabled">No File Loaded</textarea>
+<script type="text/javascript">
+        editAreaLoader.init({
+            id : "code_editor",
+            'min_width': 580,
+            'min_height': 380,
+        });
+</script>
 </div>
 <div class="grid_3">
     <div class="sidebar_box">

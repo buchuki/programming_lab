@@ -1,7 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, get_object_or_404, redirect
+from django.http import HttpResponse
 from django.template import RequestContext
-from project.models import Project
+from project.models import Project, File
 from classlist.models import ClassList
 from project.forms import NewProjectForm, NewFileForm
 
@@ -53,3 +54,8 @@ def create_file(request, project_id):
 
     return render_to_response("projects/file_form.html",
             RequestContext(request, {'form': form, 'project': project}))
+
+@login_required
+def load_file(request, file_id):
+    file = get_object_or_404(File, id=file_id, project__owner=request.user)
+    return HttpResponse(file.contents)
