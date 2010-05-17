@@ -36,7 +36,7 @@ def create_project(request, class_id):
         project.classlist = classlist
         project.owner = request.user
         project.save()
-        return redirect("/")
+        return redirect("/?classlist=%s&projectlist=%s" % (classlist.id, project.id))
 
     return render_to_response("projects/project_form.html",
             RequestContext(request, {'form': form, 'classlist': classlist}))
@@ -51,7 +51,11 @@ def create_file(request, project_id):
         file = form.save(commit=False)
         file.project = project
         file.save()
-        return redirect("/")
+        return redirect("/?classlist=%s&projectlist=%s&file_id=%s" % (
+            project.classlist.id,
+            project.id,
+            file.id
+            ))
 
     return render_to_response("projects/file_form.html",
             RequestContext(request, {'form': form, 'project': project}))
