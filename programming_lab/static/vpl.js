@@ -19,6 +19,10 @@ function show_files_for_project(project_id) {
     $('#filelist').slideDown();
     $('#projectlist a').removeClass('selected');
     $('#project_'+project_id).addClass('selected');
+    var files = editAreaLoader.getAllFiles("code_editor");
+    for (k in files) {
+        editAreaLoader.closeFile("code_editor", k);
+    }
 }
 function load_file(file_id) {
     $.ajax({
