@@ -20,12 +20,21 @@
 </div>
 <div id="code_area" class="grid_10">
 <script type="text/javascript" src="/static/edit_area/edit_area_full.js"></script>
-<textarea id="code_editor" disabled="disabled">No File Loaded</textarea>
+<textarea id="code_editor">Please load or create a file using the navigation at the left.
+    
+First, select a class, then create or select a project. Finally, create or
+select a file to be edited.
+</textarea>
 <script type="text/javascript">
         editAreaLoader.init({
             id : "code_editor",
+            'is_editable': false,
+            'is_multi_file': false,
             'min_width': 580,
             'min_height': 380,
+            'allow_toggle': false,
+            'toolbar': 'save,|,undo,redo,|,syntax_selection,highlight,reset_highlight,|,search,go_to_line,|,help',
+            'save_callback' : 'save_file'
         });
 </script>
 </div>

@@ -30,6 +30,11 @@ function load_file(file_id) {
                     'syntax': 'html',
                     'do_highlight': true
                 });
+                editAreaLoader.execCommand('code_editor', 'set_editable', true);
         }
     });
+}
+
+function save_file(file_id, contents) {
+    alert(contents);
 }
