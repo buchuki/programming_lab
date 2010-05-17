@@ -23,11 +23,13 @@ function show_files_for_project(project_id) {
 function load_file(file_id) {
     $.ajax({
         url: '/projects/file/' + file_id + '/',
-        success: function(text) {
+        dataType: "json",
+        success: function(response) {
                 editAreaLoader.openFile('code_editor', {
-                    'id': 'blah',
-                    'text': text,
-                    'syntax': 'html',
+                    'id': response.id,
+                    'title': response.title,
+                    'text': response.text,
+                    'syntax': response.syntax,
                     'do_highlight': true
                 });
                 editAreaLoader.execCommand('code_editor', 'set_editable', true);
@@ -35,6 +37,14 @@ function load_file(file_id) {
     });
 }
 
-function save_file(file_id, contents) {
-    alert(contents);
+function save_file(editor_id, contents) {
+    var info = editAreaLoader.getCurrentFile(editor_id);
+    $.ajax({
+        url: '/projects/file/' + info.id + '/',
+        type: 'POST',
+        data: {'contents': contents},
+        success: function(response) {
+            editAreaLoader.setFileEditedMode('code_editor', info.id, false);
+        }
+    });
 }

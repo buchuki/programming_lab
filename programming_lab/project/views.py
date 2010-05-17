@@ -5,6 +5,7 @@ from django.template import RequestContext
 from project.models import Project, File
 from classlist.models import ClassList
 from project.forms import NewProjectForm, NewFileForm
+import json
 
 @login_required
 def projects_for_class(request, class_id):
@@ -58,4 +59,15 @@ def create_file(request, project_id):
 @login_required
 def load_file(request, file_id):
     file = get_object_or_404(File, id=file_id, project__owner=request.user)
-    return HttpResponse(file.contents)
+    if request.POST:
+        file.contents = request.POST['contents']
+        file.save()
+        return HttpResponse("success")
+    else:
+        response = {
+                'id': str(file.id),
+                'title': file.name,
+                'text': file.contents,
+                'syntax': file.extension,
+                }
+        return HttpResponse(json.dumps(response), mimetype="application/json")

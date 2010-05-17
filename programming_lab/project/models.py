@@ -17,5 +17,9 @@ class File(models.Model):
     name = models.CharField(max_length=64)
     contents = models.TextField(blank=True)
 
+    @property
+    def extension(self):
+        return self.name.rsplit('.')[-1]
+
     def __unicode__(self):
         return self.name
