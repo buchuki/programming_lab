@@ -3,26 +3,58 @@ function sidebar_setup() {
     $('.sidebar_box h3').click(function() {
         $(this).next().slideToggle('fast');
              });
-    $('#classlist').load('/classlist/');
-    $('#classlist').slideDown();
+    load_classlist($.url.param('classlist'));
+    if ($.url.param('classlist')) {
+        show_projects_for_class($.url.param('classlist'), $.url.param('projectlist'));
+        if ($.url.param('projectlist')) {
+            show_files_for_project($.url.param('projectlist'));
+        }
+    }
 }
 
-function show_projects_for_class(class_id) {
-    $('#projectlist').load('/projects/list_for_class/' + class_id + '/');
+function ea_load(id) {
+    // When the edit_area is finished loading, we may need to load a file
+    // immediately depending on get parameters
+    if ($.url.param('classlist') && $.url.param('projectlist') && $.url.param('file_id')) {
+        load_file($.url.param('file_id'));
+    }
+}
+
+function load_classlist(selected_id) {
+    $('#classlist').load('/classlist/', {}, function() {
+        if (selected_id) {
+            select_class(selected_id);
+        }
+    });
+    $('#classlist').slideDown();
+}
+function show_projects_for_class(class_id, selected_id) {
+    $('#projectlist').load('/projects/list_for_class/' + class_id + '/', {}, function() {
+        if (selected_id) {
+            select_project(selected_id);
+        }
+            
+    });
     $('#projectlist').slideDown();
-    $('#classlist a').removeClass('selected');
-    $('#classlist_'+class_id).addClass('selected');
+    select_class(class_id);
 }
 
 function show_files_for_project(project_id) {
     $('#filelist').load('/projects/files_for_project/' + project_id + '/');
     $('#filelist').slideDown();
-    $('#projectlist a').removeClass('selected');
-    $('#project_'+project_id).addClass('selected');
+    select_project(project_id);
     var files = editAreaLoader.getAllFiles("code_editor");
     for (k in files) {
         editAreaLoader.closeFile("code_editor", k);
     }
+}
+function select_class(class_id) {
+    $('#classlist a').removeClass('selected');
+    $('#classlist_'+class_id).addClass('selected');
+}
+function select_project(project_id) {
+    $('#projectlist a').removeClass('selected');
+    $('#project_'+project_id).addClass('selected');
 }
 function load_file(file_id) {
     $.ajax({

@@ -25,7 +25,7 @@
 First, select a class, then create or select a project. Finally, create or
 select a file to be edited.
 </textarea>
-<script type="text/javascript">
+<script type="text/javascript" defer="defer">
         editAreaLoader.init({
             id : "code_editor",
             'is_editable': false,
@@ -34,7 +34,8 @@ select a file to be edited.
             'min_height': 380,
             'allow_toggle': false,
             'toolbar': 'save,|,undo,redo,|,syntax_selection,highlight,reset_highlight,|,search,go_to_line,|,help',
-            'save_callback' : 'save_file'
+            'save_callback' : 'save_file',
+            'EA_load_callback': 'ea_load'
         });
 </script>
 </div>
