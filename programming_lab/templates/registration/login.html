@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="grid16">
 Log in to Virtual Programming Lab:
 {% if form.errors %}
 <h3>Authentication Failed</h3>
@@ -24,4 +25,5 @@ Log in to Virtual Programming Lab:
     </table>
 
 </form>
+</div>
 {% endblock %}
