@@ -1,0 +1,4 @@
+* when selecting a project, close existing files
+* open files highlighted in lefthand list?
+    * need to listen for close events on buffer
+* Files in directories in projects
