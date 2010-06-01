@@ -95,6 +95,7 @@ INSTALLED_APPS = (
     'classlist',
     'project',
     'ide',
+    'chat',
 
     'registration',
     'south',

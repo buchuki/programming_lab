@@ -1,3 +1,5 @@
+classlist_id = null;
+
 function sidebar_setup() {
     // Enable the slide boxes
     $('.sidebar_box h3').click(function() {
@@ -10,6 +12,15 @@ function sidebar_setup() {
             show_files_for_project($.url.param('projectlist'));
         }
     }
+    // Ensure that user chat list is refreshed every minute
+    window.setInterval(chat_users, 60000);
+    chat_users();
+}
+
+function chat_users() {
+    if (classlist_id == null) return;
+    $('#userlist').load('/chat/logged_in_to_class/' + classlist_id + '/');
+
 }
 
 function ea_load(id) {
@@ -51,6 +62,8 @@ function show_files_for_project(project_id) {
 function select_class(class_id) {
     $('#classlist a').removeClass('selected');
     $('#classlist_'+class_id).addClass('selected');
+    classlist_id = class_id;
+    chat_users();
 }
 function select_project(project_id) {
     $('#projectlist a').removeClass('selected');

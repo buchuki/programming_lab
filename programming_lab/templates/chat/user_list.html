@@ -1,0 +1,5 @@
+<ul>
+{% for user in users %}
+<li><a href="javascript:load_chat_box({{user.id}});">{{user}}</a></li>
+{% endfor %}
+</ul>
