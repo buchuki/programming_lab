@@ -74,6 +74,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'vpl_profile.last_request_middleware.LastRequestMiddleware',
 )
 
 ROOT_URLCONF = 'urls'
@@ -90,6 +91,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.admin',
 
+    'vpl_profile',
     'classlist',
     'project',
     'ide',
@@ -99,5 +101,6 @@ INSTALLED_APPS = (
 )
 
 LOGIN_REDIRECT_URL = "/"
+AUTH_PROFILE_MODULE = "vpl_profile.UserProfile"
 
 from localsettings import *
