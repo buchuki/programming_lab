@@ -19,3 +19,8 @@ def logged_in_users(request, class_id):
             userprofile__last_request__gt=deadline)
     return render_to_response("chat/user_list.html", RequestContext(request, {
         'users': users}))
+
+@login_required
+def chat_messages(request, peer_id):
+    from django.http import HttpResponse
+    return HttpResponse("HAHA")

@@ -43,13 +43,21 @@ select a file to be edited.
     <div class="sidebar_box">
         <h3>chat users</h3>
         <div id="userlist" class="sidebar_content">
-            Select a classlist to view list of users
+            Select a classlist to view logged in users
         </div>
     </div>
     <div class="sidebar_box">
         <h3>chat box</h3>
-        <div class="sidebar_content">
-            Chat Not Yet Implemented
+        <div id="chatbox" class="sidebar_content">
+            <div id="chat_messages">
+            </div>
+            <div id="chat_input_box">
+                <form onsubmit="return send_chat_message()">
+                    <input id="chat_input" type="text" name="chat_message" />
+                    <input type="submit" value="send">
+                </form>
+            </div>
+
         </div>
     </div>
 </div>

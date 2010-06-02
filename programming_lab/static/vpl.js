@@ -1,4 +1,5 @@
 classlist_id = null;
+chat_user_id = null;
 
 function sidebar_setup() {
     // Enable the slide boxes
@@ -14,6 +15,8 @@ function sidebar_setup() {
     }
     // Ensure that user chat list is refreshed every minute
     window.setInterval(chat_users, 60000);
+    // Ensure that user chat messages are refreshed every 5 seconds
+    window.setInterval(chat_messages, 5000);
     chat_users();
 }
 
@@ -21,6 +24,10 @@ function chat_users() {
     if (classlist_id == null) return;
     $('#userlist').load('/chat/logged_in_to_class/' + classlist_id + '/');
 
+}
+function chat_messages() {
+    if (chat_user_id == null) return;
+    $('#chatmessages').load('/chat/chat_messages/' + chat_user_id + '/');
 }
 
 function ea_load(id) {
@@ -47,6 +54,7 @@ function show_projects_for_class(class_id, selected_id) {
             
     });
     $('#projectlist').slideDown();
+    $('#userlist').slideDown();
     select_class(class_id);
 }
 
@@ -96,4 +104,20 @@ function save_file(editor_id, contents) {
             editAreaLoader.setFileEditedMode('code_editor', info.id, false);
         }
     });
+}
+
+function load_chat_box(user_id) {
+    chat_user_id =user_id;
+    chat_messages();
+    $('#chat_input_box').show();
+    $('#chatbox').slideDown();
+}
+
+function send_chat_message() {
+    $('#chat_messages').load(
+            '/chat/chat_messages/' + chat_user_id + '/',
+            {
+            'message': $('#chat_input').val()
+            });
+    return false;
 }
