@@ -27,7 +27,10 @@ function chat_users() {
 }
 function chat_messages() {
     if (chat_user_id == null) return;
-    $('#chat_messages').load('/chat/chat_messages/' + chat_user_id + '/');
+    $('#chat_messages').load('/chat/chat_messages/' + chat_user_id + '/',
+            function(response, textStatus, xmlrequest) {
+                reset_chat();
+            });
 }
 
 function ea_load(id) {
@@ -113,14 +116,18 @@ function load_chat_box(user_id) {
     $('#chatbox').slideDown();
 }
 
+function reset_chat() {
+    $("#chat_messages").animate({ scrollTop: $("#chat_messages").attr("scrollHeight") - $('#chat_messages').height() }, 200);
+    $('#chat_input').focus();
+}
 function send_chat_message() {
     $('#chat_messages').load(
             '/chat/chat_messages/' + chat_user_id + '/',
-            {
-            'message': $('#chat_input').val()
+            {'message': $('#chat_input').val()},
+            function(response, textStatus, xmlrequest) {
+                reset_chat();
             });
     $('#chat_input').val('');
-    $('#chat_input').focus();
     return false;
 }
 function share_file() {
@@ -128,6 +135,8 @@ function share_file() {
 
     $('#chat_messages').load(
         "/chat/share_file/",
-        {'file_id': info.id, 'share_to': chat_user_id
-    });
+        {'file_id': info.id, 'share_to': chat_user_id},
+        function(response, textStatus, xmlrequest) {
+            reset_chat();
+        });
 }
