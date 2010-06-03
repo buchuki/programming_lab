@@ -123,3 +123,11 @@ function send_chat_message() {
     $('#chat_input').focus();
     return false;
 }
+function share_file() {
+    var info = editAreaLoader.getCurrentFile("code_editor");
+
+    $('#chat_messages').load(
+        "/chat/share_file/",
+        {'file_id': info.id, 'share_to': chat_user_id
+    });
+}
