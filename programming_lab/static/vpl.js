@@ -27,7 +27,7 @@ function chat_users() {
 }
 function chat_messages() {
     if (chat_user_id == null) return;
-    $('#chatmessages').load('/chat/chat_messages/' + chat_user_id + '/');
+    $('#chat_messages').load('/chat/chat_messages/' + chat_user_id + '/');
 }
 
 function ea_load(id) {
@@ -119,5 +119,7 @@ function send_chat_message() {
             {
             'message': $('#chat_input').val()
             });
+    $('#chat_input').val('');
+    $('#chat_input').focus();
     return false;
 }

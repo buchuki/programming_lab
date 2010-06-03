@@ -1,11 +1,12 @@
 import datetime
 
 from django.template import RequestContext
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 from classlist.models import ClassList
+from chat.models import ChatMessage
 
 @login_required
 def logged_in_users(request, class_id):
@@ -22,5 +23,13 @@ def logged_in_users(request, class_id):
 
 @login_required
 def chat_messages(request, peer_id):
-    from django.http import HttpResponse
-    return HttpResponse("HAHA")
+    peer = get_object_or_404(User, id=peer_id)
+    if request.POST:
+        message = ChatMessage.objects.create(
+                sender=request.user,
+                receiver=peer,
+                message=request.POST['message'])
+
+    messages = ChatMessage.objects.conversation(request.user, peer)
+    return render_to_response("chat/chat_messages.html", RequestContext(request,
+        {"chat_messages": messages}))

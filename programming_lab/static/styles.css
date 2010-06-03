@@ -62,3 +62,11 @@ h1 {
     border-color: #aab;
     width: 150px;
 }
+.sender {
+    font-weight: bold;
+    color: #a66;
+}
+.receiver {
+    font-weight: bold;
+    color: #66a;
+}

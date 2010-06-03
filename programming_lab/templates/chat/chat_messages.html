@@ -1,0 +1,5 @@
+<div>
+    {% for message in chat_messages %}
+    {% ifequal message.sender user %}<span class="sender">{% else %}<span class="receiver">{% endifequal %}{{message.sender}}</span>: {{message.message}}<br />
+    {% endfor %}
+</div>
