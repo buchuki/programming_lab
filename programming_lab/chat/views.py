@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 from classlist.models import ClassList
-from project.models import File
+from project.models import File, SharedFiles
 from chat.models import ChatMessage
 
 @login_required
@@ -40,6 +40,9 @@ def share_file(request):
     if request.POST:
         peer = get_object_or_404(User, id=request.POST['share_to'])
         file = get_object_or_404(File, project__owner=request.user, id=request.POST['file_id'])
+
+        shared, created = SharedFiles.objects.get_or_create(
+                file=file, shared_with=peer)
         message = ChatMessage.objects.create(
                 sender=request.user,
                 receiver=peer,

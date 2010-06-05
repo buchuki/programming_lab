@@ -23,3 +23,11 @@ class File(models.Model):
 
     def __unicode__(self):
         return self.name
+
+class SharedFiles(models.Model):
+    file = models.ForeignKey(File)
+    shared_with = models.ForeignKey(User)
+    shared_on = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together=("file", "shared_with")
