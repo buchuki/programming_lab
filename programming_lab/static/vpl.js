@@ -114,11 +114,11 @@ function load_chat_box(user_id) {
     chat_messages();
     $('#chat_input_box').show();
     $('#chatbox').slideDown();
+    $('#chat_input').focus();
 }
 
 function reset_chat() {
     $("#chat_messages").animate({ scrollTop: $("#chat_messages").attr("scrollHeight") - $('#chat_messages').height() }, 200);
-    $('#chat_input').focus();
 }
 function send_chat_message() {
     $('#chat_messages').load(
@@ -126,6 +126,7 @@ function send_chat_message() {
             {'message': $('#chat_input').val()},
             function(response, textStatus, xmlrequest) {
                 reset_chat();
+                $('#chat_input').focus();
             });
     $('#chat_input').val('');
     return false;
@@ -138,5 +139,6 @@ function share_file() {
         {'file_id': info.id, 'share_to': chat_user_id},
         function(response, textStatus, xmlrequest) {
             reset_chat();
+            $('#chat_input').focus();
         });
 }
