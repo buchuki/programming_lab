@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.template import RequestContext
-from project.models import Project, File
+from project.models import Project, File, SharedFiles
 from classlist.models import ClassList
 from project.forms import NewProjectForm, NewFileForm
 import json
@@ -75,3 +75,15 @@ def load_file(request, file_id):
                 'syntax': file.extension,
                 }
         return HttpResponse(json.dumps(response), mimetype="application/json")
+
+@login_required
+def view_shared_file(request, file_id):
+    file = get_object_or_404(File, id=file_id)
+    try:
+        shared_file = SharedFiles.objects.get(file=file, shared_with=request.user)
+    except SharedFiles.DoesNotExist:
+        return HttpResponse("The file you requested has not been shared with you.")
+    else:
+        return render_to_response("projects/view_shared_file.html",
+                RequestContext(request, {"file": file}))
+

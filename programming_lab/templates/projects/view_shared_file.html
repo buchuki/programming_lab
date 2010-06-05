@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <title>{{file.name}}</title>
+        <script type="text/javascript" src="/static/jquery-1.4.2.min.js"></script>
+    </head>
+    <body>
+        <br />
+        The file <em>{{file.name}}</em> was shared to you from <em>{{file.project.owner}}</em>:<br />
+        <script type="text/javascript" src="/static/edit_area/edit_area_full.js"></script>
+        <textarea name="read_only_editor" id="read_only_editor">{{file.contents}}</textarea>
+        <script type="text/javascript" defer="defer">
+                editAreaLoader.init({
+                    id : "read_only_editor",
+                    'is_editable': false,
+                    'is_multi_file': false,
+                    'min_width': 580,
+                    'min_height': 380,
+                    'allow_toggle': false,
+                    'toolbar': '',
+                    'syntax': '{{file.extension}}',
+                    'start_highlight': true
+                });
+        </script>
+    </body>
+</html>
