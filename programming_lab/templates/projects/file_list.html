@@ -1,6 +1,6 @@
 <ul>
 {% for file in files %}
-<li><a href="javascript:load_file({{file.id}});">{{file}}</a></li>
+<li><a href="javascript:load_file({{file.id}});">{{file}}</a> (<a href="javascript:view_file('{{file.project.classlist.class_name}}', '{{file.project.name}}', '{{file.name}}');">View</a>)</li>
 {% endfor %}
 <li><a href="{% url create_file project.id %}">New File</a></li>
 </ul>

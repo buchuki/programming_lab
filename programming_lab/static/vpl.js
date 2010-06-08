@@ -109,6 +109,11 @@ function save_file(editor_id, contents) {
     });
 }
 
+function view_file(classname, projectname, filename) {
+    //for now, assume the file is a html/css type thing
+    window.open('/projects/view/' + classname + '/' + projectname + '/' + filename);
+}
+
 function load_chat_box(user_id) {
     chat_user_id =user_id;
     chat_messages();

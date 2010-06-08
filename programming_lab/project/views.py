@@ -62,19 +62,22 @@ def create_file(request, project_id):
 
 @login_required
 def load_file(request, file_id):
-    file = get_object_or_404(File, id=file_id, project__owner=request.user)
-    if request.POST:
-        file.contents = request.POST['contents']
-        file.save()
-        return HttpResponse("success")
-    else:
-        response = {
-                'id': str(file.id),
-                'title': file.name,
-                'text': file.contents,
-                'syntax': file.extension,
-                }
-        return HttpResponse(json.dumps(response), mimetype="application/json")
+    try:
+        file = get_object_or_404(File, id=file_id, project__owner=request.user)
+        if request.POST:
+            file.contents = request.POST['contents']
+            file.save()
+            return HttpResponse("success")
+        else:
+            response = {
+                    'id': str(file.id),
+                    'title': file.name,
+                    'text': file.contents,
+                    'syntax': file.extension,
+                    }
+            return HttpResponse(json.dumps(response), mimetype="application/json")
+    except Exception as e:
+        print e
 
 @login_required
 def view_shared_file(request, file_id):
@@ -87,3 +90,9 @@ def view_shared_file(request, file_id):
         return render_to_response("projects/view_shared_file.html",
                 RequestContext(request, {"file": file}))
 
+@login_required
+def view_file(request, classlist, projectname, filename):
+    file = get_object_or_404(File, name=filename,
+            project__owner=request.user, project__name=projectname,
+            project__classlist__class_name=classlist)
+    return HttpResponse(file.contents)
