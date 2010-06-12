@@ -1,6 +1,8 @@
 {% load chat_list %}
 <ul>
 {% for u in users %}
+    {% if u != user %}
     <li class="{{u|chat_status:user}}"><a href="javascript:load_chat_box({{u.id}});">{{u}}</a></li>
+    {% endif %}
 {% endfor %}
 </ul>
