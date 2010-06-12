@@ -16,9 +16,8 @@ def logged_in_users(request, class_id):
     minute. This should be the case with the ajax poll at the other end.
     
     Efficiency IS an issue here. ;)'''
-    deadline = datetime.datetime.now() - datetime.timedelta(minutes=1)
-    users = User.objects.filter(classes__id=class_id,
-            userprofile__last_request__gt=deadline)
+    users = User.objects.filter(classes__id=class_id).order_by(
+            "-userprofile__last_request")
     return render_to_response("chat/user_list.html", RequestContext(request, {
         'users': users}))
 
