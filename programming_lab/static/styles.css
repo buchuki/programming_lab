@@ -71,6 +71,10 @@ h1 {
     font-weight: bold;
     color: #66a;
 }
+.unread a {
+    font-weight: bold;
+    color: #66a;
+}
 .online a {
     font-weight: bold;
     color: #6a6;

@@ -14,7 +14,7 @@ function sidebar_setup() {
         }
     }
     // Ensure that user chat list is refreshed every minute
-    window.setInterval(chat_users, 60000);
+    window.setInterval(chat_users, 5000);
     // Ensure that user chat messages are refreshed every 5 seconds
     window.setInterval(chat_messages, 5000);
     chat_users();

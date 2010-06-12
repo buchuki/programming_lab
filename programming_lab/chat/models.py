@@ -16,6 +16,7 @@ class ChatMessage(models.Model):
             choices=make_choice(["normal", "send_file"]),
             default="normal")
     timestamp = models.DateTimeField(auto_now_add=True)
+    read = models.BooleanField(default=False)
 
     objects = ChatMessageManager()
 

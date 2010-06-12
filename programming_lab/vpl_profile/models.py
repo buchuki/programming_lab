@@ -11,8 +11,10 @@ class UserProfile(models.Model):
     last_request = models.DateTimeField(null=True, blank=True)
 
     def is_online(self):
-        deadline = datetime.datetime.now() - datetime.timedelta(minutes=1)
-        return self.last_request > deadline
+        if self.last_request:
+            deadline = datetime.datetime.now() - datetime.timedelta(minutes=1)
+            return self.last_request > deadline
+        return False
 
 def user_profile_signal(sender, instance, signal, created, *args, **kwargs):
     '''When a new user is created, ensure a userprofile is associated with it.'''

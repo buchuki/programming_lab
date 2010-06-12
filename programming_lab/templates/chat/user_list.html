@@ -1,5 +1,6 @@
+{% load chat_list %}
 <ul>
-{% for user in users %}
-<li class="{% if user.get_profile.is_online %}online{% else %}offline{% endif %}"><a href="javascript:load_chat_box({{user.id}});">{{user}}</a></li>
+{% for u in users %}
+    <li class="{{u|chat_status:user}}"><a href="javascript:load_chat_box({{u.id}});">{{u}}</a></li>
 {% endfor %}
 </ul>
