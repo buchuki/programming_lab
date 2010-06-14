@@ -1,7 +1,7 @@
 <ul>
 {% for project in projects %}
 <li><a id="project_{{project.id}}" href="javascript:show_files_for_project({{project.id}});">{{project}}</a><a style="float: right" href="/projects/download_project/{{project.id}}"><img
-    src="/static/images/icons/download.png" alt="Download File" title="Download File" /></a></li>
+    src="/static/images/icons/download.png" alt="Download Project" title="Download Project" /></a></li>
 {% endfor %}
 <li><a href="{% url create_project classlist.id %}">New Project</a></li>
 </ul>
