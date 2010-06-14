@@ -6,6 +6,8 @@ from project.models import Project, File, SharedFiles
 from classlist.models import ClassList
 from project.forms import NewProjectForm, NewFileForm
 import json
+from zipfile import ZipFile
+from cStringIO import StringIO
 
 @login_required
 def projects_for_class(request, class_id):
@@ -102,4 +104,16 @@ def download_file(request, file_id):
     file = get_object_or_404(File, id=file_id, project__owner=request.user)
     response = HttpResponse(file.contents, "application/octet-stream")
     response['Content-Disposition'] = "attachment; filename=%s" % file.name
+    return response
+
+@login_required
+def download_project(request, project_id):
+    project = get_object_or_404(Project, id=project_id, owner=request.user)
+    response_string = StringIO()
+    archive = ZipFile(response_string, "w")
+    for file in project.file_set.all():
+        archive.writestr(file.name, file.contents)
+    archive.close()
+    response = HttpResponse(response_string.getvalue(), "application/zip")
+    response['Content-Disposition'] = "attachment; filename=%s.zip" % project.name
     return response
