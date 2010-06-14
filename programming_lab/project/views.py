@@ -96,3 +96,10 @@ def view_file(request, classlist, projectname, filename):
             project__owner=request.user, project__name=projectname,
             project__classlist__class_name=classlist)
     return HttpResponse(file.contents)
+
+@login_required
+def download_file(request, file_id):
+    file = get_object_or_404(File, id=file_id, project__owner=request.user)
+    response = HttpResponse(file.contents, "application/octet-stream")
+    response['Content-Disposition'] = "attachment; filename=%s" % file.name
+    return response
