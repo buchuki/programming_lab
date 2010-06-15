@@ -83,6 +83,27 @@ def upload_new_file(request, project_id):
                 'is_new': True}))
 
 @login_required
+def upload_replacement_file(request, file_id):
+    file = get_object_or_404(File, id=file_id, project__owner=request.user)
+    form = UploadFileForm(file.project, False,
+            request.POST or None, request.FILES or None)
+
+    if form.is_valid():
+        file_info = form.cleaned_data['file']
+        file.contents=file_info.read()
+        file.save()
+
+        return redirect("/?classlist=%s&projectlist=%s&file_id=%s" % (
+            file.project.classlist.id,
+            file.project.id,
+            file.id
+            ))
+
+    return render_to_response("projects/upload_file.html",
+            RequestContext(request, {'form': form, 'project': file.project,
+                'is_new': False, "file": file}))
+
+@login_required
 def load_file(request, file_id):
     try:
         file = get_object_or_404(File, id=file_id, project__owner=request.user)
