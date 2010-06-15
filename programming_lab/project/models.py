@@ -24,6 +24,9 @@ class File(models.Model):
     def __unicode__(self):
         return self.name
 
+    class Meta:
+        unique_together = ("project", "name")
+
 class SharedFiles(models.Model):
     file = models.ForeignKey(File)
     shared_with = models.ForeignKey(User)

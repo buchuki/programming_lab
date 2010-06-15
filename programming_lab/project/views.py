@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.template import RequestContext
 from project.models import Project, File, SharedFiles
 from classlist.models import ClassList
-from project.forms import NewProjectForm, NewFileForm
+from project.forms import NewProjectForm, NewFileForm, UploadFileForm
 import json
 from zipfile import ZipFile
 from cStringIO import StringIO
@@ -61,6 +61,26 @@ def create_file(request, project_id):
 
     return render_to_response("projects/file_form.html",
             RequestContext(request, {'form': form, 'project': project}))
+
+@login_required
+def upload_new_file(request, project_id):
+    project = get_object_or_404(request.user.project_set, id=project_id)
+    form = UploadFileForm(project, True, 
+            request.POST or None, request.FILES or None)
+    if form.is_valid():
+        file_info = form.cleaned_data['file']
+        file = File(project=project, name=file_info.name,
+                contents=file_info.read())
+        file.save()
+        return redirect("/?classlist=%s&projectlist=%s&file_id=%s" % (
+            project.classlist.id,
+            project.id,
+            file.id
+            ))
+
+    return render_to_response("projects/upload_file.html",
+            RequestContext(request, {'form': form, 'project': project,
+                'is_new': True}))
 
 @login_required
 def load_file(request, file_id):
