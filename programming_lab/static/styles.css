@@ -1,10 +1,14 @@
 body {
     font-family: helvetica,verdana,arial,sans;
-    #001;
+    background-image: url('images/page_background.png');
+    background-repeat: repeat-x;
 }
 h1 {
-    font-size: 24px;
-    color: #667;
+    background-image: url('images/header.png');
+    background-repeat: no-repeat;
+    width: 392px;
+    height: 40px;
+    margin-top: 12px;
 }
 #nav {
     margin-top: 20px;
@@ -12,10 +16,17 @@ h1 {
     background-color: #667;
     padding-top: 4px;
     padding-bottom: 4px;
+    background-image: url('images/menubar_bg.png');
+    background-repeat: repeat-x;
 }
 #nav li {
     list-style: none;
     display: inline;
+    margin-left: 10px;
+    padding-right: 10px;
+    border-right-style: solid;
+    border-right-color: #aab;
+    border-right-width: 1px;
 }
 #nav a {
     font-weight: bold;
@@ -27,17 +38,24 @@ h1 {
     border-width: 1px;
     border-style: solid;
     margin-bottom: 5px;
+    background-color: #eef;
 } 
 .sidebar_box h3 {
+    background-image: url('images/menubar_bg.png');
+    background-repeat: repeat-x;
+    background-color: #667;
+    color: #aab;
     text-align: center;
     cursor: pointer;
 }
 .sidebar_content {
     display: none;
     padding-left: 3px;
+    padding-top: 2px;
+    padding-right: 2px;
 }
 .sidebar_content a {
-    color: #aab;
+    color: #88a;
     text-decoration: none;
     font-size: small;
 }
