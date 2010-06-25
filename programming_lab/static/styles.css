@@ -80,6 +80,10 @@ h1 {
     font-weight: bold;
     color: #6a6;
 }
+.instructor a {
+    font-weight: italic;
+    color: #a66;
+}
 .offline a {
     color: #666;
 }
