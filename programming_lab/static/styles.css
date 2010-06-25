@@ -90,3 +90,11 @@ h1 {
 .errorlist li {
     color:#e66;
 }
+#userlist img {
+    vertical-align: middle;
+    margin-right: 10px;
+}
+#userlist li {
+    margin-bottom: 2px;
+    padding-bottom: 2px;
+}
