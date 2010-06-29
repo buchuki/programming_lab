@@ -12,6 +12,12 @@ class Project(models.Model):
     def __unicode__(self):
         return self.name
 
+    def is_compilable(self):
+        extensions = [f.extension for f in self.file_set.all()]
+        if 'java' in extensions:
+            return True
+        return False
+
 class File(models.Model):
     project = models.ForeignKey(Project)
     name = models.CharField(max_length=64)
