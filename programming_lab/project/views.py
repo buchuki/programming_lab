@@ -158,3 +158,11 @@ def download_project(request, project_id):
     response = HttpResponse(response_string.getvalue(), "application/zip")
     response['Content-Disposition'] = "attachment; filename=%s.zip" % project.name
     return response
+
+@login_required
+def compile_project(request, project_id):
+    project = get_object_or_404(Project, id=project_id, owner=request.user)
+    import time
+    time.sleep(14)
+    response = HttpResponse("your project may have compiled...")
+    return response

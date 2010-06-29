@@ -38,7 +38,7 @@ h1 {
     border-width: 1px;
     border-style: solid;
     margin-bottom: 5px;
-    background-color: #eef;
+    background-color: #eff;
 } 
 .sidebar_box h3 {
     background-image: url('images/menubar_bg.png');
@@ -115,4 +115,10 @@ h1 {
 #userlist li {
     margin-bottom: 2px;
     padding-bottom: 2px;
+}
+#compile_output {
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 5px;
 }

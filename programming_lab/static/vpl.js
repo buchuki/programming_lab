@@ -117,6 +117,16 @@ function view_shared_file(file_id) {
     window.open('/projects/view_shared_file/' + file_id + '/');
 }
 
+function compile_project(project_id) {
+    $('#compile_output').html("Compiling, Please Wait...");
+    $('#compile_output').slideDown();
+    $('#compile_output').load('/projects/compile/' + project_id + '/', {},
+            function (response, textStatus, xmlrequest) {
+                show_files_for_project(project_id);
+            }
+            );
+}
+
 function load_chat_box(user_id) {
     chat_user_id =user_id;
     chat_messages();
