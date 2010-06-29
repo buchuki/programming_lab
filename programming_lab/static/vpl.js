@@ -61,13 +61,15 @@ function show_projects_for_class(class_id, selected_id) {
     select_class(class_id);
 }
 
-function show_files_for_project(project_id) {
+function show_files_for_project(project_id, keepopen) {
     $('#filelist').load('/projects/files_for_project/' + project_id + '/');
     $('#filelist').slideDown();
     select_project(project_id);
     var files = editAreaLoader.getAllFiles("code_editor");
-    for (k in files) {
-        editAreaLoader.closeFile("code_editor", k);
+    if (!keepopen) {
+        for (k in files) {
+            editAreaLoader.closeFile("code_editor", k);
+        }
     }
 }
 function select_class(class_id) {
@@ -120,9 +122,9 @@ function view_shared_file(file_id) {
 function compile_project(project_id) {
     $('#compile_output').html("Compiling, Please Wait...");
     $('#compile_output').slideDown();
-    $('#compile_output').load('/projects/compile/' + project_id + '/', {},
+    $('#compile_output').load('/projects/compile/' + project_id + '/', undefined,
             function (response, textStatus, xmlrequest) {
-                show_files_for_project(project_id);
+                show_files_for_project(project_id, keepopen=true);
             }
             );
 }
