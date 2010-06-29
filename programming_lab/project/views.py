@@ -5,7 +5,10 @@ from django.template import RequestContext
 from project.models import Project, File, SharedFiles
 from classlist.models import ClassList
 from project.forms import NewProjectForm, NewFileForm, UploadFileForm
+import subprocess
 import json
+import os.path
+import tempfile
 from zipfile import ZipFile
 from cStringIO import StringIO
 
@@ -162,7 +165,18 @@ def download_project(request, project_id):
 @login_required
 def compile_project(request, project_id):
     project = get_object_or_404(Project, id=project_id, owner=request.user)
-    import time
-    time.sleep(14)
-    response = HttpResponse("your project may have compiled...")
-    return response
+    temp_path = tempfile.mkdtemp("vpl_compile_%s" % project_id)
+    response = None
+    try:
+        for file in project.file_set.filter(name__endswith=".java"):
+            filepath = os.path.join(temp_path, file.name)
+            with open(filepath, 'w') as openfile:
+                openfile.write(file.contents)
+
+            output = subprocess.Popen('/opt/java/bin/javac *.java', cwd=temp_path, shell=True, stderr=subprocess.STDOUT, stdout=subprocess.PIPE).communicate()[0]
+            if not output:
+                output = "Successful"
+            return HttpResponse("<pre>javac *.java\n\n%s</pre>" % output)
+    finally:
+        import shutil
+        shutil.rmtree(temp_path)
