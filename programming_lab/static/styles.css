@@ -98,6 +98,14 @@ h1 {
     font-weight: bold;
     color: #6a6;
 }
+.user_online {
+    font-weight: bold;
+    color: #6a6;
+    font-size: large;
+    border-bottom-style: solid;
+    border-bottom-color: #aab;
+    border-bottom-width: 1px;
+}
 .instructor a {
     font-weight: italic;
     color: #a66;
