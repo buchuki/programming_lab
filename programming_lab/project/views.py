@@ -9,6 +9,7 @@ import subprocess
 import json
 import os.path
 import tempfile
+import base64
 from zipfile import ZipFile
 from cStringIO import StringIO
 
@@ -141,6 +142,8 @@ def view_file(request, classlist, projectname, filename):
     file = get_object_or_404(File, name=filename,
             project__owner=request.user, project__name=projectname,
             project__classlist__class_name=classlist)
+    if filename.endswith('.class'):
+        return HttpResponse(base64.decodestring(file.contents))
     return HttpResponse(file.contents)
 
 @login_required
@@ -172,11 +175,21 @@ def compile_project(request, project_id):
             filepath = os.path.join(temp_path, file.name)
             with open(filepath, 'w') as openfile:
                 openfile.write(file.contents)
+                print file.contents
 
-            output = subprocess.Popen('/opt/java/bin/javac *.java', cwd=temp_path, shell=True, stderr=subprocess.STDOUT, stdout=subprocess.PIPE).communicate()[0]
-            if not output:
-                output = "Successful"
-            return HttpResponse("<pre>javac *.java\n\n%s</pre>" % output)
+        output = subprocess.Popen('/opt/java/bin/javac *.java', cwd=temp_path, shell=True, stderr=subprocess.STDOUT, stdout=subprocess.PIPE).communicate()[0]
+        if not output:
+            output = "Successful"
+            # way too special casey. Should probably store files on the
+            # filesystem to begin with
+            for filename in [f for f in os.listdir(temp_path) if f.endswith('.class')]:
+                file, created = project.file_set.get_or_create(name=filename)
+                filepath = os.path.join(temp_path, file.name)
+                print filepath
+                with open(filepath) as openfile:
+                    file.contents = base64.encodestring(openfile.read())
+                file.save()
+        return HttpResponse("<pre>javac *.java\n\n%s</pre>" % output)
     finally:
         import shutil
         shutil.rmtree(temp_path)
