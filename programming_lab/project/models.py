@@ -35,3 +35,6 @@ class SharedFiles(models.Model):
 
     class Meta:
         unique_together=("project", "filename", "shared_with")
+
+def extension(filename):
+    return filename.rsplit('.')[-1]

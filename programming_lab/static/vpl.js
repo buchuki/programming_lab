@@ -82,9 +82,9 @@ function select_project(project_id) {
     $('#projectlist a').removeClass('selected');
     $('#project_'+project_id).addClass('selected');
 }
-function load_file(file_id) {
+function load_file(project_id, filename) {
     $.ajax({
-        url: '/projects/file/' + file_id + '/',
+        url: '/projects/file/' + project_id + '/' + filename + '/',
         dataType: "json",
         success: function(response) {
                 editAreaLoader.openFile('code_editor', {

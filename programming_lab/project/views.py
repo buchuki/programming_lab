@@ -7,10 +7,10 @@ from cStringIO import StringIO
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, get_object_or_404, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.template import RequestContext
 
-from project.models import Project, SharedFiles
+from project.models import Project, SharedFiles, extension
 from classlist.models import ClassList
 from project.forms import NewProjectForm, NewFileForm, UploadFileForm
 
@@ -108,23 +108,27 @@ def upload_replacement_file(request, file_id):
                 'is_new': False, "file": file}))
 
 @login_required
-def load_file(request, file_id):
-    try:
-        file = get_object_or_404(File, id=file_id, project__owner=request.user)
-        if request.POST:
-            file.contents = request.POST['contents']
-            file.save()
-            return HttpResponse("success")
-        else:
-            response = {
-                    'id': str(file.id),
-                    'title': file.name,
-                    'text': file.contents,
-                    'syntax': file.extension,
-                    }
-            return HttpResponse(json.dumps(response), mimetype="application/json")
-    except Exception as e:
-        print e
+def load_file(request, project_id, filename):
+    project = get_object_or_404(Project, id=project_id, owner=request.user)
+
+    if not os.path.exists(project.file_path(filename)):
+        raise Http404
+
+    if request.POST:
+        with open(project.file_path(filename), 'w') as file:
+            file.write(request.POST['contents'])
+        return HttpResponse("success")
+    else:
+        with open(project.file_path(filename)) as file:
+            contents = file.read()
+
+        response = {
+                'id': '%d/%s' % (project.id, os.path.basename(file.name)),
+                'title':  os.path.basename(filename),
+                'text':   contents,
+                'syntax': extension(filename),
+                }
+        return HttpResponse(json.dumps(response), mimetype="application/json")
 
 @login_required
 def view_shared_file(request, file_id):
