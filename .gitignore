@@ -2,3 +2,4 @@
 *.swo
 *.pyc
 localsettings.py
+programming_lab/project_files/[0-9]*
