@@ -1,4 +1,4 @@
-import os 
+import os.path
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -16,9 +16,9 @@ class Project(models.Model):
         return self.name
 
     def is_compilable(self):
-        extensions = [f.extension for f in self.file_set.all()]
-        if 'java' in extensions:
-            return True
+        for file in os.listdir(self.file_path()):
+            if file.endswith('.java'):
+                return True
         return False
 
     def file_path(self, filename=None):
