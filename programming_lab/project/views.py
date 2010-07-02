@@ -87,25 +87,27 @@ def upload_new_file(request, project_id):
                 'is_new': True}))
 
 @login_required
-def upload_replacement_file(request, file_id):
-    file = get_object_or_404(File, id=file_id, project__owner=request.user)
-    form = UploadFileForm(file.project, False,
+def upload_replacement_file(request, project_id, filename):
+    project = get_object_or_404(request.user.project_set, id=project_id)
+
+    form = UploadFileForm(project, False,
             request.POST or None, request.FILES or None)
 
     if form.is_valid():
         file_info = form.cleaned_data['file']
-        file.contents=file_info.read()
-        file.save()
+        with open(project.file_path(filename), 'w') as file:
+            for chunk in file_info.chunks():
+                file.write(chunk)
 
-        return redirect("/?classlist=%s&projectlist=%s&file_id=%s" % (
-            file.project.classlist.id,
-            file.project.id,
-            file.id
+        return redirect("/?classlist=%s&projectlist=%s&filename=%s" % (
+            project.classlist.id,
+            project.id,
+            filename
             ))
 
     return render_to_response("projects/upload_file.html",
-            RequestContext(request, {'form': form, 'project': file.project,
-                'is_new': False, "file": file}))
+            RequestContext(request, {'form': form, 'project': project,
+                'is_new': False, "file": filename}))
 
 @login_required
 def load_file(request, project_id, filename):
@@ -151,9 +153,13 @@ def view_file(request, classlist, projectname, filename):
     return HttpResponse(file.contents)
 
 @login_required
-def download_file(request, file_id):
-    file = get_object_or_404(File, id=file_id, project__owner=request.user)
-    response = HttpResponse(file.contents, "application/octet-stream")
+def download_file(request, project_id, filename):
+    project = get_object_or_404(Project, id=project_id, owner=request.user)
+
+    if not os.path.exists(project.file_path(filename)):
+        raise Http404
+    with open(project.file_path(filename)) as file:
+        response = HttpResponse(file.read(), "application/octet-stream")
     response['Content-Disposition'] = "attachment; filename=%s" % file.name
     return response
 

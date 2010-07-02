@@ -33,12 +33,8 @@ class UploadFileForm(forms.Form):
         self.require_unique =require_unique
 
     def clean_file(self):
-        if self.require_unique:
-            try:
-                file = self.project.file_set.get(
-                        name=self.cleaned_data['file'].name)
-            except File.DoesNotExist:
-                return self.cleaned_data['file']
-            else:
+        path = self.project.file_path(self.cleaned_data['file'].name)
+        if self.require_unique and os.path.exists(path):
                 raise forms.ValidationError("That filename already exists")
+
         return self.cleaned_data['file']
