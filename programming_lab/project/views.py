@@ -1,17 +1,18 @@
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render_to_response, get_object_or_404, redirect
-from django.http import HttpResponse
-from django.template import RequestContext
-from project.models import Project, File, SharedFiles
-from classlist.models import ClassList
-from project.forms import NewProjectForm, NewFileForm, UploadFileForm
 import subprocess
 import json
 import os.path
 import tempfile
-import base64
 from zipfile import ZipFile
 from cStringIO import StringIO
+
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render_to_response, get_object_or_404, redirect
+from django.http import HttpResponse
+from django.template import RequestContext
+
+from project.models import Project, SharedFiles
+from classlist.models import ClassList
+from project.forms import NewProjectForm, NewFileForm, UploadFileForm
 
 @login_required
 def projects_for_class(request, class_id):
@@ -52,15 +53,14 @@ def create_file(request, project_id):
     '''Show a form to create a new file attached to a given project.'''
     project = get_object_or_404(request.user.project_set, id=project_id)
 
-    form = NewFileForm(request.POST or None)
+    form = NewFileForm(project, request.POST or None)
     if form.is_valid():
-        file = form.save(commit=False)
-        file.project = project
-        file.save()
-        return redirect("/?classlist=%s&projectlist=%s&file_id=%s" % (
+        open(form.cleaned_data['name'], 'w').close()
+
+        return redirect("/?classlist=%s&projectlist=%s&filename=%s" % (
             project.classlist.id,
             project.id,
-            file.id
+            form.cleaned_data['name']
             ))
 
     return render_to_response("projects/file_form.html",

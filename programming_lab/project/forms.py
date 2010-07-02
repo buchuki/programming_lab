@@ -1,15 +1,28 @@
+import os.path
+
 from django import forms
-from project.models import Project, File
+from django.conf import settings
+
+from project.models import Project
 
 class NewProjectForm(forms.ModelForm):
     class Meta:
         model = Project
         exclude = ['owner', 'classlist']
 
-class NewFileForm(forms.ModelForm):
-    class Meta:
-        model = File
-        exclude = ['project', 'contents']
+class NewFileForm(forms.Form):
+    name = forms.CharField()
+
+    def __init__(self, project, *args, **kwargs):
+        self.project = project
+        super(NewFileForm, self).__init__(*args, **kwargs)
+
+    def clean_name(self):
+        path = os.path.join(settings.STUDENT_PROJECT_FILES, str(self.project.id),
+                self.cleaned_data['name'])
+        if os.path.exists(path):
+            raise forms.ValidationError("That filename already exists")
+        return path
 
 class UploadFileForm(forms.Form):
     file = forms.FileField()
