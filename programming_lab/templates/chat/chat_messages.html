@@ -4,7 +4,7 @@
             {% ifequal message.sender user %}
             <em>You have shared {{message.fileinfo.filename}} with {{message.receiver}}.</em>
             {% else %}
-            <em>{{message.sender}} has shared <a href="javascript:view_shared_file({{message.fileinfo.id}});">{{message.fileinfo.filename}}</a> with you.</em>
+            <em>{{message.sender}} has shared <a href="javascript:view_shared_file({{message.fileinfo.id}}, '{{message.fileinfo.filename}}');">{{message.fileinfo.filename}}</a> with you.</em>
             {% endifequal %}
         {% else %}
             {% ifequal message.sender user %}<span class="sender">{% else %}<span class="receiver">{% endifequal %}{{message.sender}}</span>: {{message.message}}

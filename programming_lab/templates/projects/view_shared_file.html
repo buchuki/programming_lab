@@ -5,9 +5,9 @@
     </head>
     <body>
         <br />
-        The file <em>{{file.name}}</em> was shared to you from <em>{{file.project.owner}}</em>:<br />
+        The file <em>{{filename}}</em> was shared to you from <em>{{project.owner}}</em>:<br />
         <script type="text/javascript" src="/static/edit_area/edit_area_full.js"></script>
-        <textarea name="read_only_editor" id="read_only_editor">{{file.contents}}</textarea>
+        <textarea name="read_only_editor" id="read_only_editor">{{contents}}</textarea>
         <script type="text/javascript" defer="defer">
                 editAreaLoader.init({
                     id : "read_only_editor",
@@ -17,7 +17,7 @@
                     'min_height': 380,
                     'allow_toggle': false,
                     'toolbar': '',
-                    'syntax': '{{file.extension}}',
+                    'syntax': '{{extension}}',
                     'start_highlight': true
                 });
         </script>

@@ -133,15 +133,25 @@ def load_file(request, project_id, filename):
         return HttpResponse(json.dumps(response), mimetype="application/json")
 
 @login_required
-def view_shared_file(request, file_id):
-    file = get_object_or_404(File, id=file_id)
+def view_shared_file(request, project_id, filename):
+    project = get_object_or_404(Project, id=project_id)
+
+    if not os.path.exists(project.file_path(filename)):
+        raise Http404
+
     try:
-        shared_file = SharedFiles.objects.get(file=file, shared_with=request.user)
+        shared_file = SharedFiles.objects.get(project=project, filename=filename,
+                shared_with=request.user)
     except SharedFiles.DoesNotExist:
         return HttpResponse("The file you requested has not been shared with you.")
     else:
-        return render_to_response("projects/view_shared_file.html",
-                RequestContext(request, {"file": file}))
+        with open(project.file_path(filename)) as file:
+            contents = file.read()
+            print contents
+            return render_to_response("projects/view_shared_file.html",
+                    RequestContext(request, {"filename": filename,
+                        "contents": contents, "project": project,
+                        "extension": extension(filename)}))
 
 @login_required
 def view_file(request, classlist, projectname, filename):

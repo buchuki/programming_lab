@@ -15,6 +15,6 @@ urlpatterns = patterns('project.views',
             name='upload_replacement_file'),
         url(r'^compile/(?P<project_id>\d+)/$', 'compile_project', name='compile_project'),
         url(r'^view/(?P<classlist>[^/]+)/(?P<projectname>[^/]+)/(?P<filename>[^/]+)$', 'view_file', name='view_file'),
-        url(r'^view_shared_file/(?P<file_id>\d+)/$', 'view_shared_file',
+        url(r'^view_shared_file/(?P<project_id>\d+)/(?P<filename>[^/]+)/$', 'view_shared_file',
             name='view_shared_file'),
 )
