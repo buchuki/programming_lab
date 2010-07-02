@@ -18,25 +18,11 @@ class Project(models.Model):
             return True
         return False
 
-class File(models.Model):
-    project = models.ForeignKey(Project)
-    name = models.CharField(max_length=64)
-    contents = models.TextField(blank=True)
-
-    @property
-    def extension(self):
-        return self.name.rsplit('.')[-1]
-
-    def __unicode__(self):
-        return self.name
-
-    class Meta:
-        unique_together = ("project", "name")
-
 class SharedFiles(models.Model):
-    file = models.ForeignKey(File)
+    project = models.ForeignKey(Project)
+    filename = models.CharField(max_length=128)
     shared_with = models.ForeignKey(User)
     shared_on = models.DateTimeField(auto_now=True)
 
     class Meta:
-        unique_together=("file", "shared_with")
+        unique_together=("project", "filename", "shared_with")

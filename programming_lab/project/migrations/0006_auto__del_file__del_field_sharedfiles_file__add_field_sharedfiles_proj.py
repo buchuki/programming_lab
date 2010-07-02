@@ -1,33 +1,58 @@
 # encoding: utf-8
 import datetime
 from south.db import db
-from south.v2 import DataMigration
+from south.v2 import SchemaMigration
 from django.db import models
 
-class Migration(DataMigration):
+class Migration(SchemaMigration):
     
     def forwards(self, orm):
-        "Write your forwards methods here."
-        import os.path, errno
-        from django.conf import settings
-        orm.SharedFiles.objects.all().delete()
-        for file in orm.File.objects.all():
-            project_path = os.path.join(settings.STUDENT_PROJECT_FILES,
-                    str(file.project.id))
-            try:
-                os.makedirs(project_path)
-            except OSError as exc:
-                if exc.errno != errno.EEXIST:
-                    continue
+        
+        # Removing unique constraint on 'SharedFiles', fields ['shared_with', 'file']
+        db.delete_unique('project_sharedfiles', ['shared_with_id', 'file_id'])
 
-            filename = os.path.join(project_path, file.name)
-            with open(filename, 'w') as open_file:
-                open_file.write(file.contents)
+        # Deleting model 'File'
+        db.delete_table('project_file')
 
+        # Deleting field 'SharedFiles.file'
+        db.delete_column('project_sharedfiles', 'file_id')
+
+        # Adding field 'SharedFiles.project'
+        db.add_column('project_sharedfiles', 'project', self.gf('django.db.models.fields.related.ForeignKey')(default=0, to=orm['project.Project']), keep_default=False)
+
+        # Adding field 'SharedFiles.filename'
+        db.add_column('project_sharedfiles', 'filename', self.gf('django.db.models.fields.CharField')(default='', max_length=128), keep_default=False)
+
+        # Adding unique constraint on 'SharedFiles', fields ['project', 'shared_with', 'filename']
+        db.create_unique('project_sharedfiles', ['project_id', 'shared_with_id', 'filename'])
     
     
     def backwards(self, orm):
-        "Write your backwards methods here."
+        
+        # Adding model 'File'
+        db.create_table('project_file', (
+            ('project', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['project.Project'])),
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('contents', self.gf('django.db.models.fields.TextField')(blank=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=64)),
+        ))
+        db.send_create_signal('project', ['File'])
+
+        # Adding field 'SharedFiles.file'
+        db.add_column('project_sharedfiles', 'file', self.gf('django.db.models.fields.related.ForeignKey')(default='', to=orm['project.File']), keep_default=False)
+
+        # Deleting field 'SharedFiles.project'
+        db.delete_column('project_sharedfiles', 'project_id')
+
+        # Deleting field 'SharedFiles.filename'
+        db.delete_column('project_sharedfiles', 'filename')
+
+        # Adding unique constraint on 'SharedFiles', fields ['shared_with', 'file']
+        db.create_unique('project_sharedfiles', ['shared_with_id', 'file_id'])
+
+        # Removing unique constraint on 'SharedFiles', fields ['project', 'shared_with', 'filename']
+        db.delete_unique('project_sharedfiles', ['project_id', 'shared_with_id', 'filename'])
+    
     
     models = {
         'auth.group': {
@@ -74,13 +99,6 @@ class Migration(DataMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
-        'project.file': {
-            'Meta': {'unique_together': "(('project', 'name'),)", 'object_name': 'File'},
-            'contents': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '64'}),
-            'project': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['project.Project']"})
-        },
         'project.project': {
             'Meta': {'object_name': 'Project'},
             'classlist': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['classlist.ClassList']"}),
@@ -90,9 +108,10 @@ class Migration(DataMigration):
             'owner': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"})
         },
         'project.sharedfiles': {
-            'Meta': {'unique_together': "(('file', 'shared_with'),)", 'object_name': 'SharedFiles'},
-            'file': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['project.File']"}),
+            'Meta': {'unique_together': "(('project', 'filename', 'shared_with'),)", 'object_name': 'SharedFiles'},
+            'filename': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'project': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['project.Project']"}),
             'shared_on': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'shared_with': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"})
         }
