@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 from classlist.models import ClassList
-from project.models import File, SharedFiles
+from project.models import SharedFiles
 from chat.models import ChatMessage
 
 @login_required
