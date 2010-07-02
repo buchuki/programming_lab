@@ -1,12 +1,13 @@
+{% load project_viewable %}
 <ul>
 {% for file in files %}
-<li><a href="javascript:load_file({{project.id}}, '{{file}}');">{{file}}</a> <a style="float:
-    right" href="javascript:view_file('{{project.classlist.class_name}}',
-    '{{project.name}}', '{{file}}');"><img src="/static/images/icons/view.png" alt="View File" title="View File"/></a><a style="float: right" href="/projects/upload/{{project.id}}/{{file}}/"><img
+<li><a href="javascript:load_file({{project.id}}, '{{file}}');">{{file}}</a><a style="float: right" href="/projects/upload/{{project.id}}/{{file}}/"><img
     src="/static/images/icons/upload.png" alt="Upload New Version"
     title="Upload New Version" /></a><a style="float: right"
     href="/projects/download/{{project.id}}/{{file}}/"><img
-    src="/static/images/icons/download.png" alt="Download File" title="Download File" /></a></li>
+    src="/static/images/icons/download.png" alt="Download File" title="Download File" /></a>{% if file|viewable %}<a style="float:
+    right" href="javascript:view_file('{{project.classlist.class_name}}',
+    '{{project.name}}', '{{file}}');"><img src="/static/images/icons/view.png" alt="View File" title="View File"/></a>{% endif %}</li>
 {% endfor %}
 <li><a href="{% url create_file project.id %}">Create File</a></li>
 <li><a href="{% url upload_new_file project.id %}">Upload File</a></li>

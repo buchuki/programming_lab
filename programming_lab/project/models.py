@@ -38,3 +38,13 @@ class SharedFiles(models.Model):
 
 def extension(filename):
     return filename.rsplit('.')[-1]
+
+def viewable(filename):
+    return extension(filename) in [
+            "html",
+            "java",
+            "css",
+            "c",
+            "cpp",
+            "py",
+            ]
