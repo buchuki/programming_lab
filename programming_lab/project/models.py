@@ -1,5 +1,8 @@
+import os 
+
 from django.db import models
 from django.contrib.auth.models import User
+from django.conf import settings
 
 from classlist.models import ClassList
 
@@ -17,6 +20,12 @@ class Project(models.Model):
         if 'java' in extensions:
             return True
         return False
+
+    def file_path(self, filename=None):
+        path = os.path.join(settings.STUDENT_PROJECT_FILES, str(self.id))
+        if filename:
+            path = os.path.join(path, filename)
+        return path
 
 class SharedFiles(models.Model):
     project = models.ForeignKey(Project)

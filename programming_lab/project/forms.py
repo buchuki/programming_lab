@@ -18,8 +18,8 @@ class NewFileForm(forms.Form):
         super(NewFileForm, self).__init__(*args, **kwargs)
 
     def clean_name(self):
-        path = os.path.join(settings.STUDENT_PROJECT_FILES, str(self.project.id),
-                self.cleaned_data['name'])
+        path = self.project.file_path(self.cleaned_data['name'])
+
         if os.path.exists(path):
             raise forms.ValidationError("That filename already exists")
         return path
