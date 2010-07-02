@@ -103,5 +103,6 @@ INSTALLED_APPS = (
 
 LOGIN_REDIRECT_URL = "/"
 AUTH_PROFILE_MODULE = "vpl_profile.UserProfile"
+STUDENT_PROJECT_FILES = PROJECT_HOME + "/project_files/"
 
 from localsettings import *
