@@ -145,12 +145,14 @@ def view_shared_file(request, file_id):
 
 @login_required
 def view_file(request, classlist, projectname, filename):
-    file = get_object_or_404(File, name=filename,
-            project__owner=request.user, project__name=projectname,
-            project__classlist__class_name=classlist)
-    if filename.endswith('.class'):
-        return HttpResponse(base64.decodestring(file.contents))
-    return HttpResponse(file.contents)
+    project = get_object_or_404(Project,
+            owner=request.user, name=projectname,
+            classlist__class_name=classlist)
+    try:
+        with open(project.file_path(filename)) as file:
+            return HttpResponse(file.read())
+    except IOError:
+        raise Http404
 
 @login_required
 def download_file(request, project_id, filename):
