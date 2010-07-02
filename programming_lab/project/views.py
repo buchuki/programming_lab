@@ -73,13 +73,13 @@ def upload_new_file(request, project_id):
             request.POST or None, request.FILES or None)
     if form.is_valid():
         file_info = form.cleaned_data['file']
-        file = File(project=project, name=file_info.name,
-                contents=file_info.read())
-        file.save()
-        return redirect("/?classlist=%s&projectlist=%s&file_id=%s" % (
+        with open(project.file_path(file_info.name), 'w') as file:
+            for chunk in file_info.chunks():
+                file.write(chunk)
+        return redirect("/?classlist=%s&projectlist=%s&filename=%s" % (
             project.classlist.id,
             project.id,
-            file.id
+            file_info.name
             ))
 
     return render_to_response("projects/upload_file.html",
