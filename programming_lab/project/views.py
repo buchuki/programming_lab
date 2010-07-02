@@ -28,7 +28,7 @@ def files_for_project(request, project_id):
     '''Return a list of files associated with the given project. Meant to be
     loaded via ajax.'''
     project = get_object_or_404(request.user.project_set, id=project_id)
-    files = project.file_set.all()
+    files = os.listdir(project.file_path())
     return render_to_response('projects/file_list.html',
             RequestContext(request, {'project': project, 'files': files}))
 
