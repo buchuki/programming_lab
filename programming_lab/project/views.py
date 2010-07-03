@@ -189,7 +189,7 @@ def download_project(request, project_id):
 
 compiler_commands = {
     "Java": "javac *.java",
-    "C": "gcc *.c"
+    "C": "gcc *.c -o '%s'"
 }
 
 @login_required
@@ -198,6 +198,8 @@ def compile_project(request, project_id):
     response = None
 
     command = compiler_commands[project.project_type]
+    if "%s" in command:
+        command = command % project.name
     output = subprocess.Popen(command, cwd=project.file_path(), shell=True, stderr=subprocess.STDOUT, stdout=subprocess.PIPE).communicate()[0]
     if not output:
         output = "Successful"
