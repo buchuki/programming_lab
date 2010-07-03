@@ -42,6 +42,7 @@ def create_project(request, class_id):
         project.classlist = classlist
         project.owner = request.user
         project.save()
+        os.makedirs(project.file_path)
         return redirect("/?classlist=%s&projectlist=%s" % (classlist.id, project.id))
 
     return render_to_response("projects/project_form.html",
@@ -186,13 +187,19 @@ def download_project(request, project_id):
     response['Content-Disposition'] = "attachment; filename=%s.zip" % project.name
     return response
 
+compiler_commands = {
+    "Java": "javac *.java",
+    "C": "gcc *.c"
+}
+
 @login_required
 def compile_project(request, project_id):
     project = get_object_or_404(Project, id=project_id, owner=request.user)
     response = None
 
-    output = subprocess.Popen('/opt/java/bin/javac *.java', cwd=project.file_path(), shell=True, stderr=subprocess.STDOUT, stdout=subprocess.PIPE).communicate()[0]
+    command = compiler_commands[project.project_type]
+    output = subprocess.Popen(command, cwd=project.file_path(), shell=True, stderr=subprocess.STDOUT, stdout=subprocess.PIPE).communicate()[0]
     if not output:
         output = "Successful"
 
-    return HttpResponse("<pre>javac *.java\n\n%s</pre>" % output)
+    return HttpResponse("<pre>%s\n\n%s</pre>" % (command, output))

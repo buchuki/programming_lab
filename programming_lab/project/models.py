@@ -6,20 +6,22 @@ from django.conf import settings
 
 from classlist.models import ClassList
 
+make_choice = lambda c: [(s,s) for s in c]
+
 class Project(models.Model):
     owner = models.ForeignKey(User)
     classlist = models.ForeignKey(ClassList)
     name = models.CharField(max_length=128)
     description = models.TextField(blank=True)
+    project_type = models.CharField(max_length=32,
+            choices=make_choice(['C', 'Java', 'HTML', 'Other']),
+            default="Other")
 
     def __unicode__(self):
         return self.name
 
     def is_compilable(self):
-        for file in os.listdir(self.file_path()):
-            if file.endswith('.java'):
-                return True
-        return False
+        return self.project_type in ('Java', 'C')
 
     def file_path(self, filename=None):
         path = os.path.join(settings.STUDENT_PROJECT_FILES, str(self.id))
