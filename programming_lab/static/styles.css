@@ -34,6 +34,7 @@ h1 {
     text-decoration: none;
 }
 .sidebar_box {
+    font-size: small;
     border-color: #aab;
     border-width: 1px;
     border-style: solid;
@@ -41,6 +42,7 @@ h1 {
     background-color: #eff;
 } 
 .sidebar_box h3 {
+    font-size: medium;
     background-image: url('images/menubar_bg.png');
     background-repeat: repeat-x;
     background-color: #667;
@@ -48,11 +50,15 @@ h1 {
     text-align: center;
     cursor: pointer;
 }
+.sidebar_content li {
+    clear: both;
+}
 .sidebar_content {
     display: none;
     padding-left: 3px;
     padding-top: 2px;
     padding-right: 2px;
+    padding-bottom: 3px;
 }
 .sidebar_content a {
     color: #88a;

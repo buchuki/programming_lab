@@ -9,5 +9,5 @@ def viewable(filename):
     return project.models.viewable(filename)
 
 @register.filter
-def editbale(filename):
+def editable(filename):
     return project.models.editable(filename)
