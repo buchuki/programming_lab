@@ -46,7 +46,11 @@ def viewable(filename):
             "html",
             "java",
             "css",
+            "js",
             "c",
             "cpp",
             "py",
             ]
+
+def editable(filename):
+    return viewable(filename)
