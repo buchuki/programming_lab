@@ -176,6 +176,14 @@ def download_file(request, project_id, filename):
     return response
 
 @login_required
+def delete_file(request, project_id, filename):
+    project = get_object_or_404(Project, id=project_id, owner=request.user)
+    if not os.path.exists(project.file_path(filename)):
+        raise Http404
+    os.remove(project.file_path(filename))
+    return redirect("/?classlist=%s&projectlist=%s" % (project.classlist.id, project.id))
+
+@login_required
 def download_project(request, project_id):
     project = get_object_or_404(Project, id=project_id, owner=request.user)
     response_string = StringIO()
