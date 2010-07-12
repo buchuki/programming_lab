@@ -94,6 +94,7 @@ function load_file(project_id, filename) {
                     'syntax': response.syntax,
                     'do_highlight': true
                 });
+                $('#file_'+filename.replace(/(:|\.)/g,'\\$1')).addClass('selected');
                 editAreaLoader.execCommand('code_editor', 'set_editable', true);
         }
     });
