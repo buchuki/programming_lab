@@ -40,6 +40,10 @@ function ea_load(id) {
         load_file($.url.param('projectlist'), $.url.param('filename'));
     }
 }
+function ea_close(file) {
+    //when a file is closed, remove the selector from the id
+    $('#file_'+file.title.replace(/(:|\.)/g,'\\$1')).removeClass('selected');
+}
 
 function load_classlist(selected_id) {
     $('#classlist').load('/classlist/', {}, function() {
