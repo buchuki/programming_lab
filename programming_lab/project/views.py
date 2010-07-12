@@ -60,7 +60,7 @@ def create_file(request, project_id):
         return redirect("/?classlist=%s&projectlist=%s&filename=%s" % (
             project.classlist.id,
             project.id,
-            form.cleaned_data['name']
+            os.path.basename(form.cleaned_data['name'])
             ))
 
     return render_to_response("projects/file_form.html",

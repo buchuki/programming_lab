@@ -36,8 +36,8 @@ function chat_messages() {
 function ea_load(id) {
     // When the edit_area is finished loading, we may need to load a file
     // immediately depending on get parameters
-    if ($.url.param('classlist') && $.url.param('projectlist') && $.url.param('file_id')) {
-        load_file($.url.param('file_id'));
+    if ($.url.param('classlist') && $.url.param('projectlist') && $.url.param('filename')) {
+        load_file($.url.param('projectlist'), $.url.param('filename'));
     }
 }
 
