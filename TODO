@@ -1,7 +1,4 @@
-* when selecting a project, close existing files
-* open files highlighted in lefthand list?
-    * need to listen for close events on buffer
-* Files in directories in projects
-* need an indicator that a new chat has come in from a user
-    * probably a "read" flag on message objects
-* scrollbars on box and scroll to bottom on load
+* ajaxify creating projects and files
+* Ensure the sidebars don't push the compile output down, give them a
+    max-height and scroll
+* confirm delete
