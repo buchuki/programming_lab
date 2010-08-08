@@ -3,3 +3,6 @@
 *.pyc
 localsettings.py
 programming_lab/project_files/[0-9]*
+bin
+eggs
+develop-eggs
