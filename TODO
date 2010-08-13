@@ -1,4 +1,13 @@
 * ajaxify creating projects and files
-* Ensure the sidebars don't push the compile output down, give them a
-    max-height and scroll
 * confirm delete
+* Move classlist to menubar
+* ensure heading sizes are the same in firefox and webkit
+* Deleting projects????
+* display the e-mail address in the sign up for gravatar message
+* edit a project properties
+* make Send button capitalized on chat box
+* Style send and share buttons
+* Add "logged in as" to the menubar
+* Remove Project files link from admin
+* Ensure project files can be identified by users
+* Show instructor name in admin interface for projects
