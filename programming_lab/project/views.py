@@ -42,7 +42,7 @@ def create_project(request, class_id):
         project.classlist = classlist
         project.owner = request.user
         project.save()
-        os.makedirs(project.file_path)
+        os.makedirs(project.file_path())
         return redirect("/?classlist=%s&projectlist=%s" % (classlist.id, project.id))
 
     return render_to_response("projects/project_form.html",
