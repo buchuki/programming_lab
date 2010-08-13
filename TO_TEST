@@ -1,0 +1,63 @@
+* Open two separate web browsers
+
+* In each browser, visit http://vpl.athabascau.ca/
+
+* Log into one browser as:
+    username: t1
+    password: t1
+
+* Log into the other browser as:
+    username: t2
+    password: t2
+
+* Both users are already members of the "Introduction To Web Programming" class. Click this link in the classlist box to activate it, for both users.
+
+* In t1's browser, select the project "TME 1"
+
+* The files box on the left side will show available files named index.html, applet.java and styles.css. Select any of these and edit as you like in the editor in the middle. Notice how syntax highlighting is automatically changed by language extension. Click the save button on the toolbar when finished editing a file. Also note that files remain open in the tab bar at the top of the editor.
+
+* Click the "Compile" button next to "TME 1" in the Class projects box. It looks like a little gear shape. This will compile the applet.java file. Notice that the compiled applet.class is added to the list of files for the project. See the compiler output below the edit area. Try editing the applet.java file to introduce a compiler error. Compile again and view the output.
+
+* Click the "view" button in the files box, next to index.html. It looks like a little eye. It will load the page in a new window. Notice how it applies the linked stylesheet correctly, and loads the java applet.
+
+* Now let's look at the chat box. If the list of class participants isn't visible, click the "Class Participants" heading. This will toggle whether or not the box is visible. All boxes (classes, projects, files) can be displayed or hidden in this way.
+
+* Notice how the user's username (t1) and gravatar are displayed at the top of the class participants box. Below this is the list of other class participants. The instructor of the course is highlighted in red. If he or she is logged in, it is displayed in red, bold. Other logged in users are highlighted in green. Clicking a username allows discussion to be initiated with that user. Messages will be sent even if the user is not logged in.
+
+* In the chat user's box in t1's browser, click the 't2' username to open a chat with that user.
+
+* Send them a message. Click the 'send' button or press enter to send it.
+
+In the other browser, for t2, notice how the t1 username has changed color to blue, to indicate that a new incoming message is available. Click this name to view the message.
+
+* Send a reply from t2 to t1. Notice that it shows up in t1's chat box after a short network delay.
+
+* Click the "send file" button in t1's browser to allow t2 to view the currently open file. (make sure a file is open in the editor before clicking "share file".)
+
+* In t2's browser, the chat message will indicate that a file has been shared; click the link to view the file contents in a new window. These contents are not editable, but line numbers are displayed so the two participants can discuss various aspects of the file.
+
+* Click the Create File button to create a new file attached to the project. Try editing and saving it. Download the file to your computer with the blue Down arrow. Upload a new version of the file (to allow offline editing) using the green Up arrow. Delete the file with the red X icon.
+
+* Try creating a new project using the New Project button under Class Projects. Make the project type C, so it can be compiled using gcc. Create a "Hello World type of C file (See below) and compile the project. Notice how a new file with the project name is created.It cannot be edited or run, but it can be downloaded. 
+
+#include <stdio.h>
+
+int main () {
+    printf("Hello World!\n");
+}
+
+* Note that this isn't terribly useful behavior. The C program can be compiled and the student can see the compiler output and errors if there are any. This part is useful. However, the program cannot be run on the web server for obvious security reasons. Further, if the student downloads the file onto a non-linux operating system, it will likely not be binary compatible and will not run for them.
+
+* Click the logout link on the menu bar.
+
+* Test the Register link to create a new user. Log out again.
+
+* Log in as an admin user (clearly the password should be changed when we go beta):
+    username: admin
+    password: admin
+
+* Notice that the menubar now contains an "Admin" link. Click this.
+
+* The primary purpose of this admin interface is to add new Classes, assign instructors to classes, and to add participants to classes. The Student Projects link is provided in case an admin needs to edit or delete a project.
+
+* The Admin interface is automatically generated for us by django. It is customizable to an extent, but most of the functionality we get "for free".
