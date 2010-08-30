@@ -2,6 +2,7 @@ body {
     font-family: helvetica,verdana,arial,sans;
     background-image: url('images/page_background.png');
     background-repeat: repeat-x;
+    color: #001;
 }
 h1 {
     background-image: url('images/header.png');
@@ -9,6 +10,14 @@ h1 {
     width: 511px;
     height: 56px;
     margin-top: 12px;
+}
+a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #88a;
+}
+a:hover {
+    color: #667;
 }
 #nav {
     margin-top: 20px;
