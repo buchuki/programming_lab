@@ -101,7 +101,7 @@ INSTALLED_APPS = (
     'south',
 )
 
-LOGIN_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = "/ide/"
 AUTH_PROFILE_MODULE = "vpl_profile.UserProfile"
 STUDENT_PROJECT_FILES = PROJECT_HOME + "/project_files/"
 
