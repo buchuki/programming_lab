@@ -5,3 +5,6 @@ from django.template import RequestContext
 @login_required
 def main_ide(request):
     return render_to_response("ide/main_ide.html", RequestContext(request, {}))
+
+def index(request):
+    return render_to_response("index.html", RequestContext(request, {}))
