@@ -8,3 +8,9 @@ def main_ide(request):
 
 def index(request):
     return render_to_response("index.html", RequestContext(request, {}))
+
+def about(request):
+    return render_to_response("about.html", RequestContext(request, {}))
+
+def contact(request):
+    return render_to_response("contact.html", RequestContext(request, {}))
