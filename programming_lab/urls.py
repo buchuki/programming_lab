@@ -15,12 +15,12 @@ urlpatterns = patterns('',
         name='registration_register'),
     (r'accounts/', include('registration.auth_urls')),
 
-    (r'^$', include('ide.urls')),
     (r'classlist/', include('classlist.urls')),
     (r'projects/', include('project.urls')),
     (r'chat/', include('chat.urls')),
 
     (r'^admin/', include(admin.site.urls)),
+    (r'', include('ide.urls')),
 )
 
 if settings.DEBUG == True:
