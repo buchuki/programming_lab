@@ -20,27 +20,51 @@ a:hover {
     color: #667;
 }
 #nav {
-    margin-top: 20px;
-    margin-bottom: 20px;
+    padding: 0;
+    margin-bottom: 3px;
+    font-weight: bold;
+    min-height: 1.5em;
     background-color: #667;
-    padding-top: 4px;
-    padding-bottom: 4px;
     background-image: url('images/menubar_bg.png');
     background-repeat: repeat-x;
 }
 #nav li {
     list-style: none;
-    display: inline;
-    margin-left: 10px;
-    padding-right: 10px;
-    border-right-style: solid;
-    border-right-color: #aab;
-    border-right-width: 1px;
+    float: left;
 }
-#nav a {
-    font-weight: bold;
+#nav li a {
+    width: 5em;
+    display: block;
+    padding: 3px 8px;
     color: #aab;
+    font-weight: bold;
     text-decoration: none;
+}
+#nav li ul {
+    display: none;
+    width: 10em;
+    background-color: #aab;
+}
+#nav li:hover ul {
+    display: block;
+    position: absolute;
+    margin: 0;
+    padding: 0;
+}
+#nav li:hover li {
+    float: none;
+
+}
+#nav li:hover li a {
+    width: 10em;
+    background-color: #667;
+    color: #aab;
+    border-bottom: solid 1px #aab;
+}
+#nav li li a:hover {
+    color: #88a;
+    background-image: url('images/menubar_bg.png');
+    background-repeat: repeat-x;
 }
 .sidebar_box {
     font-size: small;
