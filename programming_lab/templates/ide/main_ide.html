@@ -1,12 +1,19 @@
 {% extends 'base.html' %}
 
+{% block extra_menus %}
+    <li><a href="#">My Classes</a>
+        <div id="classlist">
+        </div>
+    </li>
+{% endblock %}
+
 {% block content %}
 <div class="grid_3">
-    <div class="sidebar_box">
+    {% comment %}<div class="sidebar_box">
         <h3>My Classes</h3>
         <div id="classlist" class="sidebar_content">
         </div>
-    </div>
+    </div>{% endcomment %}
     <div class="sidebar_box">
         <h3>Class Projects</h3>
         <div id="projectlist" class="sidebar_content">

@@ -33,7 +33,7 @@ a:hover {
     float: left;
 }
 #nav li a {
-    width: 5em;
+    border-left: solid 1px #aab;
     display: block;
     padding: 3px 8px;
     color: #aab;
@@ -56,7 +56,6 @@ a:hover {
 
 }
 #nav li:hover li a {
-    width: 10em;
     background-color: #667;
     color: #aab;
     border-bottom: solid 1px #aab;

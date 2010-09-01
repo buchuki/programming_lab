@@ -48,7 +48,7 @@ function ea_close(file) {
 function load_classlist(selected_id) {
     $('#classlist').load('/classlist/', {}, function() {
         if (selected_id) {
-            select_class(selected_id);
+            //select_class(selected_id);
         }
     });
     $('#classlist').slideDown();
