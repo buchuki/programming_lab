@@ -11,3 +11,28 @@
 * Remove Project files link from admin
 * Ensure project files can be identified by users
 * Show instructor name in admin interface for projects
+
+1. on the top menu bar, there should be a list of buttons/menu items for
+language selection. It should include HTML Lab, JavaScript Lab, Web
+programming Lab (for both HTML and JavaScript), Java Lab and C++ Lab; for the
+last two, we can do one of them;
+
+2. for a user not registered in a class but registered in the system, he/she
+should still be able to use the labs; then on the left navigation bar, it
+should change to something like my lab projects, and the right, it should be
+'lab participants';
+
+3. for each language, the system should provide a list of tools/functionalities
+accessible through a list of menu items or buttons, as in an IDE;
+
+4. there should be an introduction or welcome page about the VPL for everyone
+visiting the lab home page. 
+
+6. importantly, administration functionalities for class, student,
+project/assignment and account management should be available for tutors or
+other super users.
+
+7. there should be three types of users, at least: guests, students, tutors and
+super users. the account management module should be given the type of a user
+at registration time, and the system provide different
+functionalities/interface/menu items to different type of users.
