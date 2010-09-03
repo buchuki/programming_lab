@@ -6,7 +6,8 @@ function sidebar_setup() {
     $('.sidebar_box h3').click(function() {
         $(this).next().slideToggle('fast');
              });
-    load_classlist($.url.param('classlist'));
+    load_classlist();
+    load_labs();
     if ($.url.param('classlist')) {
         show_projects_for_class($.url.param('classlist'), $.url.param('projectlist'));
         if ($.url.param('projectlist')) {
@@ -46,12 +47,10 @@ function ea_close(file) {
 }
 
 function load_classlist(selected_id) {
-    $('#classlist').load('/classlist/', {}, function() {
-        if (selected_id) {
-            //select_class(selected_id);
-        }
-    });
-    $('#classlist').slideDown();
+    $('#classlist').load('/classlist/');
+}
+function load_labs() {
+    $('#labs').load('/lab/');
 }
 function show_projects_for_class(class_id, selected_id) {
     $('#projectlist').load('/projects/list_for_class/' + class_id + '/', {}, function() {

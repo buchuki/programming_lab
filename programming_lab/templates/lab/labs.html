@@ -1,0 +1,5 @@
+<ul>
+{% for lab in labs %}
+<li><a id="lab_{{lab.id}}" href="javascript:show_projects_for_lab({{lab.id}});">{{lab}}</a></li>
+{% endfor %}
+</ul>

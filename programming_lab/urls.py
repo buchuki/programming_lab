@@ -16,6 +16,7 @@ urlpatterns = patterns('',
     (r'accounts/', include('registration.auth_urls')),
 
     (r'classlist/', include('classlist.urls')),
+    (r'lab/', include('lab.urls')),
     (r'projects/', include('project.urls')),
     (r'chat/', include('chat.urls')),
 
