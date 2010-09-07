@@ -56,7 +56,7 @@ def create_class_project(request, class_id):
         project.owner = request.user
         project.save()
         os.makedirs(project.file_path())
-        return redirect("/?classlist=%s&projectlist=%s" % (classlist.id, project.id))
+        return redirect("/ide/?classlist=%s&projectlist=%s" % (classlist.id, project.id))
 
     return render_to_response("projects/project_form.html",
             RequestContext(request, {'form': form, 'classlist': classlist}))
@@ -73,7 +73,7 @@ def create_lab_project(request, lab_id):
         project.owner = request.user
         project.save()
         os.makedirs(project.file_path())
-        return redirect("/?lab=%s&projectlist=%s" % (lab.id, project.id))
+        return redirect("/ide/?lab=%s&projectlist=%s" % (lab.id, project.id))
 
     return render_to_response("projects/project_form.html",
             RequestContext(request, {'form': form, 'parent': lab}))
