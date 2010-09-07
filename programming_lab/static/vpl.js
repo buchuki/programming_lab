@@ -11,9 +11,13 @@ function sidebar_setup() {
     load_labs();
     if ($.url.param('classlist')) {
         show_projects_for_class($.url.param('classlist'), $.url.param('projectlist'));
-        if ($.url.param('projectlist')) {
-            show_files_for_project($.url.param('projectlist'));
-        }
+    }
+    if ($.url.param('lab')) {
+        show_projects_for_lab($.url.param('lab'), $.url.param('projectlist'));
+
+    }
+    if ($.url.param('projectlist')) {
+        show_files_for_project($.url.param('projectlist'));
     }
     // Ensure that user chat list is refreshed every minute
     window.setInterval(chat_users, 5000);
