@@ -1,21 +1,14 @@
+* Show Lab Participants
 * ajaxify creating projects and files
 * confirm delete
-* Move classlist to menubar
 * ensure heading sizes are the same in firefox and webkit
-* Deleting projects????
-* display the e-mail address in the sign up for gravatar message
+* Deleting projects
 * edit a project properties
-* make Send button capitalized on chat box
 * Style send and share buttons
-* Add "logged in as" to the menubar
 * Remove Project files link from admin
 * Ensure project files can be identified by users
 * Show instructor name in admin interface for projects
-
-1. on the top menu bar, there should be a list of buttons/menu items for
-language selection. It should include HTML Lab, JavaScript Lab, Web
-programming Lab (for both HTML and JavaScript), Java Lab and C++ Lab; for the
-last two, we can do one of them;
+* Create project form for lab should not show project type
 
 2. for a user not registered in a class but registered in the system, he/she
 should still be able to use the labs; then on the left navigation bar, it
@@ -24,9 +17,6 @@ should change to something like my lab projects, and the right, it should be
 
 3. for each language, the system should provide a list of tools/functionalities
 accessible through a list of menu items or buttons, as in an IDE;
-
-4. there should be an introduction or welcome page about the VPL for everyone
-visiting the lab home page. 
 
 6. importantly, administration functionalities for class, student,
 project/assignment and account management should be available for tutors or
