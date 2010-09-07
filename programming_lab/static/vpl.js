@@ -1,4 +1,5 @@
 classlist_id = null;
+lab_id = null;
 chat_user_id = null;
 
 function sidebar_setup() {
@@ -63,7 +64,16 @@ function show_projects_for_class(class_id, selected_id) {
     $('#userlist').slideDown();
     select_class(class_id);
 }
-
+function show_projects_for_lab(lab_id, selected_id) {
+    $('#projectlist').load('/projects/list_for_lab/' + lab_id + '/', {}, function() {
+            if (selected_id) {
+                select_project(selected_id);
+            }
+            });
+            $('#projectlist').slideDown();
+            $('#userlist').slideDown();
+            select_lab(lab_id);
+}
 function show_files_for_project(project_id, keepopen) {
     $('#filelist').load('/projects/files_for_project/' + project_id + '/');
     $('#filelist').slideDown();
@@ -76,9 +86,15 @@ function show_files_for_project(project_id, keepopen) {
     }
 }
 function select_class(class_id) {
-    $('#classlist a').removeClass('selected');
-    $('#classlist_'+class_id).addClass('selected');
+    $('#breadcrumbs').html('Class: ' + $('#classlist_' + class_id).text());
     classlist_id = class_id;
+    lab_id = null;
+    chat_users();
+}
+function select_lab(lab_id) {
+    $('#breadcrumbs').html('Lab: ' + $('#lab_' + lab_id).text());
+    lab_id = lab_id;
+    classlist_id = null;
     chat_users();
 }
 function select_project(project_id) {
