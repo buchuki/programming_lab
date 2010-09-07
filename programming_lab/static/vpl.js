@@ -87,12 +87,16 @@ function show_files_for_project(project_id, keepopen) {
 }
 function select_class(class_id) {
     $('#breadcrumbs').html('Class: ' + $('#classlist_' + class_id).text());
+    $('#participants_header').html('Class Participants');
+    $('#projects_header').html('Class Projects');
     classlist_id = class_id;
     lab_id = null;
     chat_users();
 }
 function select_lab(lab_id) {
     $('#breadcrumbs').html('Lab: ' + $('#lab_' + lab_id).text());
+    $('#participants_header').html('Lab Participants');
+    $('#projects_header').html('Lab Projects');
     lab_id = lab_id;
     classlist_id = null;
     chat_users();
