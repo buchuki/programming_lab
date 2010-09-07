@@ -8,9 +8,11 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.http import HttpResponse, Http404
 from django.template import RequestContext
+from django.core.urlresolvers import reverse
 
 from project.models import Project, SharedFiles, extension
 from classlist.models import ClassList
+from lab.models import Lab
 from project.forms import NewProjectForm, NewFileForm, UploadFileForm
 
 @login_required
@@ -20,7 +22,18 @@ def projects_for_class(request, class_id):
     classlist = get_object_or_404(request.user.classes, id=class_id)
     projects = request.user.project_set.filter(classlist=classlist)
     return render_to_response('projects/project_list.html',
-            RequestContext(request, {'projects': projects, 'classlist': classlist}))
+            RequestContext(request, {'projects': projects,
+                'create_url': reverse('create_class_project', kwargs={'class_id': classlist.id})}))
+
+@login_required
+def projects_for_lab(request, lab_id):
+    '''Return a list of projects the logged in user has associated with that
+    lab. Meant to be loaded via ajax.'''
+    lab = get_object_or_404(Lab, id=lab_id)
+    projects = request.user.project_set.filter(lab=lab)
+    return render_to_response('projects/project_list.html',
+        RequestContext(request, {'projects': projects,
+            'create_url': reverse('create_lab_project', kwargs={'lab_id': lab.id})}))
 
 @login_required
 def files_for_project(request, project_id):
@@ -32,7 +45,7 @@ def files_for_project(request, project_id):
             RequestContext(request, {'project': project, 'files': files}))
 
 @login_required
-def create_project(request, class_id):
+def create_class_project(request, class_id):
     '''Show a form to create a new project attached to a given class.'''
     classlist = get_object_or_404(request.user.classes, id=class_id)
 
@@ -47,6 +60,11 @@ def create_project(request, class_id):
 
     return render_to_response("projects/project_form.html",
             RequestContext(request, {'form': form, 'classlist': classlist}))
+
+@login_required
+def create_lab_project(request, lab_id):
+    from django.http import HttpResponse
+    return HttpResponse("Boilerplate") 
 
 @login_required
 def create_file(request, project_id):
