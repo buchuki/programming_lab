@@ -8,7 +8,7 @@ from project.models import Project
 class NewProjectForm(forms.ModelForm):
     class Meta:
         model = Project
-        exclude = ['owner', 'classlist']
+        exclude = ['owner', 'classlist', 'lab']
 
 class NewFileForm(forms.Form):
     name = forms.CharField()

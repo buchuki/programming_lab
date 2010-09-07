@@ -63,8 +63,20 @@ def create_class_project(request, class_id):
 
 @login_required
 def create_lab_project(request, lab_id):
-    from django.http import HttpResponse
-    return HttpResponse("Boilerplate") 
+    lab = get_object_or_404(Lab, id=lab_id)
+
+    form = NewProjectForm(request.POST or None,
+            initial={'project_type': lab.project_type})
+    if form.is_valid():
+        project = form.save(commit=False)
+        project.lab = lab
+        project.owner = request.user
+        project.save()
+        os.makedirs(project.file_path())
+        return redirect("/?lab=%s&projectlist=%s" % (lab.id, project.id))
+
+    return render_to_response("projects/project_form.html",
+            RequestContext(request, {'form': form, 'parent': lab}))
 
 @login_required
 def create_file(request, project_id):
