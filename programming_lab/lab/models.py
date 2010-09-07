@@ -1,6 +1,6 @@
 from django.db import models
+from project import project_types
 
-from project.models import project_types
 
 class Lab(models.Model):
     name = models.CharField(max_length=16)

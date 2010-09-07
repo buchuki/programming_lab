@@ -5,14 +5,15 @@ from django.contrib.auth.models import User
 from django.conf import settings
 
 from classlist.models import ClassList
+from lab.models import Lab
+from project import project_types
 
-make_choice = lambda c: [(s,s) for s in c]
 
-project_types = make_choice(['C', 'Java', 'HTML', 'Other'])
 
 class Project(models.Model):
     owner = models.ForeignKey(User)
-    classlist = models.ForeignKey(ClassList)
+    classlist = models.ForeignKey(ClassList, null=True, blank=True)
+    lab = models.ForeignKey(Lab, null=True, blank=True)
     name = models.CharField(max_length=128)
     description = models.TextField(blank=True)
     project_type = models.CharField(max_length=32,
