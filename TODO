@@ -10,13 +10,9 @@
 * Show instructor name in admin interface for projects
 * Create project form for lab should not show project type
 
-2. for a user not registered in a class but registered in the system, he/she
-should still be able to use the labs; then on the left navigation bar, it
-should change to something like my lab projects, and the right, it should be
-'lab participants';
-
 3. for each language, the system should provide a list of tools/functionalities
 accessible through a list of menu items or buttons, as in an IDE;
+--> Essentially, move the icons to a menu
 
 6. importantly, administration functionalities for class, student,
 project/assignment and account management should be available for tutors or
