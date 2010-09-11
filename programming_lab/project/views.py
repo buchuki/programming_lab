@@ -53,6 +53,14 @@ def menu_for_project(request, project_id):
             RequestContext(request, {'project': project}))
 
 @login_required
+def file_menu(request, project_id, filename):
+    project = get_object_or_404(Project, id=project_id, owner=request.user)
+    if not os.path.exists(project.file_path(filename)):
+        raise Http404
+    return render_to_response('projects/file_menu.html',
+            RequestContext(request, {'project': project, 'file': filename}))
+
+@login_required
 def create_class_project(request, class_id):
     '''Show a form to create a new project attached to a given class.'''
     classlist = get_object_or_404(request.user.classes, id=class_id)

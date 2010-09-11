@@ -1,0 +1,8 @@
+{% load project_viewable %}
+<ul>
+    <li><a href="/projects/upload/{{project.id}}/{{file}}/">Upload New Version</a></li>
+    <li><a href="/projects/download/{{project.id}}/{{file}}/">Download</a></li>
+    <li><a href="/projects/{{project.id}}/delete_file/{{file}}/">Delete</a></li>
+    {% if file|viewable %}<li><a href="javascript:view_file('{{project.classlist.class_name}}', '{{project.name}}', '{{file}}');">View File</a>{% endif %}
+</li>
+

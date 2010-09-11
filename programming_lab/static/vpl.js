@@ -50,7 +50,7 @@ function ea_load(id) {
     }
 }
 function ea_switch(file) {
-    alert('switch' + file);
+    $('#file_menu').load('/projects/file_menu/' + file.id + '/');
 }
 function ea_close(file) {
     //when a file is closed, remove the selector from the id
