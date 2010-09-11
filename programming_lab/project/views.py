@@ -87,7 +87,7 @@ def create_file(request, project_id):
     if form.is_valid():
         open(form.cleaned_data['name'], 'w').close()
 
-        return redirect("/?classlist=%s&projectlist=%s&filename=%s" % (
+        return redirect("/ide/?classlist=%s&projectlist=%s&filename=%s" % (
             project.classlist.id,
             project.id,
             os.path.basename(form.cleaned_data['name'])
@@ -106,7 +106,7 @@ def upload_new_file(request, project_id):
         with open(project.file_path(file_info.name), 'w') as file:
             for chunk in file_info.chunks():
                 file.write(chunk)
-        return redirect("/?classlist=%s&projectlist=%s&filename=%s" % (
+        return redirect("/ide/?classlist=%s&projectlist=%s&filename=%s" % (
             project.classlist.id,
             project.id,
             file_info.name
