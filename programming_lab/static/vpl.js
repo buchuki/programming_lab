@@ -27,9 +27,12 @@ function sidebar_setup() {
 }
 
 function chat_users() {
-    if (classlist_id == null) return;
-    $('#userlist').load('/chat/logged_in_to_class/' + classlist_id + '/');
-
+    if (classlist_id != null) {
+        $('#userlist').load('/chat/logged_in_to_class/' + classlist_id + '/');
+    }
+    else if (lab_id != null) {
+        $('#userlist').load('/chat/logged_in_to_lab/' + lab_id + '/');
+    }
 }
 function chat_messages() {
     if (chat_user_id == null) return;
@@ -97,11 +100,11 @@ function select_class(class_id) {
     lab_id = null;
     chat_users();
 }
-function select_lab(lab_id) {
-    $('#breadcrumbs').html('Lab: ' + $('#lab_' + lab_id).text());
+function select_lab(l_id) {
+    $('#breadcrumbs').html('Lab: ' + $('#lab_' + l_id).text());
     $('#participants_header').html('Lab Participants');
     $('#projects_header').html('Lab Projects');
-    lab_id = lab_id;
+    lab_id = l_id;
     classlist_id = null;
     chat_users();
 }

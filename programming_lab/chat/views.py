@@ -1,4 +1,5 @@
 import datetime
+from collections import deque, defaultdict
 
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
@@ -8,6 +9,7 @@ from django.contrib.auth.models import User
 from classlist.models import ClassList
 from project.models import Project, SharedFiles
 from chat.models import ChatMessage
+from lab.models import Lab
 
 @login_required
 def logged_in_users(request, class_id):
@@ -18,6 +20,24 @@ def logged_in_users(request, class_id):
     Efficiency IS an issue here. ;)'''
     users = User.objects.filter(classes__id=class_id).order_by(
             "-userprofile__last_request")
+    return render_to_response("chat/user_list.html", RequestContext(request, {
+        'users': users}))
+
+lab_logins = defaultdict(deque)
+
+@login_required
+def logged_in_lab_users(request, lab_id):
+    '''Get the list of logged in users who are currently editing a project
+    from the given lab.
+    
+    Efficiency is even more of an issue here.'''
+    lab = Lab.objects.get(id=lab_id)
+    recent_logins = lab_logins[lab.name]
+    recent_logins.appendleft((request.user.username, datetime.datetime.now()))
+    while recent_logins[-1][1] < datetime.datetime.now() - datetime.timedelta(minutes=1):
+        recent_logins.pop()
+
+    users = User.objects.filter(username__in=[r[0] for r in recent_logins])
     return render_to_response("chat/user_list.html", RequestContext(request, {
         'users': users}))
 
