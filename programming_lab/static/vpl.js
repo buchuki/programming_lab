@@ -49,6 +49,9 @@ function ea_load(id) {
         load_file($.url.param('projectlist'), $.url.param('filename'));
     }
 }
+function ea_switch(file) {
+    alert('switch' + file);
+}
 function ea_close(file) {
     //when a file is closed, remove the selector from the id
     $('#file_'+file.title.replace(/(:|\.)/g,'\\$1')).removeClass('selected');
@@ -84,6 +87,7 @@ function show_projects_for_lab(lab_id, selected_id) {
 function show_files_for_project(project_id, keepopen) {
     $('#filelist').load('/projects/files_for_project/' + project_id + '/');
     $('#filelist').slideDown();
+    $('#project_menu').load('/projects/menu_for_project/' + project_id + '/');
     select_project(project_id);
     var files = editAreaLoader.getAllFiles("code_editor");
     if (!keepopen) {

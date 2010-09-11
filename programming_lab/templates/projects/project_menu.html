@@ -1,0 +1,6 @@
+<ul>
+    <li><a href="/projects/download_project/{{project.id}}/">Download</a></li>
+    {% if project.is_compilable %}
+    <li><a href="javascript:compile_project({{project.id}});">Compile</a></li>
+    {% endif %}
+</ul>

@@ -9,13 +9,18 @@
         <div id="labs">
         </div>
     </li>
+    <li><a href="#">Project</a>
+        <div id="project_menu">
+        </div>
+    </li>
+
 {% endblock %}
 
 {% block content %}
-<div id="breadcrumbs" class="grid_4">
+<div id="breadcrumbs" class="grid_8">
     &nbsp;
 </div>
-<div class="grid_12">
+<div class="grid_8">
     <div style="float: right">Logged in as: {{user.username}}</div>
 </div>
 <div class="grid_3">
@@ -53,6 +58,7 @@ select a file to be edited.
             'toolbar': 'save,|,undo,redo,|,syntax_selection,highlight,reset_highlight,|,search,go_to_line,|,help',
             'save_callback' : 'save_file',
             'EA_load_callback': 'ea_load',
+            'EA_file_switch_on_callback': 'ea_switch',
             'EA_file_close_callback': 'ea_close',
         });
 </script>

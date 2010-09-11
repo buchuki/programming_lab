@@ -45,6 +45,14 @@ def files_for_project(request, project_id):
             RequestContext(request, {'project': project, 'files': files}))
 
 @login_required
+def menu_for_project(request, project_id):
+    '''Return a list of menu operations  associated with the given project.
+    Meant to be loaded via ajax.'''
+    project = get_object_or_404(request.user.project_set, id=project_id)
+    return render_to_response('projects/project_menu.html',
+            RequestContext(request, {'project': project}))
+
+@login_required
 def create_class_project(request, class_id):
     '''Show a form to create a new project attached to a given class.'''
     classlist = get_object_or_404(request.user.classes, id=class_id)
@@ -87,8 +95,10 @@ def create_file(request, project_id):
     if form.is_valid():
         open(form.cleaned_data['name'], 'w').close()
 
-        return redirect("/ide/?classlist=%s&projectlist=%s&filename=%s" % (
-            project.classlist.id,
+        link = "classlist" if project.classlist else "lab"
+        return redirect("/ide/?%s=%s&projectlist=%s&filename=%s" % (
+            link,
+            project.classlist.id if project.classlist else project.lab.id,
             project.id,
             os.path.basename(form.cleaned_data['name'])
             ))
@@ -106,8 +116,11 @@ def upload_new_file(request, project_id):
         with open(project.file_path(file_info.name), 'w') as file:
             for chunk in file_info.chunks():
                 file.write(chunk)
-        return redirect("/ide/?classlist=%s&projectlist=%s&filename=%s" % (
-            project.classlist.id,
+
+        link = "classlist" if project.classlist else "lab"
+        return redirect("/ide/?%s=%s&projectlist=%s&filename=%s" % (
+            link,
+            project.classlist.id if project.classlist else project.lab.id,
             project.id,
             file_info.name
             ))
