@@ -1,7 +1,7 @@
-* Show Lab Participants
+* View file is broken for lab files. Both classlist and labs should include
+    the user's username in the url.
 * ajaxify creating projects and files
 * confirm delete
-* ensure heading sizes are the same in firefox and webkit
 * Deleting projects
 * edit a project properties
 * Style send and share buttons
@@ -9,10 +9,6 @@
 * Ensure project files can be identified by users
 * Show instructor name in admin interface for projects
 * Create project form for lab should not show project type
-
-3. for each language, the system should provide a list of tools/functionalities
-accessible through a list of menu items or buttons, as in an IDE;
---> Essentially, move the icons to a menu
 
 6. importantly, administration functionalities for class, student,
 project/assignment and account management should be available for tutors or
@@ -22,3 +18,5 @@ other super users.
 super users. the account management module should be given the type of a user
 at registration time, and the system provide different
 functionalities/interface/menu items to different type of users.
+
+* instructors need to be able to create projects assigned to all participants.
