@@ -237,7 +237,18 @@ def delete_file(request, project_id, filename):
     if not os.path.exists(project.file_path(filename)):
         raise Http404
     os.remove(project.file_path(filename))
-    return redirect("/?classlist=%s&projectlist=%s" % (project.classlist.id, project.id))
+
+    if project.classlist:
+        project_type = "classlist"
+        parent_id = project.classlist.id
+    else:
+        project_type = "lab"
+        parent_id = project.lab.id
+
+    redirect_type = "%s=%s" % (project_type, parent_id)
+    redirect_url = "/ide/?%s&projectlist=%s" % (redirect_type, project.id)
+
+    return redirect(redirect_url)
 
 @login_required
 def download_project(request, project_id):
