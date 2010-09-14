@@ -1,14 +1,10 @@
-* When you create a new file, it should load the file.
-
 * ajaxify creating projects and files
 * confirm delete
 * Deleting projects
 * edit a project properties
 * Style send and share buttons
-* Remove Project files link from admin
-* Ensure project files can be identified by users
-* Show instructor name in admin interface for projects
-* Create project form for lab should not show project type
+
+* Completely New Admin
 
 6. importantly, administration functionalities for class, student,
 project/assignment and account management should be available for tutors or
