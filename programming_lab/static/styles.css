@@ -98,7 +98,8 @@ a:hover {
     font-size: small;
 }
 .sidebar_content a.selected {
-    color:#667;
+    color:#446;
+    background-color: #eef3f3;
     font-weight: bold;
 }
 #chat_messages {
