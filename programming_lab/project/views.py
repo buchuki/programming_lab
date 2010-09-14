@@ -240,7 +240,6 @@ def delete_file(request, project_id, filename):
     project = get_object_or_404(Project, id=project_id, owner=request.user)
     if not os.path.exists(project.file_path(filename)):
         raise Http404
-    os.remove(project.file_path(filename))
 
     if project.classlist:
         project_type = "classlist"
@@ -252,7 +251,13 @@ def delete_file(request, project_id, filename):
     redirect_type = "%s=%s" % (project_type, parent_id)
     redirect_url = "/ide/?%s&projectlist=%s" % (redirect_type, project.id)
 
-    return redirect(redirect_url)
+    if request.POST:
+        os.remove(project.file_path(filename))
+
+        return redirect(redirect_url)
+
+    return render_to_response("projects/confirm_delete_file.html",
+            RequestContext(request, {'filename': filename, "cancel_url": redirect_url}))
 
 @login_required
 def download_project(request, project_id):
