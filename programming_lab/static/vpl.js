@@ -68,6 +68,9 @@ function show_projects_for_class(class_id, selected_id) {
         if (selected_id) {
             select_project(selected_id);
         }
+        else {
+            $('#filelist').html("");
+        }
             
     });
     $('#projectlist').slideDown();
@@ -78,6 +81,9 @@ function show_projects_for_lab(lab_id, selected_id) {
     $('#projectlist').load('/projects/list_for_lab/' + lab_id + '/', {}, function() {
             if (selected_id) {
                 select_project(selected_id);
+            }
+            else {
+                $('#filelist').html("");
             }
             });
             $('#projectlist').slideDown();
