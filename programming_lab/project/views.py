@@ -10,7 +10,7 @@ from django.http import HttpResponse, Http404
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 
-from project.models import Project, SharedFiles, extension
+from project.models import Project, SharedFiles, extension, editable
 from classlist.models import ClassList
 from lab.models import Lab
 from project.forms import NewProjectForm, NewFileForm, UploadFileForm
@@ -168,15 +168,19 @@ def load_file(request, project_id, filename):
         raise Http404
 
     if request.POST:
-        with open(project.file_path(filename), 'w') as file:
-            file.write(request.POST['contents'])
+        if editable(filename):
+            with open(project.file_path(filename), 'w') as file:
+                file.write(request.POST['contents'])
         return HttpResponse("success")
     else:
-        with open(project.file_path(filename)) as file:
-            contents = file.read()
+        if editable(filename):
+            with open(project.file_path(filename)) as file:
+                contents = file.read()
+        else:
+            contents = "This is a binary file. It cannot be edited. Use the File menu above to manipulate it."
 
         response = {
-                'id': '%d/%s' % (project.id, os.path.basename(file.name)),
+                'id': '%d/%s' % (project.id, os.path.basename(filename)),
                 'title':  os.path.basename(filename),
                 'text':   contents,
                 'syntax': extension(filename),
