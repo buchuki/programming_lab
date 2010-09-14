@@ -70,6 +70,7 @@ function show_projects_for_class(class_id, selected_id) {
         }
         else {
             $('#filelist').html("");
+            close_files();
         }
             
     });
@@ -84,6 +85,7 @@ function show_projects_for_lab(lab_id, selected_id) {
             }
             else {
                 $('#filelist').html("");
+                close_files();
             }
             });
             $('#projectlist').slideDown();
@@ -97,9 +99,13 @@ function show_files_for_project(project_id, keepopen) {
     select_project(project_id);
     var files = editAreaLoader.getAllFiles("code_editor");
     if (!keepopen) {
-        for (k in files) {
-            editAreaLoader.closeFile("code_editor", k);
-        }
+        close_files();
+    }
+}
+function close_files() {
+    var files = editAreaLoader.getAllFiles("code_editor");
+    for (k in files) {
+        editAreaLoader.closeFile("code_editor", k);
     }
 }
 function select_class(class_id) {
