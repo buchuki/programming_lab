@@ -1,5 +1,5 @@
-* View file is broken for lab files. Both classlist and labs should include
-    the user's username in the url.
+* When you create a new file, it should load the file.
+
 * ajaxify creating projects and files
 * confirm delete
 * Deleting projects
@@ -20,3 +20,6 @@ at registration time, and the system provide different
 functionalities/interface/menu items to different type of users.
 
 * instructors need to be able to create projects assigned to all participants.
+
+* One thing I can think of to streamline this is to automatically go to the create project screen when the user selects a lab, if and only if no projects have been created for that user/lab combination. We could also add something to the create project form to optionally create an empty file and open it for editing.
+
