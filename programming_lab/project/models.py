@@ -31,6 +31,17 @@ class Project(models.Model):
             path = os.path.join(path, filename)
         return path
 
+    def view_url(self):
+        if self.classlist:
+            parent_type = "class"
+            parent_name = self.classlist.class_name
+        else:
+            parent_type = "lab"
+            parent_name = self.lab.name
+        url = "/projects/view/%s/%s/%s/" % (parent_type, parent_name, self.name)
+        return url
+
+
 class SharedFiles(models.Model):
     project = models.ForeignKey(Project)
     filename = models.CharField(max_length=128)

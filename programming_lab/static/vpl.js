@@ -146,9 +146,8 @@ function save_file(editor_id, contents) {
     });
 }
 
-function view_file(classname, projectname, filename) {
-    //for now, assume the file is a html/css type thing
-    window.open('/projects/view/' + classname + '/' + projectname + '/' + filename);
+function view_file(url, filename) {
+    window.open(url + filename);
 }
 function view_shared_file(project_id, filename) {
     window.open('/projects/view_shared_file/' + project_id + '/' + filename + '/');
