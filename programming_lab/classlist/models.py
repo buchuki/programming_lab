@@ -10,3 +10,7 @@ class ClassList(models.Model):
 
     def __unicode__(self):
         return self.class_name
+
+class ClassTutor(models.Model):
+    classlist = models.ForeignKey(ClassList)
+    tutor = models.ForeignKey(User)
