@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 
 class ClassList(models.Model):
     class_name = models.CharField(max_length=128)
@@ -19,11 +19,26 @@ class ClassTutor(models.Model):
         return self.classlist.class_name + " tutored by " + self.tutor.username
 
 def setup_staff_signal(sender, instance, created, **kwargs):
+    '''Ensures all users have proper staff status and groups. This is overkill
+    and expensive, but this signal should be called relatively infrequently.'''
+
     for user in User.objects.all():
-        should_be_staff = bool(user.instructed_classes.count()) or bool(user.classtutor_set.all().count())
+        is_instructor = bool(user.instructed_classes.count())
+        is_tutor = bool(user.classtutor_set.count())
+        should_be_staff = is_tutor or is_instructor
         if user.is_staff != should_be_staff:
             user.is_staff = should_be_staff
             user.save()
+
+        if is_instructor:
+            user.groups.add(Group.objects.get(name="instructors"))
+        else:
+            user.groups.remove(Group.objects.get(name="instructors"))
+
+        if is_tutor:
+            user.groups.add(Group.objects.get(name="tutors"))
+        else:
+            user.groups.remove(Group.objects.get(name="tutors"))
 
 models.signals.post_save.connect(setup_staff_signal, sender=ClassList)
 models.signals.post_save.connect(setup_staff_signal, sender=ClassTutor)
