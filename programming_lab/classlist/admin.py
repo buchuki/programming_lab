@@ -1,8 +1,12 @@
 from django.contrib import admin
 from classlist.models import ClassList, ClassTutor
 
+class ClassTutorInline(admin.TabularInline):
+    model = ClassTutor
+
 class ClassListAdmin(admin.ModelAdmin):
     filter_horizontal = ['participants']
+    inlines = [ClassTutorInline]
 
     def queryset(self, request):
         all_classes = super(ClassListAdmin, self).queryset(request)
