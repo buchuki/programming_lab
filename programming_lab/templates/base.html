@@ -1,3 +1,4 @@
+{% load project_viewable %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
@@ -24,7 +25,7 @@
                         {% else %}
                             <li><a href="/ide/">IDE</a></li>
                             <li><a href="/accounts/logout/">Logout</a></li>
-                            {% if user.is_superuser %}
+                            {% if user|admin_link %}
                             <li><a href="/admin/">Admin</a></li>
                             {% endif %}
                         {% endif  %}

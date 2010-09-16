@@ -17,3 +17,13 @@ class ClassTutor(models.Model):
 
     def __unicode__(self):
         return self.classlist.class_name + " tutored by " + self.tutor.username
+
+def setup_staff_signal(sender, instance, created, **kwargs):
+    for user in User.objects.all():
+        should_be_staff = bool(user.instructed_classes.count()) or bool(user.classtutor_set.all().count())
+        if user.is_staff != should_be_staff:
+            user.is_staff = should_be_staff
+            user.save()
+
+models.signals.post_save.connect(setup_staff_signal, sender=ClassList)
+models.signals.post_save.connect(setup_staff_signal, sender=ClassTutor)

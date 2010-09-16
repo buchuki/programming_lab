@@ -11,3 +11,10 @@ def viewable(filename):
 @register.filter
 def editable(filename):
     return project.models.editable(filename)
+
+@register.filter
+def admin_link(user):
+    if user.is_superuser:
+        return True
+    if user.instructed_classes.count():
+        return True
