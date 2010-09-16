@@ -14,3 +14,6 @@ class ClassList(models.Model):
 class ClassTutor(models.Model):
     classlist = models.ForeignKey(ClassList)
     tutor = models.ForeignKey(User)
+
+    def __unicode__(self):
+        return self.classlist.class_name + " tutored by " + self.tutor.username

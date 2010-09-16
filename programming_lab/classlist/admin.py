@@ -1,8 +1,14 @@
 from django.contrib import admin
-from classlist.models import ClassList
+from classlist.models import ClassList, ClassTutor
 
 class ClassListAdmin(admin.ModelAdmin):
     filter_horizontal = ['participants']
 
+class ClassTutorAdmin(admin.ModelAdmin):
+    list_filter = ['tutor', 'classlist']
+    list_display = ['classlist', 'tutor']
+    list_display_links = ['classlist', 'tutor']
+
 
 admin.site.register(ClassList, ClassListAdmin)
+admin.site.register(ClassTutor, ClassTutorAdmin)
