@@ -14,28 +14,40 @@
 
 {% if app_list %}
         <div class="module">
+            {{perms.auth.add_user}}
+            {{perms.classlist.change_classlist}}
         <table summary="Virtual Programming Lab Admin">
         <caption><a href="#" class="section">Virtual Programming lab Admin</a></caption>
+            {% if perms.auth.change_user %}
             <tr>
                 <th scope="row"><a href="/admin/auth/user/">Participants</a></th>
                 <td><a href="/admin/auth/user/add/" class="addlink">{% trans 'Add' %}</a></td>
             </tr>
+            {% endif %}
+            {% if perms.lab.change_lab %}
             <tr>
                 <th scope="row"><a href="/admin/lab/lab/">Labs</a></th>
                 <td><a href="/admin/lab/lab/add/" class="addlink">{% trans 'Add' %}</a></td>
             </tr>
+            {% endif %}
+            {% if perms.classlist.change_classlist %}
             <tr>
                 <th scope="row"><a href="/admin/classlist/classlist/">Classes</a></th>
                 <td><a href="/admin/classlist/classlist/add/" class="addlink">{% trans 'Add' %}</a></td>
             </tr>
+            {% endif %}
+            {% if perms.classlist.change_classtutor %}
             <tr>
                 <th scope="row"><a href="/admin/classlist/classtutor/">Class Tutors</a></th>
                 <td><a href="/admin/classlist/classtutor/add/" class="addlink">{% trans 'Add' %}</a></td>
             </tr>
+            {% endif %}
+            {% if perms.project.change_project %}
             <tr>
                 <th scope="row"><a href="/admin/project/project/">Student Projects</a></th>
                 <td><a href="/admin/project/project/add/" class="addlink">{% trans 'Add' %}</a></td>
             </tr>
+            {% endif %}
         </table>
         </div>
 {% else %}
