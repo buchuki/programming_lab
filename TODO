@@ -1,21 +1,22 @@
 * ajaxify creating projects and files
-* confirm delete
 * Deleting projects
 * edit a project properties
 * Style send and share buttons
 
-* Completely New Admin
-
-6. importantly, administration functionalities for class, student,
-project/assignment and account management should be available for tutors or
-other super users.
-
-7. there should be three types of users, at least: guests, students, tutors and
-super users. the account management module should be given the type of a user
-at registration time, and the system provide different
-functionalities/interface/menu items to different type of users.
+* One thing I can think of to streamline this is to automatically go to the create project screen when the user selects a lab, if and only if no projects have been created for that user/lab combination. We could also add something to the create project form to optionally create an empty file and open it for editing.
 
 * instructors need to be able to create projects assigned to all participants.
 
-* One thing I can think of to streamline this is to automatically go to the create project screen when the user selects a lab, if and only if no projects have been created for that user/lab combination. We could also add something to the create project form to optionally create an empty file and open it for editing.
 
+
+
+Admin Activities:
+Creating users (super)
+Editing users (super)
+Creating classes (super)
+
+Editing classes (super, class instructor)
+Adding tutors to classes(super, class instructor)
+Removing tutors from classes(super, class instructor)
+
+Editing student projects (super, class instructor, tutor)
