@@ -20,3 +20,6 @@ def admin_link(user):
         return True
     if user.instructed_classes.count():
         return True
+    if user.classtutor_set.count():
+        return True
+    return False
