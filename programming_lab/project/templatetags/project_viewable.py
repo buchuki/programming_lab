@@ -14,6 +14,8 @@ def editable(filename):
 
 @register.filter
 def admin_link(user):
+    if user.is_anonymous():
+        return False
     if user.is_superuser:
         return True
     if user.instructed_classes.count():
