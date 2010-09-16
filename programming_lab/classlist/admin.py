@@ -4,6 +4,12 @@ from classlist.models import ClassList, ClassTutor
 class ClassListAdmin(admin.ModelAdmin):
     filter_horizontal = ['participants']
 
+    def queryset(self, request):
+        all_classes = super(ClassListAdmin, self).queryset(request)
+        if request.user.is_superuser:
+            return all_classes
+        return all_classes.filter(instructor=request.user)
+
 class ClassTutorAdmin(admin.ModelAdmin):
     list_filter = ['tutor', 'classlist']
     list_display = ['classlist', 'tutor']
