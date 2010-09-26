@@ -95,6 +95,27 @@ def create_lab_project(request, lab_id):
             RequestContext(request, {'form': form, 'parent': lab}))
 
 @login_required
+def delete_project(request, project_id):
+    project = get_object_or_404(Project, id=project_id, owner=request.user)
+
+    if project.classlist:
+        project_type = "classlist"
+        parent_id = project.classlist.id
+    else:
+        project_type = "lab"
+        parent_id = project.lab.id
+
+    redirect_url = "/ide/?%s=%s" % (project_type, parent_id)
+
+    if request.POST:
+        project.delete()
+        return redirect(redirect_url)
+
+
+    return render_to_response("projects/confirm_delete_project.html",
+            RequestContext(request, {'project': project, "cancel_url": redirect_url}))
+
+@login_required
 def create_file(request, project_id):
     '''Show a form to create a new file attached to a given project.'''
     project = get_object_or_404(request.user.project_set, id=project_id)

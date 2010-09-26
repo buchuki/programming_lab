@@ -3,4 +3,5 @@
     {% if project.is_compilable %}
     <li><a href="javascript:compile_project({{project.id}});">Compile</a></li>
     {% endif %}
+    <li><a href="/projects/delete/{{project.id}}/">Delete</a></li>
 </ul>
