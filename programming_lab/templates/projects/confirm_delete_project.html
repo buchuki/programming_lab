@@ -4,7 +4,7 @@
 Are you sure you want to delete the project "{{project}}"?
 <form method="post">
     {% csrf_token %}
-    <input type="submit" value="Yes" />
-    <a href="{{cancel_url}}">No</a>
+    <input class="button" type="submit" value="Yes" />
+    <a class="button" href="{{cancel_url}}">No</a>
 </form>
 {% endblock %}

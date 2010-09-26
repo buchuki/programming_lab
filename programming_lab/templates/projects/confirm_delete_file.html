@@ -5,6 +5,6 @@ Are you sure you want to delete the file "{{filename}}"?
 <form method="post">
     {% csrf_token %}
     <input type="submit" value="Yes" />
-    <a href="{{cancel_url}}">No</a>
+    <a class="button" href="{{cancel_url}}">No</a>
 </form>
 {% endblock %}
