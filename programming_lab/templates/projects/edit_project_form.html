@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="grid_16">
+    Edit Project '{{form.instance.name}}':
+<form method="post">
+    {% csrf_token %}
+    <table>
+        {{form.as_table}}
+    </table>
+    <input type="submit" value="Save Project">
+</form>
+</div>
+{% endblock %}

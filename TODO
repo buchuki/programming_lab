@@ -1,6 +1,4 @@
 * ajaxify creating projects and files
-* edit a project properties
-* Style send and share buttons
 
 * One thing I can think of to streamline this is to automatically go to the create project screen when the user selects a lab, if and only if no projects have been created for that user/lab combination. We could also add something to the create project form to optionally create an empty file and open it for editing.
 

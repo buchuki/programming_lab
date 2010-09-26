@@ -31,6 +31,16 @@ class Project(models.Model):
             path = os.path.join(path, filename)
         return path
 
+    def ide_url(self):
+        if self.classlist:
+            parent_type = "classlist"
+            parent_name = self.classlist.class_name
+        else:
+            parent_type = "lab"
+            parent_name = self.lab.name
+        url = "/ide/?%s=%s&projectlist=%s" % (parent_type, parent_name, self.id)
+        return url
+
     def view_url(self):
         if self.classlist:
             parent_type = "class"

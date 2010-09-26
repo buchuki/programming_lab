@@ -95,6 +95,17 @@ def create_lab_project(request, lab_id):
             RequestContext(request, {'form': form, 'parent': lab}))
 
 @login_required
+def edit_project(request, project_id):
+    project = get_object_or_404(Project, id=project_id, owner=request.user)
+    form = NewProjectForm(request.POST or None, instance=project)
+    if form.is_valid():
+        form.save()
+        return redirect(project.ide_url())
+
+    return render_to_response("projects/edit_project_form.html",
+            RequestContext(request, {'form': form}))
+
+@login_required
 def delete_project(request, project_id):
     project = get_object_or_404(Project, id=project_id, owner=request.user)
 
