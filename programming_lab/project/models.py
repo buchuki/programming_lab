@@ -37,7 +37,7 @@ class Project(models.Model):
             parent_name = self.classlist.class_name
         else:
             parent_type = "lab"
-            parent_name = self.lab.name
+            parent_name = self.lab.id
         url = "/ide/?%s=%s&projectlist=%s" % (parent_type, parent_name, self.id)
         return url
 
@@ -47,7 +47,7 @@ class Project(models.Model):
             parent_name = self.classlist.class_name
         else:
             parent_type = "lab"
-            parent_name = self.lab.id
+            parent_name = self.lab.name
         url = "/projects/view/%s/%s/%s/" % (parent_type, parent_name, self.name)
         return url
 
