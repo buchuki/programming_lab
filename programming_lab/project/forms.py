@@ -11,7 +11,8 @@ class ProjectForm(forms.ModelForm):
         exclude = ['owner', 'classlist', 'lab']
 
 class NewProjectForm(ProjectForm):
-    initial_filename = forms.CharField(help_text="Name a file to add to the project")
+    initial_filename = forms.CharField(help_text="Name a file to add to the project",
+            required=False)
     class Meta:
         model = Project
         exclude = ['owner', 'classlist', 'lab']
