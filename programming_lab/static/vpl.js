@@ -9,16 +9,6 @@ function sidebar_setup() {
              });
     load_classlist();
     load_labs();
-    if ($.url.param('classlist')) {
-        show_projects_for_class($.url.param('classlist'), $.url.param('projectlist'));
-    }
-    if ($.url.param('lab')) {
-        show_projects_for_lab($.url.param('lab'), $.url.param('projectlist'));
-
-    }
-    if ($.url.param('projectlist')) {
-        show_files_for_project($.url.param('projectlist'));
-    }
     // Ensure that user chat list is refreshed every minute
     window.setInterval(chat_users, 5000);
     // Ensure that user chat messages are refreshed every 5 seconds
@@ -58,10 +48,24 @@ function ea_close(file) {
 }
 
 function load_classlist(selected_id) {
-    $('#classlist').load('/classlist/');
+    $('#classlist').load('/classlist/', {}, function() {
+        if ($.url.param('classlist')) {
+            show_projects_for_class($.url.param('classlist'), $.url.param('projectlist'));
+        }
+        if ($.url.param('projectlist')) {
+            show_files_for_project($.url.param('projectlist'));
+        }
+    });
 }
 function load_labs() {
-    $('#labs').load('/lab/');
+    $('#labs').load('/lab/', {}, function() {
+        if ($.url.param('lab')) {
+            show_projects_for_lab($.url.param('lab'), $.url.param('projectlist'));
+        }
+        if ($.url.param('projectlist')) {
+            show_files_for_project($.url.param('projectlist'));
+        }
+    });
 }
 function show_projects_for_class(class_id, selected_id) {
     $('#projectlist').load('/projects/list_for_class/' + class_id + '/', {}, function() {

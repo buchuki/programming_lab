@@ -5,7 +5,13 @@ from django.conf import settings
 
 from project.models import Project
 
-class NewProjectForm(forms.ModelForm):
+class ProjectForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        exclude = ['owner', 'classlist', 'lab']
+
+class NewProjectForm(ProjectForm):
+    initial_filename = forms.CharField(help_text="Name a file to add to the project")
     class Meta:
         model = Project
         exclude = ['owner', 'classlist', 'lab']

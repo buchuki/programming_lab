@@ -13,7 +13,7 @@ from django.core.urlresolvers import reverse
 from project.models import Project, SharedFiles, extension, editable
 from classlist.models import ClassList
 from lab.models import Lab
-from project.forms import NewProjectForm, NewFileForm, UploadFileForm
+from project.forms import ProjectForm, NewProjectForm, NewFileForm, UploadFileForm
 
 @login_required
 def projects_for_class(request, class_id):
@@ -60,6 +60,19 @@ def file_menu(request, project_id, filename):
     return render_to_response('projects/file_menu.html',
             RequestContext(request, {'project': project, 'file': filename}))
 
+
+def save_new_project(project, user, form):
+    project.owner = user
+    project.save()
+    os.makedirs(project.file_path())
+    if form.cleaned_data['initial_filename']:
+        path = project.file_path(form.cleaned_data['initial_filename'])
+        open(path, 'w').close()
+        extra_url = "&filename=%s" % form.cleaned_data['initial_filename']
+    else:
+        extra_url = ""
+    return redirect(project.ide_url() + extra_url)
+
 @login_required
 def create_class_project(request, class_id):
     '''Show a form to create a new project attached to a given class.'''
@@ -69,10 +82,7 @@ def create_class_project(request, class_id):
     if form.is_valid():
         project = form.save(commit=False)
         project.classlist = classlist
-        project.owner = request.user
-        project.save()
-        os.makedirs(project.file_path())
-        return redirect("/ide/?classlist=%s&projectlist=%s" % (classlist.id, project.id))
+        return save_new_project(project, request.user, form)
 
     return render_to_response("projects/project_form.html",
             RequestContext(request, {'form': form, 'classlist': classlist}))
@@ -86,10 +96,7 @@ def create_lab_project(request, lab_id):
     if form.is_valid():
         project = form.save(commit=False)
         project.lab = lab
-        project.owner = request.user
-        project.save()
-        os.makedirs(project.file_path())
-        return redirect("/ide/?lab=%s&projectlist=%s" % (lab.id, project.id))
+        return save_new_project(project, request.user, form)
 
     return render_to_response("projects/project_form.html",
             RequestContext(request, {'form': form, 'parent': lab}))
@@ -97,7 +104,7 @@ def create_lab_project(request, lab_id):
 @login_required
 def edit_project(request, project_id):
     project = get_object_or_404(Project, id=project_id, owner=request.user)
-    form = NewProjectForm(request.POST or None, instance=project)
+    form = ProjectForm(request.POST or None, instance=project)
     if form.is_valid():
         form.save()
         return redirect(project.ide_url())
@@ -109,14 +116,7 @@ def edit_project(request, project_id):
 def delete_project(request, project_id):
     project = get_object_or_404(Project, id=project_id, owner=request.user)
 
-    if project.classlist:
-        project_type = "classlist"
-        parent_id = project.classlist.id
-    else:
-        project_type = "lab"
-        parent_id = project.lab.id
-
-    redirect_url = "/ide/?%s=%s" % (project_type, parent_id)
+    redirect_url = project.ide_url()
 
     if request.POST:
         project.delete()
@@ -136,10 +136,7 @@ def create_file(request, project_id):
         open(form.cleaned_data['name'], 'w').close()
 
         link = "classlist" if project.classlist else "lab"
-        return redirect("/ide/?%s=%s&projectlist=%s&filename=%s" % (
-            link,
-            project.classlist.id if project.classlist else project.lab.id,
-            project.id,
+        return redirect(project.ide_url() + "&filename=%s" % (
             os.path.basename(form.cleaned_data['name'])
             ))
 
