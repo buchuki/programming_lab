@@ -34,7 +34,7 @@ class Project(models.Model):
     def ide_url(self):
         if self.classlist:
             parent_type = "classlist"
-            parent_name = self.classlist.class_name
+            parent_name = self.classlist.id
         else:
             parent_type = "lab"
             parent_name = self.lab.id
