@@ -5,3 +5,5 @@
 * instructors need to be able to create projects assigned to all participants.
 
 * Allow renaming files
+
+* consider using session, rather than GET parameters, to specify class, project, file names. Not sure if this can be used in js.
