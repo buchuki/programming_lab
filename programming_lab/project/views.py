@@ -85,7 +85,7 @@ def create_class_project(request, class_id):
         return save_new_project(project, request.user, form)
 
     return render_to_response("projects/project_form.html",
-            RequestContext(request, {'form': form, 'classlist': classlist}))
+            RequestContext(request, {'form': form, 'parent': classlist}))
 
 @login_required
 def create_lab_project(request, lab_id):
