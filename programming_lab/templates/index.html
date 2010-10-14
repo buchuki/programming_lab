@@ -6,39 +6,35 @@ Welcome to SCIS Virtual Programming Lab (SCIS-VPL)! Within SCIS-VPL, registered 
 </p>
 <br />
 {% if user.is_anonymous %}
-    <div class="index_login">
-        Already a member? Login below:
+<div id="registration_forms">
+    <div class="index_register">
+        Already a member? Login below:<br />
         <form method="post" action="/accounts/login/">
             {% csrf_token %}
             <table>
                 <tr>
-                    <td>Username:</td>
+                    <th>Username:</th>
                     <td>{{authentication_form.username}}</td>
                 </tr>
                 <tr>
-                    <td>Password:</td>
+                    <th>Password:</th>
                     <td>{{authentication_form.password}}</td>
                 </tr>
-                <tr>
-                    <td>
-                        <input type="submit" value="Login" />
-                    </td>
-                </tr>
             </table>
+            <input type="submit" value="Login" />
         </form>
     </div>
     <div class="index_register">
-        New to SCIS-VPL? Fill out the form below to register:
+        New to SCIS-VPL? Register below:<br />
         <form method="POST" action="/accounts/register/">
             <table>
                 {% csrf_token %}
                 {{registration_form.as_table}}
-                <tr>
-                    <td><input type="submit" value="Register" /></td>
-                </tr>
             </table>
+            <input type="submit" value="Register" />
         </form>
     </div>
+</div>
 {% else %}
     <p><a href="/ide/">Click here</a> to access the SCIS-VPL IDE.</p>
 {% endif %}
