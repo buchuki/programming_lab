@@ -11,7 +11,7 @@ urlpatterns = patterns('',
     url(r'^accounts/register/$',
         'registration.views.register',
         {'backend': 'registration.backends.simple.SimpleBackend',
-            'success_url': '/'},
+            'success_url': '/ide/'},
         name='registration_register'),
     (r'^accounts/', include('registration.auth_urls')),
 
