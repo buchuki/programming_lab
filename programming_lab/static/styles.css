@@ -125,6 +125,12 @@ kground-image: url('images/menubar_bg.png');
     background-color: #eef3f3;
     font-weight: bold;
 }
+.list_separator {
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: #aab;
+    margin-top: 2px;
+}
 #chat_messages {
     font-size: small;
     width: 150px;
