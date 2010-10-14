@@ -223,3 +223,14 @@ a:hover {
     width: 580;
     height: 400;
 }
+#chat_input_box .button,
+#chat_input_box input[type=submit],
+#chat_input_box button {
+    font-size: small;
+    margin-top: 3px;
+}
+#code_editor {
+    margin-top: 5px;
+    width: 580;
+    height: 400;
+}
