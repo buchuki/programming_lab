@@ -206,7 +206,7 @@ def load_file(request, project_id, filename):
             with open(project.file_path(filename)) as file:
                 contents = file.read()
         else:
-            contents = "This is a binary file. It cannot be edited. Use the File menu above to manipulate it."
+            contents = "This is a binary file. It cannot be edited.\nUse the File menu above to manipulate it."
 
         response = {
                 'id': '%d/%s' % (project.id, os.path.basename(filename)),
