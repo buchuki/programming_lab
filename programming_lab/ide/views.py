@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.contrib.auth.forms import AuthenticationForm
 from registration.forms import RegistrationForm
 
 @login_required
@@ -9,8 +10,10 @@ def main_ide(request):
 
 def index(request):
     registration_form = RegistrationForm()
+    authentication_form = AuthenticationForm()
     return render_to_response("index.html", RequestContext(request, 
-        {"registration_form": registration_form}))
+        {"registration_form": registration_form,
+            "authentication_form": authentication_form}))
 
 def about(request):
     return render_to_response("about.html", RequestContext(request, {}))
