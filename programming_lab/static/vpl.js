@@ -110,7 +110,6 @@ function show_files_for_project(project_id, keepopen) {
     $('#filelist').slideDown();
     $('#project_menu').load('/projects/menu_for_project/' + project_id + '/');
     select_project(project_id);
-    var files = editAreaLoader.getAllFiles("code_editor");
     if (!keepopen) {
         close_files();
     }
