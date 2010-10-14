@@ -2,7 +2,7 @@ body {
     font-family: helvetica,verdana,arial,sans;
     background-image: url('images/page_background.png');
     background-repeat: repeat-x;
-    color: #001;
+    color: #003;
 }
 h1 {
     background-image: url('images/header.png');
@@ -103,7 +103,8 @@ a:hover {
     background-color: #eff;
 } 
 .sidebar_box h3 {
-    font-size: medium;
+    font-size: 14px;
+    font-weight: bold;
     background-image: url('images/menubar_bg.png');
     background-repeat: repeat-x;
     background-color: #667;
