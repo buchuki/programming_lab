@@ -44,7 +44,7 @@ function ea_switch(file) {
         $('#file_item').hide();
     }
     else {
-        $('#file_menu').load('/projects/file_menu/' + file.id + '/', {},
+        $('#file_menu').load('/projects/file_menu/' + escape(file.id) + '/', {},
             function() {
                 if ($('#file_menu ul').children().length > 0) {
                     $('#file_item').show();
