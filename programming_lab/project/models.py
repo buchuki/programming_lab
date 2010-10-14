@@ -41,6 +41,12 @@ class Project(models.Model):
         url = "/ide/?%s=%s&projectlist=%s" % (parent_type, parent_name, self.id)
         return url
 
+    def parent_name(self):
+        if self.classlist:
+            return self.classlist.class_name
+        else:
+            return self.lab.name
+
     def view_url(self):
         if self.classlist:
             parent_type = "class"
