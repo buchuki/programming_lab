@@ -65,6 +65,12 @@ a:hover {
     background-image: url('images/menubar_bg.png');
     background-repeat: repeat-x;
 }
+#breadcrumbs {
+    color: #667;
+}
+#logged_in {
+    color: #667;
+}
 #registration_forms {
     color: #aab;
 }
@@ -92,18 +98,19 @@ a:hover {
     border-color: #aab;
     border-width: 1px;
     border-style: solid;
+    margin-top: 5px;
     margin-bottom: 5px;
     background-color: #eff;
 } 
 .sidebar_box h3 {
     font-size: medium;
-    bac
-kground-image: url('images/menubar_bg.png');
+    background-image: url('images/menubar_bg.png');
     background-repeat: repeat-x;
     background-color: #667;
     color: #aab;
     text-align: center;
     cursor: pointer;
+    padding-bottom: 3px;
 }
 .sidebar_content li {
     clear: both;
