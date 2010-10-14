@@ -4,6 +4,9 @@ body {
     background-repeat: repeat-x;
     color: #003;
 }
+input[type=text], input[type=password] {
+    width: 15em;
+}
 h1 {
     background-image: url('images/header.png');
     background-repeat: no-repeat;
@@ -215,6 +218,7 @@ a:hover {
     background-color: #abc;
     color: #557;
     font-weight: normal;
+    font-size: 12pt;
     height: 1.5em;
     margin-top: 2px;
 }
