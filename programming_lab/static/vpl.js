@@ -40,13 +40,18 @@ function ea_load(id) {
     }
 }
 function ea_switch(file) {
-    $('#file_menu').load('/projects/file_menu/' + file.id + '/', {},
-        function() {
-            if ($('#file_menu ul').children().length > 0) {
-                $('#file_item').show();
+    if (!file) {
+        $('#file_item').hide();
+    }
+    else {
+        $('#file_menu').load('/projects/file_menu/' + file.id + '/', {},
+            function() {
+                if ($('#file_menu ul').children().length > 0) {
+                    $('#file_item').show();
+                }
             }
-        }
-    );
+        );
+    }
 }
 function ea_close(file) {
     //when a file is closed, remove the selector from the id
