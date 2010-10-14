@@ -278,7 +278,7 @@ def delete_file(request, project_id, filename):
         parent_id = project.lab.id
 
     redirect_type = "%s=%s" % (project_type, parent_id)
-    redirect_url = "/ide/?%s&projectlist=%s" % (redirect_type, project.id)
+    redirect_url = "/ide/?%s&projectlist=%s&filename=%s" % (redirect_type, project.id, filename)
 
     if request.POST:
         os.remove(project.file_path(filename))
