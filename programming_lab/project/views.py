@@ -293,8 +293,8 @@ def download_project(request, project_id):
     project = get_object_or_404(Project, id=project_id, owner=request.user)
     response_string = StringIO()
     archive = ZipFile(response_string, "w")
-    for file in project.file_set.all():
-        archive.writestr(file.name, file.contents)
+    for file in os.listdir(project.file_path()):
+        archive.write(project.file_path(file), file)
     archive.close()
     response = HttpResponse(response_string.getvalue(), "application/zip")
     response['Content-Disposition'] = "attachment; filename=%s.zip" % project.name
