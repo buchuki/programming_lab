@@ -231,7 +231,6 @@ def view_shared_file(request, project_id, filename):
     else:
         with open(project.file_path(filename)) as file:
             contents = file.read()
-            print contents
             return render_to_response("projects/view_shared_file.html",
                     RequestContext(request, {"filename": filename,
                         "contents": contents, "project": project,
