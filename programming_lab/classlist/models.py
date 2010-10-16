@@ -29,7 +29,8 @@ def setup_staff_signal(sender, instance, created, **kwargs):
     for user in User.objects.all():
         is_instructor = bool(user.instructed_classes.count())
         is_tutor = bool(user.classtutor_set.count())
-        should_be_staff = is_tutor or is_instructor
+        is_super = user.is_superuser
+        should_be_staff = any((is_tutor, is_instructor, is_super))
         if user.is_staff != should_be_staff:
             user.is_staff = should_be_staff
             user.save()
