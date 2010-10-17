@@ -32,7 +32,11 @@ def projects_for_lab(request, lab_id):
     lab = get_object_or_404(Lab, id=lab_id)
     projects = request.user.project_set.filter(lab=lab)
     if not projects:
-        request.user.project_set.create(lab=lab, name="Default")
+        project = request.user.project_set.create(
+                lab=lab,
+                name="Default",
+                project_type=lab.project_type
+                )
         os.makedirs(project.file_path())
         projects = request.user.project_set.filter(lab=lab)
     return render_to_response('projects/project_list.html',
@@ -304,6 +308,7 @@ def download_project(request, project_id):
     return response
 
 compiler_commands = {
+    "Web": "javac *.java",
     "Java": "javac *.java",
     "C": "gcc *.c -o '%s'"
 }
