@@ -53,7 +53,7 @@ def chat_messages(request, peer_id):
     messages = ChatMessage.objects.conversation(request.user, peer)
     messages.filter(receiver=request.user).update(read=True)
     return render_to_response("chat/chat_messages.html", RequestContext(request,
-        {"chat_messages": messages}))
+        {"chat_messages": messages, "peer": peer}))
 
 @login_required
 def share_file(request):
