@@ -33,6 +33,7 @@ def projects_for_lab(request, lab_id):
     projects = request.user.project_set.filter(lab=lab)
     if not projects:
         request.user.project_set.create(lab=lab, name="Default")
+        os.makedirs(project.file_path())
         projects = request.user.project_set.filter(lab=lab)
     return render_to_response('projects/project_list.html',
         RequestContext(request, {'projects': projects,
