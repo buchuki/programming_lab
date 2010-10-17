@@ -31,6 +31,9 @@ def projects_for_lab(request, lab_id):
     lab. Meant to be loaded via ajax.'''
     lab = get_object_or_404(Lab, id=lab_id)
     projects = request.user.project_set.filter(lab=lab)
+    if not projects:
+        request.user.project_set.create(lab=lab, name="Default")
+        projects = request.user.project_set.filter(lab=lab)
     return render_to_response('projects/project_list.html',
         RequestContext(request, {'projects': projects,
             'create_url': reverse('create_lab_project', kwargs={'lab_id': lab.id})}))
