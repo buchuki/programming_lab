@@ -1,13 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="grid_16">
+    {% if action == "Rename" %}
+    Rename the file "{{oldname}}" in the "{{project}}" project in "{{project.parent_name}}":
+    {% else %}
     Add a new file to the "{{project}}" project in "{{project.parent_name}}":
+    {% endif %}
 <form method="post">
     {% csrf_token %}
     <table>
         {{form.as_table}}
     </table>
-    <input type="submit" value="Create New File">
+    <input type="submit" value="{{action|default:'Create New File'}}">
     <a class="button" href="{{project.ide_url}}">Cancel</a>
 </form>
 </div>

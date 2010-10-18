@@ -143,7 +143,6 @@ def create_file(request, project_id):
     if form.is_valid():
         open(form.cleaned_data['name'], 'w').close()
 
-        link = "classlist" if project.classlist else "lab"
         return redirect(project.ide_url() + "&filename=%s" % (
             os.path.basename(form.cleaned_data['name'])
             ))
@@ -294,6 +293,24 @@ def delete_file(request, project_id, filename):
 
     return render_to_response("projects/confirm_delete_file.html",
             RequestContext(request, {'filename': filename, "cancel_url": redirect_url}))
+
+@login_required
+def rename_file(request, project_id, filename):
+    project = get_object_or_404(Project, id=project_id, owner=request.user)
+    if not os.path.exists(project.file_path(filename)):
+        raise Http404
+
+    form = NewFileForm(project, request.POST or None)
+    if form.is_valid():
+        os.rename(project.file_path(filename), form.cleaned_data['name'])
+
+        return redirect(project.ide_url() + "&filename=%s" % (
+            os.path.basename(form.cleaned_data['name'])
+            ))
+
+    return render_to_response("projects/file_form.html",
+            RequestContext(request, {'form': form, 'project': project,
+                'action': "Rename", 'oldname': filename}))
 
 @login_required
 def download_project(request, project_id):
