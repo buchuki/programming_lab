@@ -209,10 +209,11 @@ def load_file(request, project_id, filename):
                 file.write(request.POST['contents'])
         return HttpResponse("success")
     else:
-        if editable(filename):
-            with open(project.file_path(filename)) as file:
-                contents = file.read()
-        else:
+        with open(project.file_path(filename)) as file:
+            contents = file.read()
+        try:
+            json.dumps(contents)
+        except UnicodeDecodeError:
             contents = "This is a binary file. It cannot be edited.\nUse the File menu above to manipulate it."
 
         response = {
