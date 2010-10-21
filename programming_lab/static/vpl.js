@@ -3,6 +3,7 @@ lab_id = null;
 chat_user_id = null;
 
 function sidebar_setup() {
+    $.ajaxSetup({cache: false}); //Internet Explorer is a bit fuddy...
     // Enable the slide boxes
     $('.sidebar_box h3').click(function() {
         $(this).next().slideToggle('fast');

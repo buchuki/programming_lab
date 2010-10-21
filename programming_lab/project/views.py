@@ -1,3 +1,4 @@
+from django.views.decorators.cache import cache_control
 import subprocess
 import json
 import os.path
@@ -196,6 +197,7 @@ def upload_replacement_file(request, project_id, filename):
             RequestContext(request, {'form': form, 'project': project,
                 'is_new': False, "file": filename}))
 
+@cache_control(no_cache=True, must_revalidate=True)
 @login_required
 def load_file(request, project_id, filename):
     project = get_object_or_404(Project, id=project_id, owner=request.user)
