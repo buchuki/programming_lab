@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+All the files in your project will be available in a zipfile.
+Please enter a fileneame for the downloaded file:<br />
+<input type="text" name="filename" id="id_filename" value="{{project.name}}.zip" />
+    <button id="dl_button">Download</button>
+{% endblock %}
+{% block scripts %}
+$("#dl_button").click(function() {
+window.open('{% url do_download_project project.id %}' + '?filename=' + $('#id_filename').val());
+    window.location = "/ide/";
+});
+{% endblock %}

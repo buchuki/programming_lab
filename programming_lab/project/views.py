@@ -14,7 +14,8 @@ from django.core.urlresolvers import reverse
 from project.models import Project, SharedFiles, extension, editable
 from classlist.models import ClassList
 from lab.models import Lab
-from project.forms import ProjectForm, NewProjectForm, NewFileForm, UploadFileForm
+from project.forms import (ProjectForm, NewProjectForm, NewFileForm,
+        UploadFileForm) 
 
 @login_required
 def projects_for_class(request, class_id):
@@ -318,13 +319,26 @@ def rename_file(request, project_id, filename):
 @login_required
 def download_project(request, project_id):
     project = get_object_or_404(Project, id=project_id, owner=request.user)
+    return render_to_response("projects/download_project.html",
+            RequestContext(request, {
+                "project": project}))
+
+@login_required
+def do_download_project(request, project_id):
+    project = get_object_or_404(Project, id=project_id, owner=request.user)
+    filename = request.GET.get('filename')
+    if not filename:
+        filename = project.name
+    if not filename.endswith(".zip"):
+        filename = filename.zip
+
     response_string = StringIO()
     archive = ZipFile(response_string, "w")
     for file in os.listdir(project.file_path()):
         archive.write(project.file_path(file), file)
     archive.close()
     response = HttpResponse(response_string.getvalue(), "application/zip")
-    response['Content-Disposition'] = "attachment; filename=%s.zip" % project.name
+    response['Content-Disposition'] = "attachment; filename=%s" % (filename)
     return response
 
 compiler_commands = {
