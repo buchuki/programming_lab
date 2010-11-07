@@ -11,7 +11,7 @@ from django.http import HttpResponse, Http404
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 
-from project.models import Project, SharedFiles, extension, editable
+from project.models import Project, SharedFiles, syntax, editable
 from classlist.models import ClassList
 from lab.models import Lab
 from project.forms import (ProjectForm, NewProjectForm, NewFileForm,
@@ -223,7 +223,7 @@ def load_file(request, project_id, filename):
                 'id': '%d/%s' % (project.id, os.path.basename(filename)),
                 'title':  os.path.basename(filename),
                 'text':   contents,
-                'syntax': extension(filename),
+                'syntax': syntax(filename),
                 }
         return HttpResponse(json.dumps(response), mimetype="application/json")
 
@@ -245,7 +245,7 @@ def view_shared_file(request, project_id, filename):
             return render_to_response("projects/view_shared_file.html",
                     RequestContext(request, {"filename": filename,
                         "contents": contents, "project": project,
-                        "extension": extension(filename)}))
+                        "syntax": syntax(filename)}))
 
 @login_required
 def view_file(request, project_type, name, projectname, filename):

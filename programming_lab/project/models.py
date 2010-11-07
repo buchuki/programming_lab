@@ -83,3 +83,7 @@ def viewable(filename):
 
 def editable(filename):
     return viewable(filename)
+
+syntaxes = {'py': 'python'}
+def syntax(filename):
+    return syntaxes.get(extension(filename), extension(filename))

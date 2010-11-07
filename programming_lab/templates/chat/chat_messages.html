@@ -1,4 +1,6 @@
+{% load chat_list %}
 Chatting with <span style="font-style: italic">{{peer}}</span>
+{% gravatar peer.email 20 %}
 <div>
     {% for message in chat_messages %}
         {% ifequal message.message_type "send_file" %}
