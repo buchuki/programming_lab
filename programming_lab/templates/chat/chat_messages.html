@@ -5,12 +5,12 @@ Chatting with <span style="font-style: italic">{{peer}}</span>
     {% for message in chat_messages %}
         {% ifequal message.message_type "send_file" %}
             {% ifequal message.sender user %}
-            <em>You have shared {{message.fileinfo.filename}} with {{message.receiver}}.</em>
+            <em>You have shared {{message.fileinfo.filename}} with {{message.receiver.get_profile.visible_name}}.</em>
             {% else %}
-            <em>{{message.sender}} has shared <a href="javascript:view_shared_file({{message.fileinfo.id}}, '{{message.fileinfo.filename}}');">{{message.fileinfo.filename}}</a> with you.</em>
+            <em>{{message.sender.get_profile.visible_name}} has shared <a href="javascript:view_shared_file({{message.fileinfo.id}}, '{{message.fileinfo.filename}}');">{{message.fileinfo.filename}}</a> with you.</em>
             {% endifequal %}
         {% else %}
-            {% ifequal message.sender user %}<span class="sender">{% else %}<span class="receiver">{% endifequal %}{{message.sender}}</span>: {{message.message}}
+            {% ifequal message.sender user %}<span class="sender">{% else %}<span class="receiver">{% endifequal %}{{message.sender.get_profile.visible_name}}</span>: {{message.message}}
         {% endifequal %}<br />
     {% endfor %}
 </div>
