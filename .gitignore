@@ -9,3 +9,4 @@ develop-eggs
 downloads
 parts
 .installed.cfg
+.~lock*
