@@ -8,6 +8,7 @@ make_choice = lambda x: ([(p,p) for p in x])
 
 class UserProfile(models.Model):
     user = models.ForeignKey(User, unique=True)
+    preferred_name = models.CharField(max_length=128, blank=True, default="")
     last_request = models.DateTimeField(null=True, blank=True)
 
     def is_online(self):
@@ -15,6 +16,14 @@ class UserProfile(models.Model):
             deadline = datetime.datetime.now() - datetime.timedelta(minutes=1)
             return self.last_request > deadline
         return False
+
+    @property
+    def visible_name(self):
+        if self.preferred_name:
+            return self.preferred_name
+        if self.user.get_full_name():
+            return self.user.get_full_name()
+        return self.user.username
 
 def user_profile_signal(sender, instance, signal, created, *args, **kwargs):
     '''When a new user is created, ensure a userprofile is associated with it.'''
