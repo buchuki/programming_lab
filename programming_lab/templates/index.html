@@ -8,8 +8,8 @@ Welcome to SCIS Virtual Programming Lab (SCIS-VPL)! Within SCIS-VPL, registered 
 <br />
 {% if user.is_anonymous %}
 <div id="registration_forms">
-    <div class="index_register">
-        Already a member? Login below:<br />
+    <div id="login_form" class="index_register">
+        Login below or <a id="login_button" href="javascript:$('.index_register').toggle();">register</a>
         <form method="post" action="/accounts/login/">
             {% csrf_token %}
             <table>
@@ -25,8 +25,8 @@ Welcome to SCIS Virtual Programming Lab (SCIS-VPL)! Within SCIS-VPL, registered 
             <input type="submit" value="Login" />
         </form>
     </div>
-    <div class="index_register">
-        New to SCIS-VPL? Register below:<br />
+    <div id="registration_form" class="index_register" style="display: none">
+        Register below or <a id="login_button" href="javascript:$('.index_register').toggle();">login</a>
         <form method="POST" action="/accounts/register/">
             <table>
                 {% csrf_token %}
