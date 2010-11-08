@@ -68,6 +68,12 @@ a:hover {
     background-image: url('images/menubar_bg.png');
     background-repeat: repeat-x;
 }
+#labs_item {
+    margin-right: 80px;
+}
+#about_item {
+    margin-left: 80px;
+}
 #breadcrumbs {
     color: #667;
 }
