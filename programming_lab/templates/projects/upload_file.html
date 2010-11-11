@@ -3,7 +3,7 @@
 {% block content %}
 <div class="grid_16">
 {% if is_new %}
-Select a file below to choose a new file to upload to the "{{project.name}}" project:
+Select a file below to choose a new file to upload to the "{{project.name}}" project. If you upload a zip file, the files inside the archive will be extracted into the project individually.
 {% else %}
 Upload a new file to replace the "{{file}}" file on "{{project.name}}" project:
 {% endif %}
