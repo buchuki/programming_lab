@@ -159,9 +159,20 @@ def upload_new_file(request, project_id):
             request.POST or None, request.FILES or None)
     if form.is_valid():
         file_info = form.cleaned_data['file']
-        with open(project.file_path(file_info.name), 'w') as file:
-            for chunk in file_info.chunks():
-                file.write(chunk)
+        if file_info.name.lower().endswith(".zip"):
+            zipped = ZipFile(file_info)
+            for name in zipped.namelist():
+                base_name = os.path.basename(name)
+                if base_name: # is a file, not a directory
+                    infile = zipped.open(name)
+                    with open(project.file_path(base_name), 'w') as file:
+                        file.write(infile.read())
+                    infile.close()
+            zipped.close()
+        else:
+            with open(project.file_path(file_info.name), 'w') as file:
+                for chunk in file_info.chunks():
+                    file.write(chunk)
 
         link = "classlist" if project.classlist else "lab"
         return redirect("/ide/?%s=%s&projectlist=%s&filename=%s" % (
