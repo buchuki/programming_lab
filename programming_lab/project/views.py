@@ -175,12 +175,7 @@ def upload_new_file(request, project_id):
                     file.write(chunk)
 
         link = "classlist" if project.classlist else "lab"
-        return redirect("/ide/?%s=%s&projectlist=%s&filename=%s" % (
-            link,
-            project.classlist.id if project.classlist else project.lab.id,
-            project.id,
-            file_info.name
-            ))
+        return redirect(project.ide_url() + "&filename=%s" % (file_info.name))
 
     return render_to_response("projects/upload_file.html",
             RequestContext(request, {'form': form, 'project': project,
@@ -199,11 +194,7 @@ def upload_replacement_file(request, project_id, filename):
             for chunk in file_info.chunks():
                 file.write(chunk)
 
-        return redirect("/?classlist=%s&projectlist=%s&filename=%s" % (
-            project.classlist.id,
-            project.id,
-            filename
-            ))
+        return redirect(project.ide_url() + "&filename=%s" % (filename))
 
     return render_to_response("projects/upload_file.html",
             RequestContext(request, {'form': form, 'project': project,
