@@ -71,6 +71,13 @@ def extension(filename):
     return filename.rsplit('.')[-1]
 
 def viewable(filename):
+    return editable(filename) or extension(filename) in [
+            "png",
+            "jpg",
+            "gif"
+            ]
+
+def editable(filename):
     return extension(filename) in [
             "html",
             "java",
@@ -78,11 +85,7 @@ def viewable(filename):
             "js",
             "c",
             "cpp",
-            "py",
-            ]
-
-def editable(filename):
-    return viewable(filename)
+            "py"]
 
 syntaxes = {'py': 'python'}
 def syntax(filename):

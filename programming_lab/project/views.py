@@ -11,7 +11,8 @@ from django.http import HttpResponse, Http404
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 
-from project.models import Project, SharedFiles, syntax, editable
+from project.models import (Project, SharedFiles, syntax, editable, viewable,
+        extension)
 from classlist.models import ClassList
 from lab.models import Lab
 from project.forms import (ProjectForm, NewProjectForm, NewFileForm,
@@ -259,9 +260,17 @@ def view_file(request, project_type, name, projectname, filename):
         project = get_object_or_404(Project,
                 owner=request.user, name=projectname,
                 lab__name=name)
+
+    if editable(filename):
+        mimetype = "text/plain" 
+    elif extension(filename) in ['png', 'gif', 'jpg', 'jpeg']:
+        mimetype = "image/%s" % extension(filename)
+    else:
+        mimetype = None
+
     try:
         with open(project.file_path(filename)) as file:
-            return HttpResponse(file.read())
+            return HttpResponse(file.read(), mimetype=mimetype)
     except IOError:
         raise Http404
 
