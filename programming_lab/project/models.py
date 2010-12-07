@@ -68,7 +68,9 @@ class SharedFiles(models.Model):
         unique_together=("project", "filename", "shared_with")
 
 def extension(filename):
-    return filename.rsplit('.')[-1]
+    if '.' in filename:
+        return filename.rsplit('.')[-1]
+    return ''
 
 def viewable(filename):
     return editable(filename) or extension(filename) in [

@@ -152,13 +152,16 @@ function load_file(project_id, filename) {
         url: '/projects/file/' + project_id + '/' + filename + '/',
         dataType: "json",
         success: function(response) {
-                editAreaLoader.openFile('code_editor', {
+                options = {
                     'id': response.id,
                     'title': response.title,
-                    'text': response.text,
-                    'syntax': response.syntax,
-                    'do_highlight': true
-                });
+                    'text': response.text
+                }
+                if (response.syntax)  {
+                    options.syntax = response.syntax;
+                    options.do_highlight = true;
+                }
+                editAreaLoader.openFile('code_editor', options);
                 $('#file_'+filename.replace(/(:|\.)/g,'\\$1')).addClass('selected');
                 editAreaLoader.execCommand('code_editor', 'set_editable', true);
         }
