@@ -9,7 +9,7 @@ Welcome to SCIS Virtual Programming Lab (SCIS-VPL)! Within SCIS-VPL, registered 
 {% if user.is_anonymous %}
 <div id="registration_forms">
     <div id="login_form" class="index_register">
-        Login below or <a id="login_button" href="javascript:$('.index_register').toggle();">register</a>
+        Login below or <a id="login_button" href="javascript:$('.index_register').toggle();void(0);">register</a>
         <form method="post" action="/accounts/login/">
             {% csrf_token %}
             <table>
