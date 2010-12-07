@@ -81,6 +81,7 @@ def viewable(filename):
 
 def editable(filename):
     return extension(filename) in [
+            '',
             "html",
             "java",
             "css",
