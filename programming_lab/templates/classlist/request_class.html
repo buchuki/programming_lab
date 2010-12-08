@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    Please select a class you would like to be registered in:
+    <form method="post">
+        {% csrf_token %}
+        {{form.classlist}}
+        <input type="submit" value="Request Class" />
+    </form>
+{% endblock %}

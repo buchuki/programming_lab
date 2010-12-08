@@ -9,7 +9,7 @@ class ClassList(models.Model):
             blank=True, null=True)
 
     def __unicode__(self):
-        return self.class_name
+        return "%s: %s" % (self.class_number, self.class_name)
 
     class Meta:
         verbose_name="Class"
