@@ -2,7 +2,10 @@
 
 {% block content %}
 <div class="grid_16">
-    Please select a class you would like to be registered in:
+    Please select a class you would like to be registered in. After
+    submitting, the course instructor will be notified of your request.
+    <br />
+    <br />
     <form method="post">
         {% csrf_token %}
         {{form.classlist}}
