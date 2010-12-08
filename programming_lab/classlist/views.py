@@ -29,3 +29,11 @@ def request_class(request):
         request, {
             'form': form
         }))
+
+@login_required
+def approve_requests(request):
+    form = None
+    return render_to_response('classlist/approve_request.html',RequestContext(
+        request, {
+            'form': form
+        }))
