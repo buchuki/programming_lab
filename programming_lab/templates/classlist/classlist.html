@@ -1,6 +1,6 @@
 <ul>
 {% for class in classes %}
 <li><a id="classlist_{{class.id}}" href="javascript:show_projects_for_class({{class.id}});">{{class}}</a></li>
-<li class="separator"><a href="{% url request_class_registration %}">Request New Class</a></li>
 {% endfor %}
+<li class="separator"><a href="{% url request_class_registration %}">Request New Class</a></li>
 </ul>
