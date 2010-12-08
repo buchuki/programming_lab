@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User, Group
 
+make_choice = lambda x: ([(p,p) for p in x])
+
 class ClassList(models.Model):
     class_name = models.CharField(max_length=128)
     class_number = models.CharField(max_length=8, unique=True)
@@ -21,6 +23,13 @@ class ClassTutor(models.Model):
 
     def __unicode__(self):
         return self.classlist.class_name + " tutored by " + self.tutor.username
+
+class ClassRequest(models.Model):
+    user = models.ForeignKey(User)
+    classlist = models.ForeignKey(ClassList)
+    status = models.CharField(max_length=16, choices=make_choice(
+        ["pending", "rejected", "approved"]),
+        default="pending")
 
 def setup_staff_signal(sender, instance, created, **kwargs):
     '''Ensures all users have proper staff status and groups. This is overkill
