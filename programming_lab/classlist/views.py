@@ -10,3 +10,8 @@ def classlist(request):
     classes = request.user.classes.all()
     return render_to_response('classlist/classlist.html',
             RequestContext(request, {'classes': classes}))
+
+@login_required
+def request_class(request):
+    from django.http import HttpResponse
+    return HttpResponse("Boilerplate")
