@@ -40,8 +40,12 @@ def approve_requests(request):
     form = ApproveRequestForm(requests, request.POST or None)
     
     if form.is_valid():
-        form.save()
-        return redirect(redirect)
+        approved_requests = form.cleaned_data['requests']
+        for r in approved_requests:
+            r.status = "approved"
+            r.save()
+            r.classlist.participants.add(r.user)
+        return redirect("/admin/")
     
     return render_to_response('classlist/approve_request.html',RequestContext(
         request, {
