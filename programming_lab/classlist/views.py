@@ -3,7 +3,7 @@ from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 
 from classlist.models import ClassList, ClassRequest
-from classlist.forms import RequestClassForm
+from classlist.forms import RequestClassForm, ApproveRequestForm
 
 @login_required
 def classlist(request):
@@ -32,7 +32,17 @@ def request_class(request):
 
 @login_required
 def approve_requests(request):
-    form = None
+    if request.user.is_superuser:
+        requests = ClassRequest.objects.filter(status="pending")
+    else:
+        requests = ClassRequest.objects.filter(status="pending",
+                classlist__instructor=request.user)
+    form = ApproveRequestForm(requests, request.POST or None)
+    
+    if form.is_valid():
+        form.save()
+        return redirect(redirect)
+    
     return render_to_response('classlist/approve_request.html',RequestContext(
         request, {
             'form': form

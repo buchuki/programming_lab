@@ -31,6 +31,9 @@ class ClassRequest(models.Model):
         ["pending", "rejected", "approved"]),
         default="pending")
 
+    def __unicode__(self):
+        return "%s in %s" % (self.user, self.classlist)
+
 def setup_staff_signal(sender, instance, created, **kwargs):
     '''Ensures all users have proper staff status and groups. This is overkill
     and expensive, but this signal should be called relatively infrequently.'''
