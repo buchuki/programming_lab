@@ -261,7 +261,9 @@ def view_file(request, project_type, name, projectname, filename):
                 owner=request.user, name=projectname,
                 lab__name=name)
 
-    if editable(filename):
+    if extension(filename) in ['html', 'html', 'xml', 'xhtml']:
+        mimetype = "text/html"
+    elif editable(filename):
         mimetype = "text/plain" 
     elif extension(filename) in ['png', 'gif', 'jpg', 'jpeg']:
         mimetype = "image/%s" % extension(filename)
