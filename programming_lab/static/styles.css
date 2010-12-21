@@ -76,9 +76,13 @@ a:hover {
 }
 #breadcrumbs {
     color: #667;
+    height: 3ex;
+    padding-top: 2px;
 }
 #logged_in {
     color: #667;
+    height: 3ex;
+    padding-top: 2px;
 }
 #registration_forms {
     color: #002;
