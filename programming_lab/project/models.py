@@ -25,6 +25,9 @@ class Project(models.Model):
     def is_compilable(self):
         return self.project_type in ('Java', 'C')
 
+    def is_viewable(self):
+        return "index.html" in os.listdir(self.file_path())
+
     def file_path(self, filename=None):
         path = os.path.join(settings.STUDENT_PROJECT_FILES, str(self.id))
         if filename:

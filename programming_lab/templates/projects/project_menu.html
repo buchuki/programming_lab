@@ -3,6 +3,9 @@
     {% if project.is_compilable %}
     <li><a href="javascript:compile_project({{project.id}});">Compile</a></li>
     {% endif %}
+    {% if project.is_viewable %}
+    <li><a href="javascript:view_file('{{project.view_url}}', 'index.html');">View</a></li>
+    {% endif %}
     <li><a href="/projects/delete/{{project.id}}/">Delete</a></li>
     <li><a href="/projects/edit/{{project.id}}/">Edit</a></li>
     <li><a href="/projects/create_file/{{project.id}}/">Create File</a></li>
