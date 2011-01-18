@@ -23,7 +23,7 @@ class Project(models.Model):
         return self.name
 
     def is_compilable(self):
-        return self.project_type in ('Java', 'C')
+        return self.project_type in ('Java', 'C++')
 
     def is_viewable(self):
         return "index.html" in os.listdir(self.file_path())
