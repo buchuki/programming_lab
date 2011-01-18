@@ -357,8 +357,8 @@ def do_download_project(request, project_id):
 compiler_commands = {
     "Web": "javac *.java",
     "Java": "javac *.java",
-    "C++": "g++ *.c -o '%s'",
-    "C": "g++ *.c -o '%s'" # not used right now
+    "C++": "g++ *.cpp -o '%s'",
+    "C": "g++ *.cpp *.c -o '%s'" # not used right now
 }
 
 @login_required
