@@ -12,5 +12,25 @@ Upload a new file to replace the "{{file}}" file on "{{project.name}}" project:
     {{form}}
     <input type="submit" value="Upload" />
 </form>
+<p>
+Valid editable files must have one of these extensions:
+<ul>
+    <li>html</li>
+    <li>java</li>
+    <li>css</li>
+    <li>js</li>
+    <li>c</li>
+    <li>cpp</li>
+    <li>py</li>
+</ul>
+Valid viewable files can be any of the above or web images:
+<ul>
+    <li>png</li>
+    <li>jpg</li>
+    <li>gif</li>
+</ul>
+Any other file extensions (.class, .exe, etc) will be interpreted as binary
+files and will not be editable.
+</p>
 </div>
 {% endblock %}
