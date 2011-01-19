@@ -5,7 +5,9 @@
     </head>
     <body>
         <br />
+        {% if not no_message %}
         The file <em>{{filename}}</em> was shared to you from <em>{{project.owner}}</em>:<br />
+        {% endif %}
         <script type="text/javascript" src="/static/edit_area/edit_area_full.js"></script>
         <textarea name="read_only_editor" id="read_only_editor">{{contents}}</textarea>
         <script type="text/javascript" defer="defer">

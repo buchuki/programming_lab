@@ -27,6 +27,8 @@ urlpatterns = patterns('project.views',
             name='rename_file'),
         url(r'^compile/(?P<project_id>\d+)/$', 'compile_project', name='compile_project'),
         url(r'^view/(?P<project_type>class|lab)/(?P<name>[^/]+)/(?P<projectname>[^/]+)/(?P<filename>[^/]+)$', 'view_file', name='view_file'),
+        url(r'^source/(?P<project_type>class|lab)/(?P<name>[^/]+)/(?P<projectname>[^/]+)/(?P<filename>[^/]+)$',
+            'view_source', name='view_source'),
         url(r'^view_shared_file/(?P<project_id>\d+)/(?P<filename>[^/]+)/$', 'view_shared_file',
             name='view_shared_file'),
 )

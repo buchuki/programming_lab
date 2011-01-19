@@ -251,6 +251,25 @@ def view_shared_file(request, project_id, filename):
                         "syntax": syntax(filename)}))
 
 @login_required
+def view_source(request, project_type, name, projectname, filename):
+    if project_type == "class":
+        project = get_object_or_404(Project,
+                owner=request.user, name=projectname,
+                classlist__class_name=name)
+    else:
+        project = get_object_or_404(Project,
+                owner=request.user, name=projectname,
+                lab__name=name)
+
+    with open(project.file_path(filename)) as file:
+        contents = file.read()
+        return render_to_response("projects/view_shared_file.html",
+                RequestContext(request, {"filename": filename,
+                    "contents": contents, "project": project,
+                    "syntax": syntax(filename), "no_message": True}))
+
+
+@login_required
 def view_file(request, project_type, name, projectname, filename):
     if project_type == "class":
         project = get_object_or_404(Project,

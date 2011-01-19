@@ -60,6 +60,9 @@ class Project(models.Model):
         url = "/projects/view/%s/%s/%s/" % (parent_type, parent_name, self.name)
         return url
 
+    def source_url(self):
+        return self.view_url().replace('view', 'source', 1)
+
 
 class SharedFiles(models.Model):
     project = models.ForeignKey(Project)
