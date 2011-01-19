@@ -11,6 +11,7 @@ Upload a new file to replace the "{{file}}" file on "{{project.name}}" project:
     {% csrf_token %}
     {{form}}
     <input type="submit" value="Upload" />
+    <a class="button" href="{{project.ide_url}}">Cancel</a>
 </form>
 {% include "projects/valid_editable.html" %}
 </div>
