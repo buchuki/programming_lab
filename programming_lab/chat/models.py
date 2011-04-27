@@ -1,3 +1,4 @@
+import datetime
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -6,7 +7,9 @@ make_choice = lambda x: ([(p,p) for p in x])
 class ChatMessageManager(models.Manager):
     def conversation(self, participant1, participant2):
         return self.filter(sender__in=[participant1, participant2],
-                receiver__in=[participant1,participant2])
+                receiver__in=[participant1,participant2],
+                timestamp__gt=datetime.datetime.now() - datetime.timedelta(
+                    seconds=10800)) # 3 hours
 
 class ChatMessage(models.Model):
     sender = models.ForeignKey(User, related_name="sent_chat_messages")
