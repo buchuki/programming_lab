@@ -180,7 +180,10 @@ function save_file(editor_id, contents) {
     });
 }
 
-function view_file(url, filename) {
+function view_file(url, filename, wrap_js) {
+    if (wrap_js) {
+        filename = filename + "?wrapjs=wrap";
+    }
     window.open(url + filename);
 }
 function view_shared_file(project_id, filename) {

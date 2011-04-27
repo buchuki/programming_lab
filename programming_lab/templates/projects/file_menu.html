@@ -5,6 +5,6 @@
     <li><a href="/projects/{{project.id}}/delete_file/{{file}}/">Delete</a></li>
     <li><a href="/projects/{{project.id}}/rename_file/{{file}}/">Rename</a></li>
     <li><a href="javascript:view_file('{{project.source_url}}', '{{file}}');">View Source</a></li>
-    {% if file|viewable %}<li><a href="javascript:view_file('{{project.view_url}}', '{{file}}');">Render File</a>{% endif %}
+    {% if file|viewable %}<li><a href="javascript:view_file('{{project.view_url}}', '{{file}}'{% if file|extension == 'js' %}, 'wrapjs'{%endif%});">Render File</a>{% endif %}
 </li>
 

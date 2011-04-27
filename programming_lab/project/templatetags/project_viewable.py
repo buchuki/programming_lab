@@ -13,6 +13,10 @@ def editable(filename):
     return project.models.editable(filename)
 
 @register.filter
+def extension(filename):
+    return project.models.extension(filename)
+
+@register.filter
 def admin_link(user):
     if user.is_anonymous():
         return False

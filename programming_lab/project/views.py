@@ -271,6 +271,7 @@ def view_source(request, project_type, name, projectname, filename):
 
 @login_required
 def view_file(request, project_type, name, projectname, filename):
+    wrapjs = request.GET.get("wrapjs")
     if project_type == "class":
         project = get_object_or_404(Project,
                 owner=request.user, name=projectname,
@@ -282,6 +283,10 @@ def view_file(request, project_type, name, projectname, filename):
 
     if extension(filename) in ['html', 'html', 'xml', 'xhtml']:
         mimetype = "text/html"
+    elif extension(filename) == 'js' and wrapjs:
+        mimetype = "text/html"
+    elif extension(filename) == 'js':
+        mimetype = 'text/javascript'
     elif editable(filename):
         mimetype = "text/plain" 
     elif extension(filename) in ['png', 'gif', 'jpg', 'jpeg']:
@@ -289,9 +294,14 @@ def view_file(request, project_type, name, projectname, filename):
     else:
         mimetype = None
 
+
     try:
         with open(project.file_path(filename)) as file:
-            return HttpResponse(file.read(), mimetype=mimetype)
+            content = file.read()
+            if extension(filename) == 'js' and wrapjs:
+                content = "<html><body><script type='text/javascript'>" + \
+                        content + "</script></body>"
+            return HttpResponse(content, mimetype=mimetype)
     except IOError:
         raise Http404
 

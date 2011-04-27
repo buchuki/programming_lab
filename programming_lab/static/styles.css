@@ -140,6 +140,7 @@ a:hover {
     color: #88a;
     text-decoration: none;
     font-size: small;
+    line-height: 1.2em;
 }
 .sidebar_content a.selected {
     color:#446;
