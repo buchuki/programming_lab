@@ -75,7 +75,7 @@ class SharedFiles(models.Model):
 
 def extension(filename):
     if '.' in filename:
-        return filename.rsplit('.')[-1]
+        return filename.rsplit('.')[-1].lower()
     return ''
 
 def viewable(filename):
