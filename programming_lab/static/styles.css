@@ -47,6 +47,7 @@ a:hover {
     display: none;
     width: 10em;
     background-color: #aab;
+    z-index: 100;
 }
 #nav li:hover ul {
     display: block;
