@@ -1,6 +1,7 @@
 classlist_id = null;
 lab_id = null;
 chat_user_id = null;
+code_editor = null;
 
 function sidebar_setup() {
     $.ajaxSetup({cache: false}); //Internet Explorer is a bit fuddy...
@@ -121,10 +122,7 @@ function show_files_for_project(project_id, keepopen) {
     }
 }
 function close_files() {
-    var files = editAreaLoader.getAllFiles("code_editor");
-    for (k in files) {
-        editAreaLoader.closeFile("code_editor", k);
-    }
+    /* noop */
 }
 function select_class(class_id) {
     $('#breadcrumbs').html('Class: ' + $('#classlist_' + class_id).text());
@@ -152,18 +150,11 @@ function load_file(project_id, filename) {
         url: '/projects/file/' + project_id + '/' + filename + '/',
         dataType: "json",
         success: function(response) {
-                options = {
-                    'id': response.id,
-                    'title': response.title,
-                    'text': response.text
-                }
-                if (response.syntax)  {
-                    options.syntax = response.syntax;
-                    options.do_highlight = true;
-                }
-                editAreaLoader.openFile('code_editor', options);
+                mirror = code_editor.mirror;
+                mirror.setValue(response.text);
+                mirror.setOption("readOnly", false);
+                mirror.setOption("mode", "htmlmixed");
                 $('#file_'+filename.replace(/(:|\.)/g,'\\$1')).addClass('selected');
-                editAreaLoader.execCommand('code_editor', 'set_editable', true);
         }
     });
 }

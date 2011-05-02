@@ -45,7 +45,20 @@
     </div>
 </div>
 <div id="code_area" class="grid_10">
-<script type="text/javascript" src="/static/edit_area/edit_area_full.js"></script>
+<script src="/static/codemirror-ui/lib/codemirror.js" type="text/javascript"></script>
+<link rel="stylesheet" href="/static/codemirror-ui/lib/codemirror.css">
+<script src="/static/codemirror-ui/lib/mode/javascript/javascript.js"></script>
+<link rel="stylesheet" href="/static/codemirror-ui/lib/mode/javascript/javascript.css">
+<script src="/static/codemirror-ui/lib/mode/clike/clike.js"></script>
+<link rel="stylesheet" href="/static/codemirror-ui/lib/mode/clike/clike.css">
+<script src="/static/codemirror-ui/lib/mode/xml/xml.js"></script>
+<link rel="stylesheet" href="/static/codemirror-ui/lib/mode/xml/xml.css">
+<script src="/static/codemirror-ui/lib/mode/css/css.js"></script>
+<link rel="stylesheet" href="/static/codemirror-ui/lib/mode/css/css.css">
+<script src="/static/codemirror-ui/lib/mode/htmlmixed/htmlmixed.js"></script>
+
+<script src="/static/codemirror-ui/js/codemirror-ui.js" type="text/javascript"></script>
+<link rel="stylesheet" href="/static/codemirror-ui/css/codemirror-ui.css" type="text/css" media="screen" />
 <textarea id="code_editor">
 Please load or create a file using the navigation at
 the left.
@@ -55,19 +68,17 @@ create or select a project. Finally, create or select
 a file to be edited.
 </textarea>
 <script type="text/javascript" defer="defer">
-        editAreaLoader.init({
-            id : "code_editor",
-            'is_editable': false,
-            'is_multi_file': false,
-            'min_width': 580,
-            'min_height': 400,
-            'allow_toggle': false,
-            'toolbar': 'save,|,undo,redo,|,syntax_selection,highlight,reset_highlight,|,search,go_to_line,|,fullscreen,help',
-            'save_callback' : 'save_file',
-            'EA_load_callback': 'ea_load',
-            'EA_file_switch_on_callback': 'ea_switch',
-            'EA_file_close_callback': 'ea_close',
-        });
+    var textarea = document.getElementById('code_editor');
+    code_editor = new CodeMirrorUI(textarea,
+            {
+                path: '/static/codemirror-ui/js/',
+                buttons: ['search', 'undo', 'redo', 'jump', 'reindentSelection', 'reindent']
+
+            },
+            {
+                lineNumbers: true,
+                readOnly: true
+            });
 </script>
     <div class="sidebar_box">
         <h3>Compile Output</h3>
