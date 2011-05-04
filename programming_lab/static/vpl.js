@@ -154,19 +154,27 @@ function load_file(project_id, filename) {
                 mirror.setValue(response.text);
                 mirror.setOption("readOnly", false);
                 mirror.setOption("mode", "htmlmixed");
+                $('#filelist a').removeClass('selected');
                 $('#file_'+filename.replace(/(:|\.)/g,'\\$1')).addClass('selected');
+                $('#file_menu').load('/projects/file_menu/' + escape(response.id) + '/', {},
+                    function() {
+                        if ($('#file_menu ul').children().length > 0) {
+                            $('#file_item').show();
+                        }
+                    }
+                );
         }
     });
 }
 
-function save_file(editor_id, contents) {
-    var info = editAreaLoader.getCurrentFile(editor_id);
+function save_file(project_id, filename) {
+    var contents = code_editor.mirror.getValue();
     $.ajax({
-        url: '/projects/file/' + info.id + '/',
+        url: '/projects/file/' + project_id + '/' + filename + '/',
         type: 'POST',
         data: {'contents': contents},
         success: function(response) {
-            editAreaLoader.setFileEditedMode('code_editor', info.id, false);
+            // noop
         }
     });
 }
