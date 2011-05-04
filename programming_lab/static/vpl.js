@@ -2,6 +2,7 @@ classlist_id = null;
 lab_id = null;
 chat_user_id = null;
 code_editor = null;
+current_project = null;
 current_file = null;
 
 function sidebar_setup() {
@@ -17,6 +18,7 @@ function sidebar_setup() {
     // Ensure that user chat messages are refreshed every 5 seconds
     window.setInterval(chat_messages, 5000);
     chat_users();
+    $.ctrl('S', save_file);
 }
 
 function chat_users() {
@@ -132,6 +134,7 @@ function select_lab(l_id) {
     chat_users();
 }
 function select_project(project_id) {
+    current_project = project_id;
     $('#project_item').show();
     $('#projectlist a').removeClass('selected');
     $('#project_'+project_id).addClass('selected');
@@ -161,16 +164,18 @@ function load_file(project_id, filename) {
     });
 }
 
-function save_file(project_id, filename) {
-    var contents = code_editor.mirror.getValue();
-    $.ajax({
-        url: '/projects/file/' + project_id + '/' + filename + '/',
-        type: 'POST',
-        data: {'contents': contents},
-        success: function(response) {
-            $("#file_" + file_id(filename)).removeClass("modified");
-        }
-    });
+function save_file() {
+    if (current_file) {
+        var contents = code_editor.mirror.getValue();
+        $.ajax({
+            url: '/projects/file/' + current_project + '/' + current_file + '/',
+            type: 'POST',
+            data: {'contents': contents},
+            success: function(response) {
+                $("#file_" + file_id(current_file)).removeClass("modified");
+            }
+        });
+    }
 }
 
 function view_file(url, filename, wrap_js) {
@@ -232,3 +237,14 @@ function file_id(filename) {
     return filename.replace(/(:|\.)/g,'\\$1');
 
 }
+
+/* jquery plugin */
+$.ctrl = function(key, callback, args) {
+    $(document).keydown(function(e) {
+        if(!args) args=[]; // IE barks when args is null
+        if(e.keyCode == key.charCodeAt(0) && e.ctrlKey) {
+            callback.apply(this, args);
+            return false;
+        }
+    });
+};
