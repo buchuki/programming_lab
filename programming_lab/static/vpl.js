@@ -2,6 +2,7 @@ classlist_id = null;
 lab_id = null;
 chat_user_id = null;
 code_editor = null;
+current_file = null;
 
 function sidebar_setup() {
     $.ajaxSetup({cache: false}); //Internet Explorer is a bit fuddy...
@@ -33,14 +34,22 @@ function chat_messages() {
                 reset_chat();
             });
 }
+/* codemirror callbacks */
+function editor_changed(editor) {
+    if (current_file != null) {
+        $("#file_" + file_id(current_file)).addClass('modified');
+    }
+}
 
 function ea_load(id) {
+    // This is an ea callback that needs to be replaced
     // When the edit_area is finished loading, we may need to load a file
     // immediately depending on get parameters
     if ($.url.param('projectlist') && $.url.param('filename')) {
         load_file($.url.param('projectlist'), $.url.param('filename'));
     }
 }
+/* end codemirror callbacks */
 
 function load_classlist(selected_id) {
     $('#classlist').load('/classlist/', {}, function() {
@@ -128,16 +137,18 @@ function select_project(project_id) {
     $('#project_'+project_id).addClass('selected');
 }
 function load_file(project_id, filename) {
+    current_file = null;
     $.ajax({
         url: '/projects/file/' + project_id + '/' + filename + '/',
         dataType: "json",
         success: function(response) {
                 mirror = code_editor.mirror;
                 mirror.setValue(response.text);
+                current_file = filename;
                 mirror.setOption("readOnly", false);
                 mirror.setOption("mode", "htmlmixed");
                 $('#filelist a').removeClass('selected');
-                $('#file_'+filename.replace(/(:|\.)/g,'\\$1')).addClass('selected');
+                $('#file_'+file_id(filename)).addClass('selected');
                 $('#file_menu').load('/projects/file_menu/' + escape(response.id) + '/', {},
                     function() {
                         if ($('#file_menu ul').children().length > 0) {
@@ -156,7 +167,7 @@ function save_file(project_id, filename) {
         type: 'POST',
         data: {'contents': contents},
         success: function(response) {
-            // noop
+            $("#file_" + file_id(filename)).removeClass("modified");
         }
     });
 }
@@ -213,4 +224,10 @@ function share_file() {
             reset_chat();
             $('#chat_input').focus();
         });
+}
+
+/* helpers */
+function file_id(filename) {
+    return filename.replace(/(:|\.)/g,'\\$1');
+
 }

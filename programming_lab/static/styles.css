@@ -148,6 +148,13 @@ a:hover {
     background-color: #eef3f3;
     font-weight: bold;
 }
+.sidebar_content a.modified {
+    color: #464;
+    background-color: #eef3f3;
+}
+.sidebar_content a.modified:before {
+    content: "*"
+}
 .list_separator {
     border-top-width: 1px;
     border-top-style: solid;
