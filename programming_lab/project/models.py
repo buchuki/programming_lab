@@ -96,6 +96,13 @@ def editable(filename):
             "cpp",
             "py"]
 
-syntaxes = {'py': 'python'}
+syntaxes = {'py': 'python',
+        'html': 'htmlmixed',
+        'js': 'javascript',
+        'java': 'clike',
+        'c': 'clike',
+        'cpp': 'clike',
+        'c++': 'clike'}
+
 def syntax(filename):
     return syntaxes.get(extension(filename), extension(filename))

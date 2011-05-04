@@ -142,11 +142,12 @@ function load_file(project_id, filename) {
         url: '/projects/file/' + project_id + '/' + filename + '/',
         dataType: "json",
         success: function(response) {
+            console.log(response);
                 mirror = code_editor.mirror;
                 mirror.setValue(response.text);
                 current_file = filename;
                 mirror.setOption("readOnly", false);
-                mirror.setOption("mode", "htmlmixed");
+                mirror.setOption("mode", response.syntax);
                 $('#filelist a').removeClass('selected');
                 $('#file_'+file_id(filename)).addClass('selected');
                 $('#file_menu').load('/projects/file_menu/' + escape(response.id) + '/', {},
