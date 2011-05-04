@@ -41,24 +41,6 @@ function ea_load(id) {
         load_file($.url.param('projectlist'), $.url.param('filename'));
     }
 }
-function ea_switch(file) {
-    if (!file) {
-        $('#file_item').hide();
-    }
-    else {
-        $('#file_menu').load('/projects/file_menu/' + escape(file.id) + '/', {},
-            function() {
-                if ($('#file_menu ul').children().length > 0) {
-                    $('#file_item').show();
-                }
-            }
-        );
-    }
-}
-function ea_close(file) {
-    //when a file is closed, remove the selector from the id
-    $('#file_'+file.title.replace(/(:|\.)/g,'\\$1')).removeClass('selected');
-}
 
 function load_classlist(selected_id) {
     $('#classlist').load('/classlist/', {}, function() {
