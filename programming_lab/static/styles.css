@@ -144,13 +144,13 @@ a:hover {
     line-height: 1.2em;
 }
 .sidebar_content a.selected {
-    color:#446;
-    background-color: #eef3f3;
+    color:#449;
+    background-color: #aaf3f3;
     font-weight: bold;
 }
 .sidebar_content a.modified {
     color: #464;
-    background-color: #eef3f3;
+    background-color: #aaf3f3;
 }
 .sidebar_content a.modified:before {
     content: "*"
