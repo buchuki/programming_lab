@@ -21,6 +21,7 @@ function sidebar_setup() {
     window.setInterval(chat_messages, 5000);
     chat_users();
     $.ctrl('S', save_file);
+
 }
 
 function chat_users() {
@@ -44,15 +45,6 @@ function editor_changed(editor) {
         $("#file_" + file_id(current_file)).addClass('modified');
     }
 }
-
-function ea_load(id) {
-    // This is an ea callback that needs to be replaced
-    // When the edit_area is finished loading, we may need to load a file
-    // immediately depending on get parameters
-    if ($.url.param('projectlist') && $.url.param('filename')) {
-        load_file($.url.param('projectlist'), $.url.param('filename'));
-    }
-}
 /* end codemirror callbacks */
 
 function load_classlist(selected_id) {
@@ -74,7 +66,13 @@ function load_labs() {
             show_projects_for_lab($.url.param('lab'), $.url.param('projectlist'));
         }
         if ($.url.param('projectlist')) {
-            show_files_for_project($.url.param('projectlist'));
+            if ($.url.param('filename')) {
+                show_files_for_project($.url.param('projectlist'),
+                    selected_id=$.url.param('filename'));
+            }
+            else {
+                show_files_for_project($.url.param('projectlist'));
+            }
         }
     });
 }
@@ -107,8 +105,13 @@ function show_projects_for_lab(lab_id, selected_id) {
             $('#userlist').slideDown();
             select_lab(lab_id);
 }
-function show_files_for_project(project_id, keepopen) {
-    $('#filelist').load('/projects/files_for_project/' + project_id + '/');
+function show_files_for_project(project_id, selected_id, keepopen) {
+    $('#filelist').load('/projects/files_for_project/' + project_id + '/',
+            function(response, textstatus,xhr) {
+                if (selected_id) {
+                    load_file(project_id, selected_id);
+                }
+    });
     $('#filelist').slideDown();
     $('#project_menu').load('/projects/menu_for_project/' + project_id + '/');
     select_project(project_id);
@@ -143,15 +146,12 @@ function select_project(project_id) {
 }
 function load_file(project_id, filename) {
     if (current_file && open_files[project_id + '/' + current_file]) {
-        console.log("storing contents of " + current_file);
-        console.log(code_editor.mirror.getValue());
         open_files[project_id + '/' + current_file].text = code_editor.mirror.getValue();
     }
 
     current_file = null;
 
     if (open_files[project_id + '/' + filename]) {
-        console.log("loading cached contents of " + filename);
         var r = open_files[project_id + '/' + filename];
         setup_file(r, project_id, filename);
     }
@@ -160,7 +160,6 @@ function load_file(project_id, filename) {
             url: '/projects/file/' + project_id + '/' + filename + '/',
             dataType: "json",
             success: function(response) {
-                    console.log("reloading that " + filename);
                     setup_file(response, project_id, filename);
             }
         });
