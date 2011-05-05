@@ -258,11 +258,15 @@ function send_chat_message() {
     return false;
 }
 function share_file() {
-    var info = editAreaLoader.getCurrentFile("code_editor");
-
+    if (!current_file) {
+        return;
+    }
     $('#chat_messages').load(
         "/chat/share_file/",
-        {'file_id': info.id, 'share_to': chat_user_id},
+        {
+            'file_id': current_project + "/" + current_file,
+            'share_to': chat_user_id
+        },
         function(response, textStatus, xmlrequest) {
             reset_chat();
             $('#chat_input').focus();
