@@ -6,22 +6,32 @@
     <body>
         <br />
         {% if not no_message %}
-        The file <em>{{filename}}</em> was shared to you from <em>{{project.owner}}</em>:<br />
+        The file <em>{{filename}}</em> was shared to you from <em>{{project.owner}}</em>:<br /><br />
         {% endif %}
-        <script type="text/javascript" src="/static/edit_area/edit_area_full.js"></script>
+    <script src="/static/codemirror-ui/lib/codemirror.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="/static/codemirror-ui/lib/codemirror.css">
+    <script src="/static/codemirror-ui/lib/mode/javascript/javascript.js"></script>
+    <script src="/static/codemirror-ui/lib/mode/clike/clike.js"></script>
+    <script src="/static/codemirror-ui/lib/mode/xml/xml.js"></script>
+    <script src="/static/codemirror-ui/lib/mode/css/css.js"></script>
+    <script src="/static/codemirror-ui/lib/mode/htmlmixed/htmlmixed.js"></script>
+    <script src="/static/codemirror-ui/lib/mode/php/php.js"></script>
+    <script src="/static/codemirror-ui/lib/mode/python/python.js"></script>
+    <link rel="stylesheet" href="/static/codemirror-ui/lib/mode/javascript/javascript.css">
+    <link rel="stylesheet" href="/static/codemirror-ui/lib/mode/clike/clike.css">
+    <link rel="stylesheet" href="/static/codemirror-ui/lib/mode/xml/xml.css">
+    <link rel="stylesheet" href="/static/codemirror-ui/lib/mode/css/css.css">
+    <link rel="stylesheet" href="/static/codemirror-ui/lib/mode/python/python.css">
+
         <textarea name="read_only_editor" id="read_only_editor">{{contents}}</textarea>
         <script type="text/javascript" defer="defer">
-                editAreaLoader.init({
-                    id : "read_only_editor",
-                    'is_editable': false,
-                    'is_multi_file': false,
-                    'min_width': 580,
-                    'min_height': 380,
-                    'allow_toggle': false,
-                    'toolbar': '',
-                    'syntax': '{{syntax}}',
-                    'start_highlight': true
-                });
+            var textarea = document.getElementById('read_only_editor');
+            code_editor = CodeMirror.fromTextArea(textarea,
+                    {
+                        lineNumbers: true,
+                        readOnly: true,
+                        mode: '{{syntax}}'
+                    });
         </script>
     </body>
 </html>
