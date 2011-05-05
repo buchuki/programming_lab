@@ -4,6 +4,8 @@ chat_user_id = null;
 code_editor = null;
 current_project = null;
 current_file = null;
+open_files = {};
+
 
 function sidebar_setup() {
     $.ajaxSetup({cache: false}); //Internet Explorer is a bit fuddy...
@@ -115,7 +117,7 @@ function show_files_for_project(project_id, keepopen) {
     }
 }
 function close_files() {
-    /* noop */
+    open_files = {};
 }
 function select_class(class_id) {
     $('#breadcrumbs').html('Class: ' + $('#classlist_' + class_id).text());
@@ -140,28 +142,47 @@ function select_project(project_id) {
     $('#project_'+project_id).addClass('selected');
 }
 function load_file(project_id, filename) {
+    if (current_file && open_files[project_id + '/' + current_file]) {
+        console.log("storing contents of " + current_file);
+        console.log(code_editor.mirror.getValue());
+        open_files[project_id + '/' + current_file].text = code_editor.mirror.getValue();
+    }
+
     current_file = null;
-    $.ajax({
-        url: '/projects/file/' + project_id + '/' + filename + '/',
-        dataType: "json",
-        success: function(response) {
-            console.log(response);
-                mirror = code_editor.mirror;
-                mirror.setValue(response.text);
-                current_file = filename;
-                mirror.setOption("readOnly", false);
-                mirror.setOption("mode", response.syntax);
-                $('#filelist a').removeClass('selected');
-                $('#file_'+file_id(filename)).addClass('selected');
-                $('#file_menu').load('/projects/file_menu/' + escape(response.id) + '/', {},
-                    function() {
-                        if ($('#file_menu ul').children().length > 0) {
-                            $('#file_item').show();
-                        }
-                    }
-                );
+
+    if (open_files[project_id + '/' + filename]) {
+        console.log("loading cached contents of " + filename);
+        var r = open_files[project_id + '/' + filename];
+        setup_file(r, project_id, filename);
+    }
+    else {
+        $.ajax({
+            url: '/projects/file/' + project_id + '/' + filename + '/',
+            dataType: "json",
+            success: function(response) {
+                    console.log("reloading that " + filename);
+                    setup_file(response, project_id, filename);
+            }
+        });
+    }
+}
+
+function setup_file(response, project_id, filename) {
+    mirror = code_editor.mirror;
+    mirror.setValue(response.text);
+    current_file = filename;
+    mirror.setOption("readOnly", false);
+    mirror.setOption("mode", response.syntax);
+    $('#filelist a').removeClass('selected');
+    $('#file_'+file_id(filename)).addClass('selected');
+    $('#file_menu').load('/projects/file_menu/' + escape(response.id) + '/', {},
+        function() {
+            if ($('#file_menu ul').children().length > 0) {
+                $('#file_item').show();
+            }
         }
-    });
+    );
+    open_files[project_id + '/' + filename] = response;
 }
 
 function save_file() {

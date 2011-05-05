@@ -150,7 +150,6 @@ a:hover {
 }
 .sidebar_content a.modified {
     color: #464;
-    background-color: #aaf3f3;
 }
 .sidebar_content a.modified:before {
     content: "*"
