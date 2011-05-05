@@ -120,6 +120,10 @@ function show_files_for_project(project_id, selected_id, keepopen) {
     }
 }
 function close_files() {
+    $('#file_item').hide();
+    current_file = null;
+    code_editor.mirror.setValue('');
+    code_editor.mirror.setOption("readOnly", true);
     open_files = {};
 }
 function select_class(class_id) {
