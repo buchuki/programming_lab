@@ -105,12 +105,25 @@ function show_projects_for_lab(lab_id, selected_id) {
             $('#userlist').slideDown();
             select_lab(lab_id);
 }
+function idify() {
+    return this.id;
+}
 function show_files_for_project(project_id, selected_id, keepopen) {
+    var selected = $('#filelist a.selected').map(idify).get();
+    var modified = $('#filelist a.modified').map(idify).get();
     $('#filelist').load('/projects/files_for_project/' + project_id + '/',
-            function(response, textstatus,xhr) {
-                if (selected_id) {
-                    load_file(project_id, selected_id);
-                }
+        function(response, textstatus,xhr) {
+            if (selected_id) {
+                load_file(project_id, selected_id);
+            }
+            if (keepopen) {
+                $.each(selected, function(){
+                    $('#' + file_id(this)).addClass("selected");
+                });
+                $.each(modified, function(){
+                    $('#' + file_id(this)).addClass("modified");
+                });
+            }
     });
     $('#filelist').slideDown();
     $('#project_menu').load('/projects/menu_for_project/' + project_id + '/');
@@ -217,7 +230,7 @@ function compile_project(project_id) {
     $('#compile_output').slideDown();
     $('#compile_output').load('/projects/compile/' + project_id + '/', undefined,
             function (response, textStatus, xmlrequest) {
-                show_files_for_project(project_id, keepopen=true);
+                show_files_for_project(project_id, null, keepopen=true);
             }
             );
 }
